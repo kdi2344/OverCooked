@@ -53,7 +53,7 @@ public class Object : MonoBehaviour
             onSomething = true;
             if (type == ObjectType.CounterTop)
             {
-                Vector3 position = transform.parent.GetChild(1).position;
+                Vector3 position = transform.parent.GetChild(1).position; //지정해둔 Pos 위치에 놓기
                 return position;
             }
             else //(type == ObjectType.Craft)

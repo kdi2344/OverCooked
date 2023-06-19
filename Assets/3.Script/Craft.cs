@@ -11,6 +11,5 @@ public class Craft : MonoBehaviour
     public void OpenCraft()
     {
         CraftAnim.SetTrigger("Open");
-
     }
 }
