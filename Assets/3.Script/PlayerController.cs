@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public bool isMoving = false;
-    private Animator anim;
+    [SerializeField] private Animator anim;
     public float Speed = 10.0f;
     private bool canActive = false;
     public GameObject activeObject;
@@ -14,13 +14,7 @@ public class PlayerController : MonoBehaviour
     public float rotateSpeed = 10.0f;       // 회전 속도
 
     float h, v;
-    private Rigidbody rigid;
 
-    private void Awake()
-    {
-        rigid = FindObjectOfType<Rigidbody>();
-        anim = FindObjectOfType<Animator>();
-    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && activeObject != null && activeObject.CompareTag("Craft"))
