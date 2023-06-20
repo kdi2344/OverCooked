@@ -7,6 +7,8 @@ public class Handle : MonoBehaviour
     public bool isOnDesk = true;
     public bool isCooked = false;
 
+    [SerializeField] private Mesh cookedIngredient;
+
     public void IngredientHandle(Transform something)
     {
         transform.parent.transform.parent.transform.SetParent(something);
@@ -26,5 +28,10 @@ public class Handle : MonoBehaviour
     {
         transform.SetParent(parent);
         transform.localPosition = target;
+    }
+
+    public void changeMesh()
+    {
+        transform.parent.GetComponent<MeshFilter>().mesh = cookedIngredient;
     }
 }

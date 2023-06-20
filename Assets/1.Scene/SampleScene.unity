@@ -1748,6 +1748,11 @@ MonoBehaviour:
   activeObject: {fileID: 0}
   nextActiveObject: {fileID: 0}
   rotateSpeed: 10
+  idleR: {fileID: 1347243051412465963}
+  idleL: {fileID: 5907568793268376016}
+  GribR: {fileID: 8852920828311703575}
+  GribL: {fileID: 7147676534157316850}
+  Knife: {fileID: 5829559900124018636}
 --- !u!54 &605118242
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2263,7 +2268,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.35115823, y: -0, z: -0, w: 0.9363162}
-  m_LocalPosition: {x: 33.8, y: 14.3, z: -26.7}
+  m_LocalPosition: {x: 35.46, y: 16.86, z: -29.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

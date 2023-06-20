@@ -17,28 +17,70 @@ public class PlayerController : MonoBehaviour
 
     float h, v;
 
+    [Header("플레이어 관련")]
+    [SerializeField] private GameObject idleR;
+    [SerializeField] private GameObject idleL;
+    [SerializeField] private GameObject GribR;
+    [SerializeField] private GameObject GribL;
+    [SerializeField] private GameObject Knife;
+
     private void Update()
     {
+        if (isHolding)
+        {
+            Knife.SetActive(false);
+            idleL.SetActive(false);
+            idleR.SetActive(false);
+            GribL.SetActive(true);
+            GribR.SetActive(true);
+        }
+        else
+        {
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("New_Chef@Chop"))
+            {
+                Knife.SetActive(true);
+                idleL.SetActive(false);
+                idleR.SetActive(false);
+                GribL.SetActive(true);
+                GribR.SetActive(true);
+            }
+            else
+            {
+                Knife.SetActive(false);
+                idleL.SetActive(true);
+                idleR.SetActive(true);
+                GribL.SetActive(false);
+                GribR.SetActive(false);
+            }
+        }
         if (Input.GetKeyDown(KeyCode.Space) && activeObject != null)
         {
             if (activeObject.GetComponent<Object>().type == Object.ObjectType.CounterTop || activeObject.GetComponent<Object>().type == Object.ObjectType.Board) //counterTop과 상호작용
             {
                 if (canActive && activeObject.GetComponent<Object>().onSomething && !isHolding) //선반에 무언가 있다면 집기
                 {
-                    activeObject.GetComponent<Object>().onSomething = false;
-                    isHolding = true;
-                    anim.SetBool("isHolding", isHolding);
                     GameObject handleThing = activeObject.transform.parent.GetChild(2).gameObject;
-                    if (handleThing.CompareTag("Ingredient"))
+                    if (handleThing.CompareTag("Ingredient") && activeObject.GetComponent<Object>().type == Object.ObjectType.Board && activeObject.transform.GetChild(0).GetComponent<CuttingBoard>().cookingBar.IsActive())
                     {
-                        handleThing.transform.GetChild(0).transform.GetChild(0).GetComponent<Handle>().isOnDesk = false;
-                        handleThing.transform.GetChild(0).transform.GetChild(0).GetComponent<Handle>().IngredientHandle(transform);
+                        //손질중인 재료 못가져가 히히
                     }
                     else
                     {
-                        handleThing.GetComponent<Handle>().isOnDesk = false; //접시
-                        handleThing.GetComponent<Handle>().PlayerHandle(transform);
+                        activeObject.GetComponent<Object>().onSomething = false;
+                        isHolding = true;
+                        anim.SetBool("isHolding", isHolding);
+                        if (handleThing.CompareTag("Ingredient"))
+                        {
+                            handleThing.transform.GetChild(0).transform.GetChild(0).GetComponent<Handle>().isOnDesk = false;
+                            handleThing.transform.GetChild(0).transform.GetChild(0).GetComponent<Handle>().IngredientHandle(transform);
+                        }
+                        else
+                        {
+                            handleThing.GetComponent<Handle>().isOnDesk = false; //접시
+                            handleThing.GetComponent<Handle>().PlayerHandle(transform);
+                        }
                     }
+                    
                 }
                 else if (canActive && !activeObject.GetComponent<Object>().onSomething && isHolding) //선반에 없는데 내가 뭔가 들고 있다면 놓기
                 {
@@ -113,18 +155,19 @@ public class PlayerController : MonoBehaviour
             isHolding = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.C) && activeObject.GetComponent<Object>().type == Object.ObjectType.Board && canActive && !activeObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Handle>().isCooked)
+        if (Input.GetKeyDown(KeyCode.C) && activeObject.GetComponent<Object>().type == Object.ObjectType.Board && activeObject.transform.parent.childCount > 2 && !activeObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Handle>().isCooked)
         {
-            if (activeObject.transform.GetChild(0).GetComponent<CuttingBoard>().Pause) //실행되다 만거라면
+            if (activeObject.transform.GetChild(0).GetComponent<CuttingBoard>()._CoTimer == null) //한번도 실행 안된거면 시작 가능
             {
                 anim.SetTrigger("startCut");
-                activeObject.transform.GetChild(0).GetComponent<CuttingBoard>().PauseSlider(false);
-            }
-            else if (activeObject.transform.GetChild(0).GetComponent<CuttingBoard>()._CoTimer == null) //한번도 실행 안된거면 시작 가능
-            {
                 activeObject.transform.GetChild(0).GetComponent<CuttingBoard>().Pause = false;
                 activeObject.transform.GetChild(0).GetComponent<CuttingBoard>().CuttingTime = 0;
                 activeObject.transform.GetChild(0).GetComponent<CuttingBoard>().StartCutting();
+            }
+            else if (activeObject.transform.GetChild(0).GetComponent<CuttingBoard>().Pause) //실행되다 만거라면
+            {
+                anim.SetTrigger("startCut");
+                activeObject.transform.GetChild(0).GetComponent<CuttingBoard>().PauseSlider(false);
             }
         }
     }

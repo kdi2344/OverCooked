@@ -8,7 +8,7 @@ using UnityEngine.Events;
 public class CuttingBoard : MonoBehaviour
 {
     private Object parentObject;
-    [SerializeField] private Slider cookingBar;
+    public Slider cookingBar;
     [SerializeField] Vector3 pos;
     public Coroutine _CoTimer;
     public bool Pause = false;
@@ -34,10 +34,10 @@ public class CuttingBoard : MonoBehaviour
     {
         if (parentObject.onSomething)
         {
+            cookingBar.gameObject.SetActive(true);
             ClearTime();
             _CoTimer = StartCoroutine(CoStartCutting(EndCallBack));
             FindObjectOfType<PlayerController>().anim.SetTrigger("startCut");
-            cookingBar.gameObject.SetActive(true);
         }
     }
     public void PauseSlider(bool pause)
@@ -58,6 +58,9 @@ public class CuttingBoard : MonoBehaviour
         }
         EndCallBack?.Invoke();
         OffSlider();
+        _CoTimer = null;
+        Pause = false;
+        CuttingTime = 0;
     }
 
     private void ClearTime()
@@ -72,9 +75,11 @@ public class CuttingBoard : MonoBehaviour
 
     public void OffSlider()
     {
-        cookingBar.gameObject.SetActive(false);
         cookingBar.value = 0f;
+        cookingBar.gameObject.SetActive(false);
         FindObjectOfType<PlayerController>().anim.SetBool("canCut", false);
-        FindObjectOfType<Handle>().isCooked = true;
+        Handle Ingredient = transform.parent.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Handle>();
+        Ingredient.isCooked = true;
+        Ingredient.changeMesh();
     }
 }

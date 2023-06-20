@@ -141,6 +141,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOnDesk: 1
+  isCooked: 0
+  cookedIngredient: {fileID: -4128499884555316590, guid: c7642c54dd04da943a017d614d0cb665, type: 3}
 --- !u!114 &3423423071116868458
 MonoBehaviour:
   m_ObjectHideFlags: 0
