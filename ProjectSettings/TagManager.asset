@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Craft
   - CounterTop
+  - Ingredient
   layers:
   - Default
   - TransparentFX
