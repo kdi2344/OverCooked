@@ -7,6 +7,10 @@ TagManager:
   - Craft
   - CounterTop
   - Ingredient
+  - Bin
+  - Return
+  - Station
+  - Plate
   layers:
   - Default
   - TransparentFX

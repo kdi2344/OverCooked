@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2727957548120369714}
   - component: {fileID: 2695148466325265811}
   - component: {fileID: 4143092294781579287}
+  - component: {fileID: 8225174813919695165}
+  - component: {fileID: 5567285912993784724}
   m_Layer: 0
   m_Name: m_ingredients_fish_01_0
   m_TagString: Ingredient
@@ -26,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1933878302785511434}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.13800001, z: 0.08200001}
+  m_LocalPosition: {x: 0, y: 0.13800001, z: 0.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1988286225239023869}
@@ -82,6 +84,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8225174813919695165
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1933878302785511434}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4988185594251539572, guid: dbcb336b7d3588a4eba8a5beb4fd936a, type: 3}
+--- !u!54 &5567285912993784724
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1933878302785511434}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &5349593236225748489
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,9 +172,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0713fb8c0c7de4348b118c07896a2eb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hand: 0
   isOnDesk: 1
   isCooked: 0
   cookedIngredient: {fileID: -4128499884555316590, guid: c7642c54dd04da943a017d614d0cb665, type: 3}
+  cookedFish: {fileID: 2100000, guid: c09639f93bb398343b7de506532f1c4f, type: 2}
 --- !u!114 &3423423071116868458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,6 +194,8 @@ MonoBehaviour:
   materials:
   - {fileID: 2100000, guid: 7e3bed856ea8be2478951f70d301aa76, type: 2}
   - {fileID: 2100000, guid: 9f1b3fcb25300a746aa7efbd086eb36c, type: 2}
+  - {fileID: 2100000, guid: c09639f93bb398343b7de506532f1c4f, type: 2}
+  - {fileID: 2100000, guid: 2fae5d8e097d64b47ba74f8db10d8a9d, type: 2}
   type: 5
 --- !u!1 &7928919074424237346
 GameObject:
@@ -186,7 +222,7 @@ Transform:
   m_GameObject: {fileID: 7928919074424237346}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.00002, y: 0.00501, z: 0.00084}
-  m_LocalScale: {x: 2.6, y: 2.6, z: 2.6}
+  m_LocalScale: {x: 2.4, y: 2.4, z: 2.4}
   m_Children:
   - {fileID: 2727957548120369714}
   m_Father: {fileID: 0}

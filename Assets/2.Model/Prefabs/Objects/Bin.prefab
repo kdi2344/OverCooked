@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 7481739128295858309}
   - component: {fileID: 1290316943538269980}
   - component: {fileID: 5636473727987787520}
+  - component: {fileID: 4731954236680569578}
   m_Layer: 0
   m_Name: m_sk_bin_01_0
-  m_TagString: Untagged
+  m_TagString: Bin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,6 +83,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4731954236680569578
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146813000206458281}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2125156, y: 0.5490261, z: 1.2073318}
+  m_Center: {x: 0.0017554462, y: 0.27131805, z: -0.0015172958}
 --- !u!1 &5263894690249625294
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,9 +106,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3813455237114060988}
   - component: {fileID: 8471222565739649540}
+  - component: {fileID: 7407938839231687711}
   m_Layer: 0
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: Bin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,11 +136,29 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5263894690249625294}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.2969583, y: 1.1790695, z: 1}
-  m_Center: {x: 0.14847898, y: 0.08953362, z: 0}
+  m_Size: {x: 1.4943385, y: 1.1790695, z: 1}
+  m_Center: {x: 0.24716897, y: 0.08953362, z: 0}
+--- !u!114 &7407938839231687711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5263894690249625294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 932d8214ec00d4c45ad97990b9712924, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onSomething: 0
+  canActive: 0
+  materials:
+  - {fileID: 2100000, guid: cbe1dd92f6ac0fc4db147f6c62aee90f, type: 2}
+  - {fileID: 2100000, guid: 57649f06986bdc4498bc3b8eeeebcf06, type: 2}
+  type: 7
 --- !u!1 &5456895571927088320
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,10 +168,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4679549185113843322}
-  - component: {fileID: 7572770503513626680}
   m_Layer: 0
   m_Name: Bin
-  m_TagString: Untagged
+  m_TagString: Bin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -158,16 +190,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7572770503513626680
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5456895571927088320}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.51285744, z: 1}
-  m_Center: {x: 0, y: 0.24357128, z: 0}

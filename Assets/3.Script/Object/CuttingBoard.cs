@@ -13,6 +13,10 @@ public class CuttingBoard : MonoBehaviour
     public Coroutine _CoTimer;
     public bool Pause = false;
     public float CuttingTime;
+
+    [SerializeField] private GameObject Canvas;
+    [SerializeField] private GameObject IngredientUI;
+    [SerializeField] private Sprite[] Icons;
     private void Start()
     {
         parentObject = transform.parent.GetComponent<Object>();
@@ -38,6 +42,7 @@ public class CuttingBoard : MonoBehaviour
             ClearTime();
             _CoTimer = StartCoroutine(CoStartCutting(EndCallBack));
             FindObjectOfType<PlayerController>().anim.SetTrigger("startCut");
+            FindObjectOfType<PlayerController>().anim.SetBool("canCut", true);
         }
     }
     public void PauseSlider(bool pause)
@@ -80,6 +85,25 @@ public class CuttingBoard : MonoBehaviour
         FindObjectOfType<PlayerController>().anim.SetBool("canCut", false);
         Handle Ingredient = transform.parent.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Handle>();
         Ingredient.isCooked = true;
-        Ingredient.changeMesh();
+        Ingredient.changeMesh(Ingredient.hand);
+        InstantiateUI();
+    }
+    public void InstantiateUI()
+    {
+        Handle Ingredient = transform.parent.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Handle>();
+        if (Ingredient.hand == Handle.HandleType.Fish)
+        {
+            GameObject madeUI = Instantiate(IngredientUI, Vector3.zero, Quaternion.identity, Canvas.transform);
+            Image image = madeUI.GetComponent<Image>();
+            image.sprite = Icons[0];
+            madeUI.GetComponent<IngredientUI>().Target = Ingredient.transform;
+        }
+        else if (Ingredient.hand == Handle.HandleType.Shrimp)
+        {
+            GameObject madeUI = Instantiate(IngredientUI, Vector3.zero, Quaternion.identity, Canvas.transform);
+            Image image = madeUI.GetComponent<Image>();
+            image.sprite = Icons[1];
+            madeUI.GetComponent<IngredientUI>().Target = Ingredient.transform;
+        }
     }
 }

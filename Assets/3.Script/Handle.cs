@@ -4,34 +4,71 @@ using UnityEngine;
 
 public class Handle : MonoBehaviour
 {
+    public enum HandleType { Fish, Shrimp, Plate }
+    public HandleType hand;
     public bool isOnDesk = true;
     public bool isCooked = false;
 
     [SerializeField] private Mesh cookedIngredient;
+    [SerializeField] private Material cookedFish;
 
-    public void IngredientHandle(Transform something)
+    private Vector3 fishLocalPos = new Vector3(0, 0.138f, 0.08f);
+    private Vector3 shrimpLocalPos = new Vector3(-0.365000874f, -0.0890001357f, -0.423000485f);
+
+
+    public void IngredientHandle(Transform something, HandleType handle)
     {
-        transform.parent.transform.parent.transform.SetParent(something);
-        transform.parent.transform.parent.transform.localPosition = new Vector3(-0.409999996f, 0, 1.84000003f);
+        //들려있을때는 collider끄기
+        transform.parent.GetComponent<MeshCollider>().isTrigger = true;
+        transform.parent.parent.SetParent(something);
+        transform.parent.parent.localRotation = Quaternion.identity;
+        transform.parent.parent.localPosition = new Vector3(-0.409999996f, 0, 1.84000003f);
+        if (handle == HandleType.Fish)
+        {
+            transform.parent.parent.GetChild(0).localPosition = fishLocalPos;
+        }
+        else if (handle == HandleType.Shrimp)
+        {
+            transform.parent.parent.GetChild(0).localPosition = shrimpLocalPos;
+            transform.parent.parent.GetChild(0).localRotation = Quaternion.Euler(new Vector3(35.029995f, -1.04264745e-06f, 326.160004f));
+        }
+        transform.parent.parent.transform.rotation = Quaternion.identity;
     }
     public void IngredientHandleOff(Transform parent, Vector3 target)
     {
-        transform.parent.transform.parent.transform.SetParent(parent);
-        transform.parent.transform.parent.transform.localPosition = target;
+        transform.parent.GetComponent<MeshCollider>().isTrigger = false;
+        transform.parent.parent.SetParent(parent);
+        transform.parent.parent.localRotation = Quaternion.identity;
+        //transform.parent.parent.transform.rotation = Quaternion.identity;
+        transform.parent.parent.localPosition = target;
     }
     public void PlayerHandle(Transform something)
     {
         transform.SetParent(something);
+        transform.localRotation = Quaternion.identity;
         transform.localPosition = new Vector3(-0.4f, 0.24f, 2.23f);
     }
     public void PlayerHandleOff(Transform parent, Vector3 target)
     {
         transform.SetParent(parent);
+        transform.rotation = Quaternion.identity;
         transform.localPosition = target;
     }
 
-    public void changeMesh()
+    public void changeMesh(HandleType handType)
     {
         transform.parent.GetComponent<MeshFilter>().mesh = cookedIngredient;
+        transform.parent.GetComponent<MeshCollider>().sharedMesh = cookedIngredient;
+        if (handType == HandleType.Fish)
+        {
+            MeshRenderer mesh = transform.parent.GetComponent<MeshRenderer>();
+            mesh.material = cookedFish;
+        }
+        else if (handType == HandleType.Shrimp)
+        {
+
+        }
     }
+
+    
 }

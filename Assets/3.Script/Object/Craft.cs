@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Craft : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Craft : MonoBehaviour
     public enum FoodType { Fish, Shrimp }
     public FoodType food;
     public GameObject foodPrefabs;
+
     public void OpenCraft()
     {
         CraftAnim.SetTrigger("Open");
@@ -15,13 +17,13 @@ public class Craft : MonoBehaviour
         {
             GameObject newFish = Instantiate(foodPrefabs, Vector3.zero, Quaternion.identity);
             FindObjectOfType<PlayerController>().isHolding = true;
-            newFish.transform.GetChild(0).transform.GetChild(0).GetComponent<Handle>().IngredientHandle(FindObjectOfType<PlayerController>().transform);
+            newFish.transform.GetChild(0).transform.GetChild(0).GetComponent<Handle>().IngredientHandle(FindObjectOfType<PlayerController>().transform, Handle.HandleType.Fish);
         }
         else if (food == FoodType.Shrimp)
         {
             GameObject newShrimp = Instantiate(foodPrefabs, Vector3.zero, Quaternion.identity);
             FindObjectOfType<PlayerController>().isHolding = true;
-            newShrimp.transform.GetChild(0).transform.GetChild(0).GetComponent<Handle>().IngredientHandle(FindObjectOfType<PlayerController>().transform);
+            newShrimp.transform.GetChild(0).transform.GetChild(0).GetComponent<Handle>().IngredientHandle(FindObjectOfType<PlayerController>().transform, Handle.HandleType.Shrimp);
         }
     }
 }

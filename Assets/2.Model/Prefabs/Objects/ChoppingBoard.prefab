@@ -23,14 +23,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5327475356018773706}
-  m_LocalRotation: {x: -0.0436939, y: -0.7099275, z: -0.24812448, w: 0.65766877}
-  m_LocalPosition: {x: 0.00328, y: -0.00203, z: -0.00304}
-  m_LocalScale: {x: 0.007, y: 0.007, z: 0.007}
+  m_LocalRotation: {x: -0.117905065, y: -0.7014304, z: -0.31572804, w: 0.6280204}
+  m_LocalPosition: {x: -0.00725, y: 0.0036, z: -0.0031500002}
+  m_LocalScale: {x: 0.007, y: 0.007, z: -0.007}
   m_Children:
   - {fileID: 6073838547388371826}
   m_Father: {fileID: 5868949752298090927}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -24.191, y: -90.742, z: -16.844}
+  m_LocalEulerAnglesHint: {x: -36.229, y: -90.839, z: -16.653}
 --- !u!1 &6130611100266648089
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,6 +158,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cookingBar: {fileID: 0}
   pos: {x: 0, y: 2, z: 0}
+  Pause: 0
+  CuttingTime: 0
+  Canvas: {fileID: 0}
+  IngredientUI: {fileID: 6144069945401074483, guid: bc38fd90eb538be48845667d3cbb70f0, type: 3}
+  Icons:
+  - {fileID: 21300000, guid: 70a1f22fcd619b041912cbc0835cfa77, type: 3}
+  - {fileID: 21300000, guid: 2a35135078153ab4492d54255a27b648, type: 3}
 --- !u!1 &7083673564493514521
 GameObject:
   m_ObjectHideFlags: 0

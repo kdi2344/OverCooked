@@ -7,22 +7,16 @@ public class Object : MonoBehaviour
     public bool onSomething = false;
     public bool canActive = false;
     [SerializeField] private Material[] materials;
-    [HideInInspector] public enum ObjectType { CounterTop, Craft, Return, Station, Sink, Ingredient, Board };
+    [HideInInspector] public enum ObjectType { CounterTop, Craft, Return, Station, Sink, Ingredient, Board, Bin, Plate};
     public ObjectType type;
 
-    public void OnHighlight(bool onSomething)
+    public void OnHighlight(bool isCooked)
     {
-        if (type == ObjectType.CounterTop || type == ObjectType.Board)
+        if (type == ObjectType.CounterTop || type == ObjectType.Board || type == ObjectType.Bin || type == ObjectType.Plate)
         {
             canActive = true;
             Renderer rd = transform.parent.GetComponent<MeshRenderer>();
             rd.material = materials[1];
-            if (onSomething)
-            {
-                //rd = transform.parent.transform.parent.GetChild(2).transform.GetChild(0).GetComponent<MeshRenderer>();
-                //생선이 있는지 새우가 있는지 다르게 material 적용
-                //rd.material = materials[1];
-            }
         }
         else if (type == ObjectType.Craft)
         {
@@ -31,23 +25,39 @@ public class Object : MonoBehaviour
             rd.material = materials[1];
             rd = transform.parent.transform.parent.GetChild(1).GetComponent<MeshRenderer>();
             rd.material = materials[1];
-            if (onSomething)
-            {
-                //rd = transform.parent.transform.parent.GetChild(2).GetComponent<MeshRenderer>();
-                //rd.material = materials[1];
-            }
         }
         else if (type == ObjectType.Ingredient)
         {
             canActive = true;
             Renderer rd = transform.parent.GetComponent<MeshRenderer>();
+            if (!isCooked)
+            {
+                rd.material = materials[1];
+            }
+            else
+            {
+                rd.material = materials[3];
+            }
+        }
+        else if (type == ObjectType.Station)
+        {
+            canActive = true;
+            Material[] originM = transform.GetChild(1).GetComponent<MeshRenderer>().materials;
+            originM[0] = materials[2];
+            originM[3] = materials[3];
+            transform.GetChild(1).GetComponent<MeshRenderer>().materials = originM;
+        }
+        else if (type == ObjectType.Return)
+        {
+            canActive = true;
+            Renderer rd = transform.parent.GetChild(0).GetComponent<MeshRenderer>();
             rd.material = materials[1];
         }
     }
 
-    public void OffHighlight()
+    public void OffHighlight(bool isCooked)
     {
-        if (type == ObjectType.CounterTop || type == ObjectType.Board)
+        if (type == ObjectType.CounterTop || type == ObjectType.Board || type == ObjectType.Bin || type == ObjectType.Plate)
         {
             canActive = false;
             Renderer rd = transform.parent.GetComponent<MeshRenderer>();
@@ -65,9 +75,31 @@ public class Object : MonoBehaviour
         {
             canActive = false;
             Renderer rd = transform.parent.GetComponent<MeshRenderer>();
+            if (!isCooked)
+            {
+                rd.material = materials[0];
+            }
+            else
+            {
+                rd.material = materials[2];
+            }
+        }
+        else if (type == ObjectType.Station)
+        {
+            canActive = false;
+            Material[] originM = transform.GetChild(1).GetComponent<MeshRenderer>().materials;
+            originM[0] = materials[0];
+            originM[3] = materials[1];
+            transform.GetChild(1).GetComponent<MeshRenderer>().materials = originM;
+        }
+        else if (type == ObjectType.Return)
+        {
+            canActive = false;
+            Renderer rd = transform.parent.GetChild(0).GetComponent<MeshRenderer>();
             rd.material = materials[0];
         }
     }
+}
 
     //public Vector3 PutSomething()
     //{
@@ -95,4 +127,3 @@ public class Object : MonoBehaviour
     //        return Vector3.zero;
     //    }
     //}
-}

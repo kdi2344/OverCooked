@@ -79,6 +79,11 @@ MonoBehaviour:
   CraftAnim: {fileID: 7278062333995217243}
   food: 0
   foodPrefabs: {fileID: 7928919074424237346, guid: e7b95c62e872747468dda411b11e28df, type: 3}
+  Canvas: {fileID: 0}
+  IngredientUI: {fileID: 6144069945401074483, guid: bc38fd90eb538be48845667d3cbb70f0, type: 3}
+  Icons:
+  - {fileID: 21300000, guid: 2a35135078153ab4492d54255a27b648, type: 3}
+  - {fileID: 21300000, guid: 2a35135078153ab4492d54255a27b648, type: 3}
 --- !u!1 &1681650756303890803
 GameObject:
   m_ObjectHideFlags: 0
