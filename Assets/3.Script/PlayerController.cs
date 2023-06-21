@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     public Object activeObjectOb;
     public GameObject nextActiveObject;
 
+    [SerializeField] private Vector3 throwPower;
+
     public float rotateSpeed = 10.0f;       // 회전 속도
 
     float h, v;
@@ -184,7 +186,7 @@ public class PlayerController : MonoBehaviour
                 handleThing.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 handleThing.GetComponent<Handle>().PlayerHandle(transform);
             }
-            else if (activeObject.CompareTag("Return")) //반환 접시 가져오기
+            else if (activeObject.CompareTag("Return") && activeObject.GetComponent<Object>().onSomething) //반환 접시 가져오기
             {
                 isHolding = true;
                 anim.SetBool("isHolding", isHolding);
@@ -238,6 +240,20 @@ public class PlayerController : MonoBehaviour
                 anim.SetTrigger("startCut");
                 activeObject.transform.GetChild(0).GetComponent<CuttingBoard>().PauseSlider(false);
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q) && isHolding && transform.GetChild(1).GetComponent<Handle>() == null)
+        { //ingredient 던지기 가능
+            Vector3 dir = transform.TransformDirection(throwPower);
+            anim.SetTrigger("throw");
+            isHolding = false;
+            anim.SetBool("isHolding", isHolding);
+            transform.GetChild(1).GetChild(0).transform.localPosition += new Vector3(0, 0.5f, 0);
+            Rigidbody ingreRigid = transform.GetChild(1).GetChild(0).GetComponent<Rigidbody>();
+            ingreRigid.AddForce(dir, ForceMode.Impulse);
+            transform.GetChild(1).GetChild(0).GetComponent<MeshCollider>().isTrigger = false;
+            transform.GetChild(1).GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            transform.GetChild(1).SetParent(transform.parent);
         }
     }
 
