@@ -142,11 +142,6 @@ MonoBehaviour:
   CraftAnim: {fileID: 7278062333995217243}
   food: 1
   foodPrefabs: {fileID: 1000850549753151896, guid: f80d55000b336934d856c9ed62c7a26e, type: 3}
-  Canvas: {fileID: 0}
-  IngredientUI: {fileID: 6144069945401074483, guid: bc38fd90eb538be48845667d3cbb70f0, type: 3}
-  Icons:
-  - {fileID: 21300000, guid: 2a35135078153ab4492d54255a27b648, type: 3}
-  - {fileID: 21300000, guid: 2a35135078153ab4492d54255a27b648, type: 3}
 --- !u!114 &8669291803235281995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,7 +254,7 @@ GameObject:
   - component: {fileID: 8816886588534443664}
   m_Layer: 0
   m_Name: Pos
-  m_TagString: Untagged
+  m_TagString: Craft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -7,7 +7,7 @@ public class Plates : MonoBehaviour
 {
     public List<Handle.HandleType> containIngredients = new List<Handle.HandleType>();
     public int limit = 1;
-    [SerializeField] private GameObject Canvas;
+    public GameObject Canvas;
     [SerializeField] private GameObject IngredientUI;
     [SerializeField] private Sprite[] Icons;
     GameObject madeUI;

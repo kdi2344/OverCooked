@@ -168,10 +168,20 @@ public class PlayerController : MonoBehaviour
                     anim.SetBool("isHolding", isHolding);
                 }
             }
-            else if (activeObject.CompareTag("Station") && isHolding) //그릇 제출
+            else if (activeObject.CompareTag("Station")) //그릇 제출
             {
                 if (isHolding && transform.GetChild(1).gameObject.GetComponent<Handle>() != null && transform.GetChild(1).gameObject.GetComponent<Handle>().hand == Handle.HandleType.Plate)
                 {
+                    if (GameManager.instance.CheckMenu(transform.GetChild(1).gameObject.GetComponent<Plates>().containIngredients))
+                    {
+                        Debug.Log("있는 메뉴");
+                        GameManager.instance.MakeOrder();
+                    }
+                    else
+                    {
+                        Debug.Log("없는 메뉴");
+                        //실패하면 뭐시기 빨간색 불들어오고 뭐 그런거 함수 만들어서 처리하기
+                    }
                     Destroy(transform.GetChild(1).gameObject); //접시 통째로 삭제 (시간 되면 재활용으로 바꾸기)
                     isHolding = false;
                     anim.SetBool("isHolding", isHolding);
@@ -186,7 +196,7 @@ public class PlayerController : MonoBehaviour
                 handleThing.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
                 handleThing.GetComponent<Handle>().PlayerHandle(transform);
             }
-            else if (activeObject.CompareTag("Return") && activeObject.GetComponent<Object>().onSomething) //반환 접시 가져오기
+            else if (activeObject.CompareTag("Return") && activeObject.GetComponent<Object>().onSomething && !isHolding) //반환 접시 가져오기
             {
                 isHolding = true;
                 anim.SetBool("isHolding", isHolding);
@@ -227,7 +237,7 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.C) && activeObjectOb.type == Object.ObjectType.Board && activeObject.transform.parent.childCount > 2 && !activeObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Handle>().isCooked && !isHolding)
-        {
+        {//자르기
             if (activeObject.transform.GetChild(0).GetComponent<CuttingBoard>()._CoTimer == null) //한번도 실행 안된거면 시작 가능
             {
                 anim.SetTrigger("startCut");
