@@ -93,6 +93,21 @@ public class PlayerController : MonoBehaviour
                     }
                     anim.SetBool("isHolding", isHolding);
                 }
+                else if (canActive && isHolding && activeObjectOb.onSomething) //내가 뭘 들고있고 상호작용 가능한 것도 있는데 누르면 그냥 바닥에 버림
+                {
+                    if (transform.GetChild(1).CompareTag("Plate"))
+                    {
+                        transform.GetChild(1).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                    }
+                    else if (transform.GetChild(1).CompareTag("Ingredient"))
+                    {
+                        transform.GetChild(1).GetChild(0).GetComponent<MeshCollider>().isTrigger = false;
+                        transform.GetChild(1).GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                    }
+                    transform.GetChild(1).SetParent(transform.parent);
+                    isHolding = false;
+                    anim.SetBool("isHolding", isHolding);
+                }
             }
             else if (activeObjectOb.type == Object.ObjectType.Craft) //Crate와 상호작용
             {
@@ -175,6 +190,14 @@ public class PlayerController : MonoBehaviour
                     if (GameManager.instance.CheckMenu(transform.GetChild(1).gameObject.GetComponent<Plates>().containIngredients))
                     {
                         Debug.Log("있는 메뉴");
+                        if (GameManager.instance.i -1 < 0)
+                        {
+                            GameManager.instance.SetPosition(0);
+                        }
+                        else
+                        {
+                            GameManager.instance.SetPosition(GameManager.instance.i-1);
+                        }
                         GameManager.instance.MakeOrder();
                     }
                     else
@@ -372,7 +395,6 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Debug.Log("외않됌");
                 activeObject.GetComponent<Object>().OffHighlight(activeObject.GetComponent<Handle>().isCooked);
                 activeObject = null;
                 activeObjectOb = null;

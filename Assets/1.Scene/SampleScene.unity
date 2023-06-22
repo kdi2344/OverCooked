@@ -6620,9 +6620,10 @@ MonoBehaviour:
   StartTime: 0
   Ready: {fileID: 402411302}
   Go: {fileID: 1198578893}
-  GameTime: 151
+  GameTime: 31
   TimeSlider: {fileID: 316209927}
   TextTime: {fileID: 2131289415}
+  CoinOb: {fileID: 561800580}
   TipSlider: {fileID: 1947572258}
   TextCoin: {fileID: 561800582}
   TextTip: {fileID: 1936309496}
@@ -6632,7 +6633,7 @@ MonoBehaviour:
   Menus:
   - {fileID: 11400000, guid: fe873dddedc000343a19a2bb2d41b4e3, type: 2}
   - {fileID: 11400000, guid: 08e1e834349f76948a27eafe07672ded, type: 2}
-  maxMenuLimit: 2
+  maxMenuLimit: 4
   Single_Double_PoolUIs:
   - {fileID: 1494184074}
   - {fileID: 38709521}
@@ -6643,6 +6644,7 @@ MonoBehaviour:
   CurrentOrderUI: []
   poolPos: {x: 1200, y: 468, z: 0}
   Canvas: {fileID: 1185548257}
+  i: -1
 --- !u!4 &2068749930
 Transform:
   m_ObjectHideFlags: 0

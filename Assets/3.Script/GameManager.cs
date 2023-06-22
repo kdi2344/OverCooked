@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
-    private Coroutine activeCo = null;
+    public Coroutine activeCo = null;
 
     public bool isStop = true; //일시정지 여부
 
@@ -23,8 +23,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float GameTime = 160f;
     [SerializeField] private Slider TimeSlider;
     [SerializeField] private Text TextTime;
-    
+
     //돈 UI
+    [SerializeField] private GameObject CoinOb;
     [SerializeField] private Slider TipSlider;
     private int Coin;
     [SerializeField] private Text TextCoin;
@@ -45,12 +46,12 @@ public class GameManager : MonoBehaviour
     public Vector3 poolPos;
     [SerializeField] private GameObject Canvas;
 
-    private int i = -1;
+    public int i = -1;
     private int j = -1;
 
     float duration = 75; // This will be your time in seconds.
     float smoothness = 0.1f; // This will determine the smoothness of the lerp. Smaller values are smoother. Really it's the time between updates.
-    Color Start = new Color(0, 192 / 255f, 5 / 255f, 255 / 255f);
+    Color Start = new Color(0, 192 / 255f, 5 / 255f, 255 / 255f); //초록
     Color Middle = new Color(243 / 255f, 239 / 255f, 0, 255 / 255f);
     Color End = new Color(215 / 255f, 11 / 255f, 0, 1f);
     Color currentColor; // This is the state of the color in the current interpolation.
@@ -151,9 +152,9 @@ public class GameManager : MonoBehaviour
             once = true;
             Invoke("MakeOrder", 0.5f);
             Invoke("MakeOrder", 5f);
-            //Invoke("MakeOrder", 30f);
-            //Invoke("MakeOrder", 80f);
-            //Invoke("MakeOrder", 150f);
+            Invoke("MakeOrder", 30f);
+            Invoke("MakeOrder", 80f);
+            Invoke("MakeOrder", 150f);
         }
         else if (StartSetting && once)
         {
@@ -175,6 +176,10 @@ public class GameManager : MonoBehaviour
         
         GameTime -= Time.deltaTime;
         ToClock();
+        if (GameTime <= 0) //시간 지나면 멈추기
+        {
+            Time.timeScale = 0;
+        }
     }
     private void ToClock()
     {
@@ -260,6 +265,7 @@ public class GameManager : MonoBehaviour
     {
         if (containIngredients == null) //빈 접시만 내면 무조건 탈롹
         {
+            //빨간색 띵
             return false;
         }
         else
@@ -279,9 +285,10 @@ public class GameManager : MonoBehaviour
                             CurrentOrderUI[i].transform.position = poolPos;
                             CurrentOrderUI[i].SetActive(false);
                             AddCoin(i);
+                            //StartCoroutine(TimingControl(i));
+                            SetPosition(i);
                             CurrentOrder.RemoveAt(i);
                             CurrentOrderUI.RemoveAt(i);
-                            StartCoroutine(TimingControl(i));
                             return true;
                         }
                     }
@@ -291,7 +298,7 @@ public class GameManager : MonoBehaviour
                         {
                             CurrentOrderUI[i].transform.position = poolPos;
                             CurrentOrderUI[i].SetActive(false);
-                            
+                            SetPosition(i);
                             CurrentOrderUI.RemoveAt(i);
                             CurrentOrderUI.RemoveAt(i);
                             return true;
@@ -309,7 +316,7 @@ public class GameManager : MonoBehaviour
 
     private void AddCoin(int i)
     {
-        //if tip 가능할때이면 뭐시기
+        //if canTip 가능할때이면 뭐시기
         if (CurrentOrderUI[i].GetComponent<OrderUI>().timer.value > CurrentOrderUI[i].GetComponent<OrderUI>().timer.maxValue * 0.6f)
         {
             Coin += 28;
@@ -323,28 +330,47 @@ public class GameManager : MonoBehaviour
             Coin += 15;
         }
         SetCoinText();
-        //StartCoroutine();---> 커졌다가 작아지는 코루틴 만들기 + 색깔 하양 -> 초록 -> 하양
+        StartCoroutine(StartBigger()); //---> 커졌다가 작아지는 코루틴 만들기 + 색깔 하양 -> 초록 -> 하양
     }
 
     private void SetCoinText()
     {
         TextCoin.text = Coin.ToString();
     }
-
-    IEnumerator TimingControl(int i)
+    IEnumerator StartBigger()
     {
-        Debug.Log(i+"번째가 없어짐, 그 이후의 애들은 다 정렬되어야함");
-        for (j = 0; j < CurrentOrderUI.Count; j++)
+        float progress = 0;
+        Color textColor = TextCoin.GetComponent<Text>().color;
+        while (CoinOb.transform.localScale.x < 2)
         {
-            if (j >= i && CurrentOrderUI[j].activeSelf)
-            {
-                yield return new WaitForSeconds(0.2f);
-                Debug.Log(j + "정렬");
-                CurrentOrderUI[j].GetComponent<OrderUI>().goLeft = true;
-                //j애들만 왼쪽으로 움직이기
-            }
+            textColor = Color.Lerp(Color.white, Start, progress);
+            progress += Time.deltaTime * 3;
+            TextCoin.GetComponent<Text>().color = textColor;
+            Vector3 CurrentScale = TextCoin.gameObject.transform.localScale;
+            CurrentScale.x += Time.deltaTime * 3;
+            CurrentScale.y += Time.deltaTime * 3;
+            CurrentScale.z += Time.deltaTime * 3;
+            TextCoin.gameObject.transform.localScale = CurrentScale;
+            yield return null;
         }
-        activeCo = null;
+        StartCoroutine(StartSmaller());
+    }
+    IEnumerator StartSmaller()
+    {
+        float progress = 0;
+        Color textColor = TextCoin.GetComponent<Text>().color;
+        while (CoinOb.transform.localScale.x > 1)
+        {
+            textColor = Color.Lerp(Start, Color.white, progress);
+            progress += Time.deltaTime * 3;
+            TextCoin.GetComponent<Text>().color = textColor;
+            Vector3 CurrentScale = TextCoin.gameObject.transform.localScale;
+            CurrentScale.x -= Time.deltaTime * 3;
+            CurrentScale.y -= Time.deltaTime * 3;
+            CurrentScale.z -= Time.deltaTime * 3;
+            TextCoin.gameObject.transform.localScale = CurrentScale;
+            yield return null;
+        }
     }
 
 
@@ -357,13 +383,25 @@ public class GameManager : MonoBehaviour
                 //점수나 뭐 깎기 + 빨간 효과
                 whichUI.transform.position = poolPos;
                 whichUI.SetActive(false);
+                SetPosition(i);
                 CurrentOrderUI.RemoveAt(i);
                 CurrentOrder.RemoveAt(i);
                 MakeOrder();
-                if (activeCo == null)
-                {
-                    activeCo = StartCoroutine(TimingControl(i));
-                }
+            }
+        }
+    }
+
+    public void SetPosition(int i)
+    {
+        float width = CurrentOrderUI[i].GetComponent<BoxCollider2D>().size.x;
+
+        for (int j = 0; j < CurrentOrderUI.Count; j++)
+        {
+            if (i < j)
+            {
+                Vector3 CurrentPosition = CurrentOrderUI[j].transform.position;
+                CurrentPosition.x -= width;
+                CurrentOrderUI[j].transform.position = CurrentPosition;
             }
         }
     }

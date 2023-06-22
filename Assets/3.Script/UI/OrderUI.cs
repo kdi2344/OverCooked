@@ -18,7 +18,7 @@ public class OrderUI : MonoBehaviour
     Color currentColor; // This is the state of the color in the current interpolation.
     private void Awake()
     {
-        timer = FindObjectOfType<Slider>();
+        timer = transform.GetChild(2).GetChild(0).GetComponent<Slider>();
         duration = timer.maxValue / 2 * 30;
         currentColor = Start;
     }
@@ -35,8 +35,8 @@ public class OrderUI : MonoBehaviour
     {
         transform.localPosition = GameManager.instance.poolPos;
         goLeft = true;
-        StartCoroutine(LerpColor1());
         StartCoroutine(TimerStart());
+        StartCoroutine(LerpColor1());
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -85,4 +85,5 @@ public class OrderUI : MonoBehaviour
         }
         GameManager.instance.MenuFail(gameObject);
     }
+
 }
