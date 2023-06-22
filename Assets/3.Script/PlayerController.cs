@@ -248,7 +248,7 @@ public class PlayerController : MonoBehaviour
             anim.SetTrigger("throw");
             isHolding = false;
             anim.SetBool("isHolding", isHolding);
-            transform.GetChild(1).GetChild(0).transform.localPosition += new Vector3(0, 0.5f, 0);
+            transform.GetChild(1).GetChild(0).transform.localPosition += new Vector3(0, 0.3f, 0);
             Rigidbody ingreRigid = transform.GetChild(1).GetChild(0).GetComponent<Rigidbody>();
             ingreRigid.AddForce(dir, ForceMode.Impulse);
             transform.GetChild(1).GetChild(0).GetComponent<MeshCollider>().isTrigger = false;

@@ -15,6 +15,8 @@ public class Handle : MonoBehaviour
     private Vector3 fishLocalPos = new Vector3(0, 0.138f, 0.08f);
     private Vector3 shrimpLocalPos = new Vector3(-0.365000874f, -0.0890001357f, -0.423000485f);
 
+    //private Quaternion shrimpLocalRotation = new Quaternion(0.287927657f, 0.0875888839f, -0.277543157f, 0.912357152f);
+
 
     public void IngredientHandle(Transform something, HandleType handle)
     {
@@ -40,6 +42,23 @@ public class Handle : MonoBehaviour
         transform.parent.parent.SetParent(parent);
         transform.parent.parent.localRotation = Quaternion.identity;
         //transform.parent.parent.transform.rotation = Quaternion.identity;
+        transform.parent.parent.localPosition = target;
+    }
+    public void IngredientAuto(Transform parent, Vector3 target, HandleType handle)
+    {
+        transform.parent.GetComponent<MeshCollider>().isTrigger = false;
+        if (handle == HandleType.Fish)
+        {
+            transform.parent.parent.GetChild(0).localPosition = fishLocalPos;
+            transform.parent.parent.GetChild(0).localRotation = Quaternion.identity;
+        }
+        else if (handle == HandleType.Shrimp)
+        {
+            transform.parent.parent.GetChild(0).localPosition = shrimpLocalPos;
+            transform.parent.parent.GetChild(0).localRotation = Quaternion.Euler(new Vector3(35.029995f, -1.04264745e-06f, 326.160004f));
+        }
+        transform.parent.parent.SetParent(parent);
+        transform.parent.parent.localRotation = Quaternion.identity;
         transform.parent.parent.localPosition = target;
     }
     public void PlayerHandle(Transform something)
