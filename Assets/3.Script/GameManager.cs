@@ -48,8 +48,43 @@ public class GameManager : MonoBehaviour
     private int i = -1;
     private int j = -1;
 
+    float duration = 75; // This will be your time in seconds.
+    float smoothness = 0.1f; // This will determine the smoothness of the lerp. Smaller values are smoother. Really it's the time between updates.
+    Color Start = new Color(0, 192 / 255f, 5 / 255f, 255 / 255f);
+    Color Middle = new Color(243 / 255f, 239 / 255f, 0, 255 / 255f);
+    Color End = new Color(215 / 255f, 11 / 255f, 0, 1f);
+    Color currentColor; // This is the state of the color in the current interpolation.
+
+    IEnumerator LerpColor1()
+    {
+        float progress = 0; //This float will serve as the 3rd parameter of the lerp function.
+        float increment = smoothness / duration; //The amount of change to apply.
+        while (progress < 1)
+        {
+            currentColor = Color.Lerp(Start, Middle, progress);
+            progress += increment;
+            yield return new WaitForSeconds(smoothness);
+            TimeSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>().color = currentColor;
+        }
+        StartCoroutine(LerpColor2());
+    }
+    IEnumerator LerpColor2()
+    {
+        float progress = 0; //This float will serve as the 3rd parameter of the lerp function.
+        float increment = smoothness / duration; //The amount of change to apply.
+        while (progress < 1)
+        {
+            currentColor = Color.Lerp(Middle, End, progress);
+            progress += increment;
+            yield return new WaitForSeconds(smoothness);
+            TimeSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>().color = currentColor;
+        }
+
+    }
+
     void Awake()
     {
+        currentColor = TimeSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>().color;
         if (null == instance)
         {
             instance = this;
@@ -66,6 +101,7 @@ public class GameManager : MonoBehaviour
         TimeSlider.value = TimeSlider.maxValue;
         Coin = 0;
         SetCoinText();
+        StartCoroutine(LerpColor1());
     }
     private void Update()
     {
@@ -287,6 +323,7 @@ public class GameManager : MonoBehaviour
             Coin += 15;
         }
         SetCoinText();
+        //StartCoroutine();---> 커졌다가 작아지는 코루틴 만들기 + 색깔 하양 -> 초록 -> 하양
     }
 
     private void SetCoinText()
@@ -309,6 +346,7 @@ public class GameManager : MonoBehaviour
         }
         activeCo = null;
     }
+
 
     public void MenuFail(GameObject whichUI) //메뉴를 주어진 시간 내로 전달 못했을 때 작동
     {
