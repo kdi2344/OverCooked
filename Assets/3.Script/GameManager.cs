@@ -28,10 +28,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject CoinOb;
     [SerializeField] private Slider TipSlider;
     private int Coin;
+    private int Tip;
     [SerializeField] private Text TextCoin;
     [SerializeField] private Text TextTip;
-    int tipCombo;
+    public int tipCombo;
     bool canCombo;
+    [SerializeField] GameObject TextPrefabs;
 
     //접시 리스폰 관련
     [SerializeField] private GameObject platePrefabs;
@@ -282,10 +284,23 @@ public class GameManager : MonoBehaviour
                     {
                         if (containIngredients[0] == CurrentOrder[i].Ingredient[0])
                         {
+                            if (i == 0) //순서대로 메뉴를 냈다면 콤보
+                            {
+                                tipCombo += 1;
+                                if (tipCombo > 4)
+                                {
+                                    tipCombo = 4; //최대 4콤보까지
+                                }
+                            }
+                            else
+                            {
+                                tipCombo = 0;
+                            }
                             CurrentOrderUI[i].transform.position = poolPos;
                             CurrentOrderUI[i].SetActive(false);
-                            AddCoin(i);
-                            //StartCoroutine(TimingControl(i));
+                            Coin += CurrentOrder[i].Price;
+                            CoinOb.transform.parent.GetChild(1).GetComponent<Animator>().SetTrigger("spin");
+                            AddTip(i);
                             SetPosition(i);
                             CurrentOrder.RemoveAt(i);
                             CurrentOrderUI.RemoveAt(i);
@@ -298,6 +313,9 @@ public class GameManager : MonoBehaviour
                         {
                             CurrentOrderUI[i].transform.position = poolPos;
                             CurrentOrderUI[i].SetActive(false);
+                            Coin += CurrentOrder[i].Price;
+                            CoinOb.transform.parent.GetChild(1).GetComponent<Animator>().SetTrigger("spin");
+                            AddTip(i);
                             SetPosition(i);
                             CurrentOrderUI.RemoveAt(i);
                             CurrentOrderUI.RemoveAt(i);
@@ -314,28 +332,43 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    private void AddCoin(int i)
+    private void AddTip(int i)
     {
-        //if canTip 가능할때이면 뭐시기
         if (CurrentOrderUI[i].GetComponent<OrderUI>().timer.value > CurrentOrderUI[i].GetComponent<OrderUI>().timer.maxValue * 0.6f)
         {
-            Coin += 28;
+            Tip = 8;
         }
         else if (CurrentOrderUI[i].GetComponent<OrderUI>().timer.value > CurrentOrderUI[i].GetComponent<OrderUI>().timer.maxValue * 0.3f)
         {
-            Coin += 20;
+            Tip = 5;
         }
         else
         {
-            Coin += 15;
+            Tip = 3;
         }
         SetCoinText();
-        StartCoroutine(StartBigger()); //---> 커졌다가 작아지는 코루틴 만들기 + 색깔 하양 -> 초록 -> 하양
+        StartCoroutine(StartBigger()); //---> 커졌다가 작아지는 코루틴 
     }
 
     private void SetCoinText()
     {
-        TextCoin.text = Coin.ToString();
+        if (tipCombo < 2) //팁 콤보 업데이트
+        {
+            TextTip.text = "";
+        }
+        else
+        {
+            TextTip.text = "팁 x " + tipCombo.ToString(); //팁 x 3 같은거 글씨 바꾸기
+            Tip *= tipCombo;
+        }
+        TipSlider.value = tipCombo;
+        Coin += Tip;
+        TextCoin.text = Coin.ToString(); //돈 얼마됐다고 업데이트
+        if (Tip != 0)
+        {
+            GameObject tipText = Instantiate(TextPrefabs, Camera.main.WorldToScreenPoint(FindObjectOfType<Station>().transform.position), Quaternion.identity, Canvas.transform);
+            tipText.GetComponent<Text>().text = "+" + Tip + " 팁!";
+        }
     }
     IEnumerator StartBigger()
     {
@@ -397,8 +430,9 @@ public class GameManager : MonoBehaviour
 
         for (int j = 0; j < CurrentOrderUI.Count; j++)
         {
-            if (i < j)
+            if (i < j && !CurrentOrderUI[j].GetComponent<OrderUI>().goLeft)
             {
+                Debug.Log(CurrentOrderUI[j].name +"가 "+ width + "만큼 이동");
                 Vector3 CurrentPosition = CurrentOrderUI[j].transform.position;
                 CurrentPosition.x -= width;
                 CurrentOrderUI[j].transform.position = CurrentPosition;

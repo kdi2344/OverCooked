@@ -12,4 +12,5 @@ public class Menu : ScriptableObject
     public float LimitTime;
     public Sprite MenuIcon;
     public List <Sprite> IngredientIcon;
+    public int Price;
 }

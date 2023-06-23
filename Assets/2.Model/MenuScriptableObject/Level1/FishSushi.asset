@@ -15,7 +15,8 @@ MonoBehaviour:
   Level: 1
   MenuName: FishSushi
   Ingredient: 00000000
-  LimitTime: 300
+  LimitTime: 500
   MenuIcon: {fileID: 21300000, guid: f04218074dcf0e6478b93d7b4490f75c, type: 3}
   IngredientIcon:
   - {fileID: 21300000, guid: 70a1f22fcd619b041912cbc0835cfa77, type: 3}
+  Price: 20

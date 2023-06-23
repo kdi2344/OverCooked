@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public bool isMoving = false;
     [SerializeField] private bool canActive = false; //내 앞에 테이블 같은거 있는지
     public bool isHolding = false;
+    private bool isDash = false;
 
     public Animator anim;
     public float Speed = 10.0f;
@@ -189,15 +190,6 @@ public class PlayerController : MonoBehaviour
                 {
                     if (GameManager.instance.CheckMenu(transform.GetChild(1).gameObject.GetComponent<Plates>().containIngredients))
                     {
-                        Debug.Log("있는 메뉴");
-                        if (GameManager.instance.i -1 < 0)
-                        {
-                            GameManager.instance.SetPosition(0);
-                        }
-                        else
-                        {
-                            GameManager.instance.SetPosition(GameManager.instance.i-1);
-                        }
                         GameManager.instance.MakeOrder();
                     }
                     else
@@ -288,6 +280,18 @@ public class PlayerController : MonoBehaviour
             transform.GetChild(1).GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             transform.GetChild(1).SetParent(transform.parent);
         }
+
+        if (Input.GetKeyDown(KeyCode.V) && !isDash && isMoving)
+        {
+            isDash = true;
+            Rigidbody playerRigid = GetComponent<Rigidbody>();
+            playerRigid.AddForce(transform.TransformDirection(new Vector3(0, 0, 10)), ForceMode.Impulse);
+            Invoke("OffIsDash", 0.5f);
+        }
+    }
+    private void OffIsDash()
+    {
+        isDash = false;
     }
 
     void FixedUpdate()

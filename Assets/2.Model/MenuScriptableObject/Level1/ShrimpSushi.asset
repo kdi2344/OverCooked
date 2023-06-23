@@ -15,7 +15,8 @@ MonoBehaviour:
   Level: 1
   MenuName: ShrimpSushi
   Ingredient: 01000000
-  LimitTime: 300
+  LimitTime: 500
   MenuIcon: {fileID: 21300000, guid: 00e51bf8bcf4e274bbfbb1716164f211, type: 3}
   IngredientIcon:
   - {fileID: 21300000, guid: 2a35135078153ab4492d54255a27b648, type: 3}
+  Price: 20
