@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Craft : MonoBehaviour
 {
     [SerializeField] private Animator CraftAnim;
-    public enum FoodType { Fish, Shrimp }
+    public enum FoodType { Fish, Shrimp, Lettuce, Cucumber, Tomato, Chicken, Potato }
     public FoodType food;
     public GameObject foodPrefabs;
 
