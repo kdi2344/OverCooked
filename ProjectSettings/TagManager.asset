@@ -11,6 +11,7 @@ TagManager:
   - Return
   - Station
   - Plate
+  - stage1
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -91,9 +92,7 @@ public class GameManager : MonoBehaviour
         if (null == instance)
         {
             instance = this;
-
-            DontDestroyOnLoad(gameObject);
-
+            //DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -181,6 +180,8 @@ public class GameManager : MonoBehaviour
         if (GameTime <= 0) //시간 지나면 멈추기
         {
             Time.timeScale = 0;
+            StageManager.instance.isClearMap1 = true;
+            SceneManager.LoadScene("Map");
         }
     }
     private void ToClock()

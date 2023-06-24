@@ -7003,7 +7003,7 @@ MonoBehaviour:
   StartTime: 0
   Ready: {fileID: 402411302}
   Go: {fileID: 1198578893}
-  GameTime: 151
+  GameTime: 1
   TimeSlider: {fileID: 316209927}
   TextTime: {fileID: 2131289415}
   CoinOb: {fileID: 561800580}
@@ -10714,7 +10714,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &599386521300713131
 MeshRenderer:
   m_ObjectHideFlags: 0
