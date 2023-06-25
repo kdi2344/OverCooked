@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool canActive = false; //내 앞에 테이블 같은거 있는지
     public bool isHolding = false;
     private bool isDash = false;
+    private Rigidbody rigid;
 
     public Animator anim;
     public float Speed = 10.0f;
@@ -28,8 +29,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject GribL;
     [SerializeField] private GameObject Knife;
 
+    private void Awake()
+    {
+        rigid = GetComponent<Rigidbody>();
+    }
     private void Update()
     {
+        rigid.velocity = Vector3.zero;
         SetHand(); //손 세팅
         if (Input.GetKeyDown(KeyCode.Space) && activeObject != null) //사용 가능한 물체가 있고 Space 눌렀다면
         {

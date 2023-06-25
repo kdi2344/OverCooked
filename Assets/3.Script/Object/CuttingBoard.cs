@@ -105,5 +105,12 @@ public class CuttingBoard : MonoBehaviour
             image.sprite = Icons[1];
             madeUI.GetComponent<IngredientUI>().Target = Ingredient.transform;
         }
+        else if (Ingredient.hand == Handle.HandleType.Lettuce)
+        {
+            GameObject madeUI = Instantiate(IngredientUI, Vector3.zero, Quaternion.identity, Canvas.transform);
+            Image image = madeUI.GetComponent<Image>();
+            image.sprite = Icons[2];
+            madeUI.GetComponent<IngredientUI>().Target = Ingredient.transform;
+        }
     }
 }

@@ -25,5 +25,35 @@ public class Craft : MonoBehaviour
             FindObjectOfType<PlayerController>().isHolding = true;
             newShrimp.transform.GetChild(0).transform.GetChild(0).GetComponent<Handle>().IngredientHandle(FindObjectOfType<PlayerController>().transform, Handle.HandleType.Shrimp);
         }
+        else if (food == FoodType.Lettuce)
+        {
+            GameObject newFish = Instantiate(foodPrefabs, Vector3.zero, Quaternion.identity);
+            FindObjectOfType<PlayerController>().isHolding = true;
+            newFish.transform.GetChild(0).transform.GetChild(0).GetComponent<Handle>().IngredientHandle(FindObjectOfType<PlayerController>().transform, Handle.HandleType.Lettuce);
+        }
+        else if (food == FoodType.Cucumber)
+        {
+            GameObject newFish = Instantiate(foodPrefabs, Vector3.zero, Quaternion.identity);
+            FindObjectOfType<PlayerController>().isHolding = true;
+            newFish.transform.GetChild(0).transform.GetChild(0).GetComponent<Handle>().IngredientHandle(FindObjectOfType<PlayerController>().transform, Handle.HandleType.Cucumber);
+        }
+        else if (food == FoodType.Tomato)
+        {
+            GameObject newFish = Instantiate(foodPrefabs, Vector3.zero, Quaternion.identity);
+            FindObjectOfType<PlayerController>().isHolding = true;
+            newFish.transform.GetChild(0).transform.GetChild(0).GetComponent<Handle>().IngredientHandle(FindObjectOfType<PlayerController>().transform, Handle.HandleType.Tomato);
+        }
+        else if (food == FoodType.Chicken)
+        {
+            GameObject newFish = Instantiate(foodPrefabs, Vector3.zero, Quaternion.identity);
+            FindObjectOfType<PlayerController>().isHolding = true;
+            newFish.transform.GetChild(0).transform.GetChild(0).GetComponent<Handle>().IngredientHandle(FindObjectOfType<PlayerController>().transform, Handle.HandleType.Chicken);
+        }
+        else if (food == FoodType.Potato)
+        {
+            GameObject newFish = Instantiate(foodPrefabs, Vector3.zero, Quaternion.identity);
+            FindObjectOfType<PlayerController>().isHolding = true;
+            newFish.transform.GetChild(0).transform.GetChild(0).GetComponent<Handle>().IngredientHandle(FindObjectOfType<PlayerController>().transform, Handle.HandleType.Potato    );
+        }
     }
 }

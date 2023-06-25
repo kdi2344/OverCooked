@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Handle : MonoBehaviour
 {
-    public enum HandleType { Fish, Shrimp, Plate }
+    public enum HandleType { Fish, Shrimp, Plate, Lettuce, Tomato, Cucumber, Chicken, Potato }
     public HandleType hand;
     public bool isOnDesk = true;
     public bool isCooked = false;
@@ -34,6 +34,26 @@ public class Handle : MonoBehaviour
             transform.parent.parent.GetChild(0).localPosition = shrimpLocalPos;
             transform.parent.parent.GetChild(0).localRotation = Quaternion.Euler(new Vector3(35.029995f, -1.04264745e-06f, 326.160004f));
         }
+        else if (handle == HandleType.Lettuce)
+        {
+            transform.parent.parent.GetChild(0).localPosition = Vector3.zero;
+        }
+        else if (handle == HandleType.Tomato)
+        {
+            transform.parent.parent.GetChild(0).localPosition = Vector3.zero;
+        }
+        else if (handle == HandleType.Cucumber)
+        {
+            transform.parent.parent.GetChild(0).localPosition = Vector3.zero;
+        }
+        else if (handle == HandleType.Chicken)
+        {
+            transform.parent.parent.GetChild(0).localPosition = Vector3.zero;
+        }
+        else if (handle == HandleType.Potato)
+        {
+            transform.parent.parent.GetChild(0).localPosition = Vector3.zero;
+        }
         transform.parent.parent.transform.rotation = Quaternion.identity;
     }
     public void IngredientHandleOff(Transform parent, Vector3 target)
@@ -56,6 +76,31 @@ public class Handle : MonoBehaviour
         {
             transform.parent.parent.GetChild(0).localPosition = shrimpLocalPos;
             transform.parent.parent.GetChild(0).localRotation = Quaternion.Euler(new Vector3(35.029995f, -1.04264745e-06f, 326.160004f));
+        }
+        else if (handle == HandleType.Lettuce)
+        {
+            transform.parent.parent.GetChild(0).localPosition = Vector3.zero;
+            transform.parent.parent.GetChild(0).localRotation = Quaternion.identity;
+        }
+        else if (handle == HandleType.Tomato)
+        {
+            transform.parent.parent.GetChild(0).localPosition = Vector3.zero;
+            transform.parent.parent.GetChild(0).localRotation = Quaternion.identity;
+        }
+        else if (handle == HandleType.Cucumber)
+        {
+            transform.parent.parent.GetChild(0).localPosition = Vector3.zero;
+            transform.parent.parent.GetChild(0).localRotation = Quaternion.identity;
+        }
+        else if (handle == HandleType.Chicken)
+        {
+            transform.parent.parent.GetChild(0).localPosition = Vector3.zero;
+            transform.parent.parent.GetChild(0).localRotation = Quaternion.identity;
+        }
+        else if (handle == HandleType.Potato)
+        {
+            transform.parent.parent.GetChild(0).localPosition = Vector3.zero;
+            transform.parent.parent.GetChild(0).localRotation = Quaternion.identity;
         }
         transform.parent.parent.SetParent(parent);
         transform.parent.parent.localRotation = Quaternion.identity;
