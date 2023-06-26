@@ -94,22 +94,57 @@ public class CuttingBoard : MonoBehaviour
         if (Ingredient.hand == Handle.HandleType.Fish)
         {
             GameObject madeUI = Instantiate(IngredientUI, Vector3.zero, Quaternion.identity, Canvas.transform);
-            Image image = madeUI.GetComponent<Image>();
+            madeUI.transform.GetChild(0).gameObject.SetActive(true);
+            Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
             image.sprite = Icons[0];
             madeUI.GetComponent<IngredientUI>().Target = Ingredient.transform;
         }
         else if (Ingredient.hand == Handle.HandleType.Shrimp)
         {
             GameObject madeUI = Instantiate(IngredientUI, Vector3.zero, Quaternion.identity, Canvas.transform);
-            Image image = madeUI.GetComponent<Image>();
+            madeUI.transform.GetChild(0).gameObject.SetActive(true);
+            Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
             image.sprite = Icons[1];
+            madeUI.GetComponent<IngredientUI>().Target = Ingredient.transform;
+        }
+        else if (Ingredient.hand == Handle.HandleType.Tomato)
+        {
+            GameObject madeUI = Instantiate(IngredientUI, Vector3.zero, Quaternion.identity, Canvas.transform);
+            madeUI.transform.GetChild(0).gameObject.SetActive(true);
+            Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
+            image.sprite = Icons[2];
             madeUI.GetComponent<IngredientUI>().Target = Ingredient.transform;
         }
         else if (Ingredient.hand == Handle.HandleType.Lettuce)
         {
             GameObject madeUI = Instantiate(IngredientUI, Vector3.zero, Quaternion.identity, Canvas.transform);
-            Image image = madeUI.GetComponent<Image>();
-            image.sprite = Icons[2];
+            madeUI.transform.GetChild(0).gameObject.SetActive(true);
+            Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
+            image.sprite = Icons[3];
+            madeUI.GetComponent<IngredientUI>().Target = Ingredient.transform;
+        }
+        else if (Ingredient.hand == Handle.HandleType.Cucumber)
+        {
+            GameObject madeUI = Instantiate(IngredientUI, Vector3.zero, Quaternion.identity, Canvas.transform);
+            madeUI.transform.GetChild(0).gameObject.SetActive(true);
+            Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
+            image.sprite = Icons[4];
+            madeUI.GetComponent<IngredientUI>().Target = Ingredient.transform;
+        }
+        else if (Ingredient.hand == Handle.HandleType.Potato)
+        {
+            GameObject madeUI = Instantiate(IngredientUI, Vector3.zero, Quaternion.identity, Canvas.transform);
+            madeUI.transform.GetChild(0).gameObject.SetActive(true);
+            Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
+            image.sprite = Icons[5];
+            madeUI.GetComponent<IngredientUI>().Target = Ingredient.transform;
+        }
+        else if (Ingredient.hand == Handle.HandleType.Chicken)
+        {
+            GameObject madeUI = Instantiate(IngredientUI, Vector3.zero, Quaternion.identity, Canvas.transform);
+            madeUI.transform.GetChild(0).gameObject.SetActive(true);
+            Image image = madeUI.transform.GetChild(0).GetComponent<Image>();
+            image.sprite = Icons[6];
             madeUI.GetComponent<IngredientUI>().Target = Ingredient.transform;
         }
     }

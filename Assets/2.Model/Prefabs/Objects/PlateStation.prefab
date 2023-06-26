@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 1666248963708353710}
   - component: {fileID: 2556165443406546596}
   - component: {fileID: 7668845711894856618}
+  - component: {fileID: 5991212054853161226}
   m_Layer: 0
   m_Name: Mesh 7
   m_TagString: Station
@@ -191,6 +192,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.02391136, y: 0.013480391, z: 0.01881804}
   m_Center: {x: 0.000048475267, y: -0.0013972725, z: 0.0030215369}
+--- !u!114 &5991212054853161226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5512865851456825616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5765c1f537bf0494f87cf0f048a5e126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5921588013459619497
 GameObject:
   m_ObjectHideFlags: 0

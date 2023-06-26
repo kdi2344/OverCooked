@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
+    public enum State { stage1, stage2, stage3 };
+    State state = State.stage1;
     public Coroutine activeCo = null;
 
     public bool isStop = true; //일시정지 여부
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Menu[] Menus; //이번 스테이지에 등장할 메뉴들
     [SerializeField] private int maxMenuLimit; //이번 스테이지에서 최대로 쌓일 수 있는 메뉴 개수들
     [SerializeField] private GameObject[] Single_Double_PoolUIs; //오브젝트 풀링으로 쓸 단일 메뉴 UI들
+    [SerializeField] private GameObject[] Triple_PoolUIs; //오브젝트 풀링으로 쓸 3개짜리 메뉴 UI들
     public List<Menu> CurrentOrder;
     public List<GameObject> CurrentOrderUI;
     public Vector3 poolPos;
@@ -180,7 +183,19 @@ public class GameManager : MonoBehaviour
         if (GameTime <= 0) //시간 지나면 멈추기
         {
             Time.timeScale = 0;
-            StageManager.instance.isClearMap1 = true;
+            if (state == State.stage1)
+            {
+                StageManager.instance.isClearMap1 = true;
+            }
+            else if (state == State.stage2) 
+            {
+                StageManager.instance.isClearMap2 = true;
+            }
+            else if (state == State.stage3)
+            {
+                StageManager.instance.isClearMap3 = true;
+            }
+            
             SceneManager.LoadScene("Map");
         }
     }
@@ -217,7 +232,8 @@ public class GameManager : MonoBehaviour
         i = -1;
         j = -1;
         i = Random.Range(0, Menus.Length);
-        if (Menus[i].Ingredient.Count == 1)
+        Debug.Log(Menus[i].name + "만듦");
+        if (Menus[i].Ingredient.Count == 1) //재료가 한개
         {
             for (j = 0; j < Single_Double_PoolUIs.Length; j++)
             {
@@ -239,7 +255,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        else if (Menus[i].Ingredient.Count == 2)
+        else if (Menus[i].Ingredient.Count == 2) //재료가 두개
         {
             for (j = 0; j < Single_Double_PoolUIs.Length; j++)
             {
@@ -254,6 +270,29 @@ public class GameManager : MonoBehaviour
                     Single_Double_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().value = Menus[i].LimitTime; //풀로 시작
                     CurrentOrder.Add(Menus[i]);
                     CurrentOrderUI.Add(Single_Double_PoolUIs[j]);
+                    return;
+                }
+                else //다 켜져있으면 실패
+                {
+                    continue;
+                }
+            }
+        }
+        else //재료가 세개
+        {
+            for (j = 0; j < Triple_PoolUIs.Length; j++)
+            {
+                if (!Triple_PoolUIs[j].activeSelf) //꺼져있는거 찾아서
+                {
+                    Triple_PoolUIs[j].SetActive(true); //켜주고
+                    Triple_PoolUIs[j].transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = Menus[i].IngredientIcon[0]; //첫번째 재료 아이콘 바꾸고
+                    Triple_PoolUIs[j].transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = Menus[i].IngredientIcon[1]; //두번째 재료 아이콘 바꾸고
+                    Triple_PoolUIs[j].transform.GetChild(0).GetChild(2).GetComponent<Image>().sprite = Menus[i].IngredientIcon[2]; //세번째 재료 아이콘 바꾸고
+                    Triple_PoolUIs[j].transform.GetChild(2).GetChild(1).GetComponent<Image>().sprite = Menus[i].MenuIcon; //메뉴 아이콘 바꾸고
+                    Triple_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().maxValue = Menus[i].LimitTime; //슬라이더 시간대로 할당
+                    Triple_PoolUIs[j].transform.GetChild(2).GetChild(0).GetComponent<Slider>().value = Menus[i].LimitTime; //풀로 시작
+                    CurrentOrder.Add(Menus[i]);
+                    CurrentOrderUI.Add(Triple_PoolUIs[j]);
                     return;
                 }
                 else //다 켜져있으면 실패
@@ -312,20 +351,71 @@ public class GameManager : MonoBehaviour
                     {
                         if ((containIngredients[0] == CurrentOrder[i].Ingredient[0] && containIngredients[1] == CurrentOrder[i].Ingredient[1]) || (containIngredients[1] == CurrentOrder[i].Ingredient[0] && containIngredients[0] == CurrentOrder[i].Ingredient[1]))
                         {
+                            if (i == 0) //순서대로 메뉴를 냈다면 콤보
+                            {
+                                tipCombo += 1;
+                                if (tipCombo > 4)
+                                {
+                                    tipCombo = 4; //최대 4콤보까지
+                                }
+                            }
+                            else
+                            {
+                                tipCombo = 0;
+                            }
                             CurrentOrderUI[i].transform.position = poolPos;
                             CurrentOrderUI[i].SetActive(false);
                             Coin += CurrentOrder[i].Price;
                             CoinOb.transform.parent.GetChild(1).GetComponent<Animator>().SetTrigger("spin");
                             AddTip(i);
                             SetPosition(i);
-                            CurrentOrderUI.RemoveAt(i);
+                            CurrentOrder.RemoveAt(i);
                             CurrentOrderUI.RemoveAt(i);
                             return true;
                         }
                     }
                     else if (containIngredients.Count == 3) //세 개일때 할거면 뭐 하던지 말던지
-                    {
-
+                    {//containIngredients 3개랑 CurrentOrderUI[i]의 ingredient 비교
+                        int count = 0;
+                        for (int j =0; j < containIngredients.Count; j++)
+                        {
+                            for (int k =0; k < CurrentOrder[i].Ingredient.Count; k++)
+                            {
+                                if (containIngredients[j].Equals(CurrentOrder[i].Ingredient[k]))
+                                {
+                                    count++;
+                                    break;
+                                }
+                            }
+                        }
+                        if (count == 3)
+                        {
+                            if (i == 0) //순서대로 메뉴를 냈다면 콤보
+                            {
+                                tipCombo += 1;
+                                if (tipCombo > 4)
+                                {
+                                    tipCombo = 4; //최대 4콤보까지
+                                }
+                            }
+                            else
+                            {
+                                tipCombo = 0;
+                            }
+                            CurrentOrderUI[i].transform.position = poolPos;
+                            CurrentOrderUI[i].SetActive(false);
+                            Coin += CurrentOrder[i].Price;
+                            CoinOb.transform.parent.GetChild(1).GetComponent<Animator>().SetTrigger("spin");
+                            AddTip(i);
+                            SetPosition(i);
+                            CurrentOrder.RemoveAt(i);
+                            CurrentOrderUI.RemoveAt(i);
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
                     }
                 }
             }
@@ -433,7 +523,6 @@ public class GameManager : MonoBehaviour
         {
             if (i < j && !CurrentOrderUI[j].GetComponent<OrderUI>().goLeft)
             {
-                Debug.Log(CurrentOrderUI[j].name +"가 "+ width + "만큼 이동");
                 Vector3 CurrentPosition = CurrentOrderUI[j].transform.position;
                 CurrentPosition.x -= width;
                 CurrentOrderUI[j].transform.position = CurrentPosition;

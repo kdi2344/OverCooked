@@ -12,6 +12,7 @@ TagManager:
   - Station
   - Plate
   - stage1
+  - focus
   layers:
   - Default
   - TransparentFX

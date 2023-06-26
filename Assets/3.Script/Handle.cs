@@ -36,7 +36,7 @@ public class Handle : MonoBehaviour
         }
         else if (handle == HandleType.Lettuce)
         {
-            transform.parent.parent.GetChild(0).localPosition = Vector3.zero;
+            transform.parent.parent.GetChild(0).localPosition = new Vector3(0, 0, 0);
         }
         else if (handle == HandleType.Tomato)
         {
@@ -84,7 +84,7 @@ public class Handle : MonoBehaviour
         }
         else if (handle == HandleType.Tomato)
         {
-            transform.parent.parent.GetChild(0).localPosition = Vector3.zero;
+            transform.parent.parent.GetChild(0).localPosition = new Vector3(0, 0, 0);
             transform.parent.parent.GetChild(0).localRotation = Quaternion.identity;
         }
         else if (handle == HandleType.Cucumber)
@@ -127,12 +127,11 @@ public class Handle : MonoBehaviour
         {
             MeshRenderer mesh = transform.parent.GetComponent<MeshRenderer>();
             mesh.material = cookedFish;
-        }
-        else if (handType == HandleType.Shrimp)
-        {
 
+        }
+        else if (handType == HandleType.Tomato)
+        {
+            transform.parent.GetComponent<MeshCollider>().sharedMesh = cookedIngredient;
         }
     }
-
-    
 }

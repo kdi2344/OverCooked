@@ -162,7 +162,7 @@ MonoBehaviour:
   hand: 3
   isOnDesk: 1
   isCooked: 0
-  cookedIngredient: {fileID: 8992917995696789888, guid: 2455cb0560311f742a94253da113b402, type: 3}
+  cookedIngredient: {fileID: 8097617054539991953, guid: 12a386c2dfdf6504791895fae95723f0, type: 3}
   cookedFish: {fileID: 0}
 --- !u!114 &6417045685113032427
 MonoBehaviour:
