@@ -13,6 +13,7 @@ TagManager:
   - Plate
   - stage1
   - focus
+  - stage2
   layers:
   - Default
   - TransparentFX

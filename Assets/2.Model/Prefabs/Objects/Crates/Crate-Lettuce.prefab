@@ -202,7 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CraftAnim: {fileID: 5221491689511982923}
   food: 2
-  foodPrefabs: {fileID: 9060732173125595618, guid: 04babbe4a4bec7a49b9dd83e4e423d47, type: 3}
+  foodPrefabs: {fileID: 5495133024234152564, guid: c3097bce1564cac478c406ce84f6aed9, type: 3}
 --- !u!1 &4967199767160227568
 GameObject:
   m_ObjectHideFlags: 0

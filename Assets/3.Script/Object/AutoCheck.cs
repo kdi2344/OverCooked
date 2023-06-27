@@ -6,7 +6,9 @@ public class AutoCheck : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (!(FindObjectOfType<PlayerController>().transform.childCount > 1 && !FindObjectOfType<PlayerController>().transform.GetChild(1).GetChild(0).GetChild(0).Equals(other)))
+        if (other.CompareTag("Player")) return;
+        if (other.CompareTag("Plate")) return;
+        if (!(FindObjectOfType<PlayerController>().transform.childCount > 1 && FindObjectOfType<PlayerController>().transform.GetChild(1).GetChild(0) != null && !FindObjectOfType<PlayerController>().transform.GetChild(1).GetChild(0).GetChild(0).Equals(other)))
         {
             if (other.GetComponent<MeshCollider>() == null)
             {

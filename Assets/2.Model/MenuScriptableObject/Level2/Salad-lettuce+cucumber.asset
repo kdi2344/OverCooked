@@ -15,9 +15,9 @@ MonoBehaviour:
   Level: 2
   MenuName: SaladLettuceCucumber
   Ingredient: 0300000005000000
-  LimitTime: 450
+  LimitTime: 500
   MenuIcon: {fileID: 21300000, guid: 7c34fc98b54ccb44194a169dbcbc4a1d, type: 3}
   IngredientIcon:
   - {fileID: 21300000, guid: 8664d225a9029924781b8b4474490a1a, type: 3}
   - {fileID: 21300000, guid: 76d14744947c6c5409f533990372ab43, type: 3}
-  Price: 25
+  Price: 30
