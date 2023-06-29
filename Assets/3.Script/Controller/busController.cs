@@ -32,22 +32,22 @@ public class busController : MonoBehaviour
             }
             else if (ActiveScene.SceneName.Equals("StageSalad"))
             {
-                if (!StageManager.instance.stage2Space)
+                if (!StageManager.instance.stage2Space && StageManager.instance.map1Star >= 2)
                 {
                     StageManager.instance.stage2Space = true;
                 }
-                else
+                else if (StageManager.instance.stage2Space)
                 {
                     LoadingSceneManager.LoadScene(ActiveScene.SceneName);
                 }
             }
             else if (ActiveScene.SceneName.Equals("StagePotato"))
             {
-                if (!StageManager.instance.stage3Space )
+                if (!StageManager.instance.stage3Space && StageManager.instance.map1Star + StageManager.instance.map2Star >= 4)
                 {
                     StageManager.instance.stage3Space = true;
                 }
-                else
+                else if (StageManager.instance.stage3Space)
                 {
                     LoadingSceneManager.LoadScene(ActiveScene.SceneName);
                 }
@@ -98,17 +98,17 @@ public class busController : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         CanGo = false;
-        if (ActiveScene.SceneName.Equals("StageSalad") && Stage3UI.activeSelf)
+        if (ActiveScene.SceneName.Equals("StageSalad") && Stage2UI.activeSelf)
         {
-            Stage3UI.SetActive(false);
+            Stage2UI.SetActive(false);
         }
         else if (ActiveScene.SceneName.Equals("SampleScene") && Stage1UI.activeSelf)
         {
             Stage1UI.SetActive(false);
         }
-        else if (ActiveScene.SceneName.Equals("StagePotato") && Stage2UI.activeSelf)
+        else if (ActiveScene.SceneName.Equals("StagePotato") && Stage3UI.activeSelf)
         {
-            Stage2UI.SetActive(false);
+            Stage3UI.SetActive(false);
         }
         ActiveScene = null;
     }

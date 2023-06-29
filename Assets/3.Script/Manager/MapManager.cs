@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Cinemachine;
 
 public class MapManager : MonoBehaviour
@@ -17,6 +18,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private GameObject focus;
     public bool canActive = false;
 
+    [SerializeField] private Text TotalStar;
     [SerializeField] private GameObject[] flags;
     [SerializeField] private Material[] flags_m;
 
@@ -86,10 +88,17 @@ public class MapManager : MonoBehaviour
         }
         else if (StageManager.instance.playStage == StageManager.State.stage3)
         {
-
+            bus.transform.position = positions[3];
+            Cam.Follow = bus.transform;
+            Cam.LookAt = bus.transform;
+            bus.SetActive(true);
         }
     }
 
+    private void OnEnable()
+    {
+        TotalStar.text = (StageManager.instance.map1Star + StageManager.instance.map2Star + StageManager.instance.map3Star).ToString();
+    }
     IEnumerator FlipFirst()
     {
         for (int i = 0; i < first.Length; i++)
