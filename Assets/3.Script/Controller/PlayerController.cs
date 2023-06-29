@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,8 +17,9 @@ public class PlayerController : MonoBehaviour
     public Object activeObjectOb;
     public GameObject nextActiveObject;
 
-    [SerializeField] private Vector3 throwPower;
+    [SerializeField] private GameObject CountDown;
 
+    [SerializeField] private Vector3 throwPower;
     public float rotateSpeed = 10.0f;       // 회전 속도
 
     float h, v;
@@ -35,7 +37,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        rigid.velocity = Vector3.zero;
+        rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
         SetHand(); //손 세팅
         if (Input.GetKeyDown(KeyCode.Space) && activeObject != null) //사용 가능한 물체가 있고 Space 눌렀다면
         {
@@ -120,7 +122,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (!activeObjectOb.onSomething && !isHolding) //Crate위에 뭐가 없고 나도 안들고 있으면
                 {
-                    activeObject.GetComponent<Craft>().OpenCraft(); //꺼내기
+                    activeObject.GetComponent<Craft>().OpenCraftPlayer1(); //꺼내기
                     activeObjectOb.onSomething = false;
                     isHolding = true;
                     anim.SetBool("isHolding", isHolding);
@@ -225,6 +227,17 @@ public class PlayerController : MonoBehaviour
                 handleThing.GetComponent<Handle>().isOnDesk = false;
                 handleThing.GetComponent<Handle>().PlayerHandle(transform);
             }
+            else if (activeObject.CompareTag("Return") && activeObject.GetComponent<Object>().onSomething && isHolding)
+            {
+                if (activeObject.CompareTag("Ingredient") && activeObject.GetComponent<Handle>().isCooked) { }
+                {
+                    FindObjectOfType<Return>().returnPlates[FindObjectOfType<Return>().returnPlates.Count-1].GetComponent<Plates>().AddIngredient(transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Handle>().hand);
+                    FindObjectOfType<Return>().returnPlates[FindObjectOfType<Return>().returnPlates.Count-1].GetComponent<Plates>().InstantiateUI();
+                    isHolding = false;
+                    anim.SetBool("isHolding", false);
+                    Destroy(transform.GetChild(1).gameObject);
+                }
+            }
             else
             {
                 if (activeObject != null && activeObject.CompareTag("Ingredient") && isHolding) //앞에 아무것도 없고 바닥에 두기 (예외처리)
@@ -264,7 +277,7 @@ public class PlayerController : MonoBehaviour
                 anim.SetTrigger("startCut");
                 activeObject.transform.GetChild(0).GetComponent<CuttingBoard>().Pause = false;
                 activeObject.transform.GetChild(0).GetComponent<CuttingBoard>().CuttingTime = 0;
-                activeObject.transform.GetChild(0).GetComponent<CuttingBoard>().StartCutting();
+                activeObject.transform.GetChild(0).GetComponent<CuttingBoard>().StartCutting1();
             }
             else if (activeObject.transform.GetChild(0).GetComponent<CuttingBoard>().Pause) //실행되다 만거라면
             {
@@ -336,8 +349,66 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void DieRespawn()
+    {
+        if (isHolding && transform.GetChild(1).CompareTag("Plate"))
+        {
+            Destroy(transform.GetChild(1).gameObject);
+            GameManager.instance.PlateReturn();
+        }
+        else if (isHolding && transform.GetChild(1).CompareTag("Ingredient"))
+        {
+            Destroy(transform.GetChild(1).gameObject);
+        }
+        isHolding = false;
+        ShowCount();
+        gameObject.SetActive(false);
+        Invoke("Respawn", 5);
+    }
+    private void ShowCount()
+    {
+        CountDown.transform.GetChild(1).GetComponent<Text>().text = "5";
+        CountDown.SetActive(true);
+        Invoke("ShowCount1", 1f);
+    }
+    private void ShowCount1()
+    {
+        CountDown.transform.GetChild(1).GetComponent<Text>().text = "4";
+        Invoke("ShowCount2", 1f);
+    }
+    private void ShowCount2()
+    {
+        CountDown.transform.GetChild(1).GetComponent<Text>().text = "3";
+        Invoke("ShowCount3", 1f);
+    }
+    private void ShowCount3()
+    {
+        CountDown.transform.GetChild(1).GetComponent<Text>().text = "2";
+        Invoke("ShowCount4", 1f);
+    }
+    private void ShowCount4()
+    {
+        CountDown.transform.GetChild(1).GetComponent<Text>().text = "1";
+        Invoke("ShowCount5", 1f);
+    }
+    private void ShowCount5()
+    {
+        CountDown.SetActive(false);
+    }
+    private void Respawn()
+    {
+        gameObject.transform.localPosition = new Vector3(20.6200008f, 1.33632302f, -6.61000013f);
+        gameObject.transform.localRotation = new Quaternion(0, 1, 0, 0);
+        gameObject.SetActive(true);
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("deadZone"))
+        {
+            DieRespawn();
+            return;
+        }
         if (activeObject != null && activeObject.CompareTag("Ingredient") && isHolding)
         {
             activeObject.GetComponent<Object>().OffHighlight(activeObject.GetComponent<Handle>().isCooked);

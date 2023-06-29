@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class busController : MonoBehaviour
 {
+    [SerializeField] GameObject Stage1UI;
+    [SerializeField] GameObject Stage2UI;
+    [SerializeField] GameObject Stage3UI;
+
     public float Speed = 1.0f;
     public float rotateSpeed = 1.0f;
     float h, v;
@@ -13,9 +17,41 @@ public class busController : MonoBehaviour
     private bool CanGo = false;
     private void Update()
     {
-        if (CanGo && Input.GetKeyDown(KeyCode.Space))
+        if (ActiveScene != null && CanGo && Input.GetKeyDown(KeyCode.Space))
         {
-            SceneManager.LoadScene(ActiveScene.SceneName);
+            if (ActiveScene.SceneName.Equals("SampleScene"))
+            {
+                if (!StageManager.instance.stage1Space)
+                {
+                    StageManager.instance.stage1Space = true;
+                }
+                else
+                {
+                    LoadingSceneManager.LoadScene(ActiveScene.SceneName);
+                }
+            }
+            else if (ActiveScene.SceneName.Equals("StageSalad"))
+            {
+                if (!StageManager.instance.stage2Space)
+                {
+                    StageManager.instance.stage2Space = true;
+                }
+                else
+                {
+                    LoadingSceneManager.LoadScene(ActiveScene.SceneName);
+                }
+            }
+            else if (ActiveScene.SceneName.Equals("StagePotato"))
+            {
+                if (!StageManager.instance.stage3Space )
+                {
+                    StageManager.instance.stage3Space = true;
+                }
+                else
+                {
+                    LoadingSceneManager.LoadScene(ActiveScene.SceneName);
+                }
+            }
         }
     }
 
@@ -46,10 +82,34 @@ public class busController : MonoBehaviour
     {
         CanGo = true;
         ActiveScene = other.GetComponent<SceneConnect>();
+        if (ActiveScene.SceneName.Equals("StageSalad") && !Stage2UI.activeSelf)
+        {
+            Stage2UI.SetActive(true);
+        }
+        else if (ActiveScene.SceneName.Equals("SampleScene") && !Stage1UI.activeSelf)
+        {
+            Stage1UI.SetActive(true);
+        }
+        else if (ActiveScene.SceneName.Equals("StagePotato") && !Stage3UI.activeSelf)
+        {
+            Stage3UI.SetActive(true);
+        }
     }
     private void OnTriggerExit(Collider other)
     {
         CanGo = false;
+        if (ActiveScene.SceneName.Equals("StageSalad") && Stage3UI.activeSelf)
+        {
+            Stage3UI.SetActive(false);
+        }
+        else if (ActiveScene.SceneName.Equals("SampleScene") && Stage1UI.activeSelf)
+        {
+            Stage1UI.SetActive(false);
+        }
+        else if (ActiveScene.SceneName.Equals("StagePotato") && Stage2UI.activeSelf)
+        {
+            Stage2UI.SetActive(false);
+        }
         ActiveScene = null;
     }
 }

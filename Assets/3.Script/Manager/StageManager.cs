@@ -16,12 +16,17 @@ public class StageManager : MonoBehaviour
     public int map1Star = 0;
     public int map2Star = 0;
     public int map3Star = 0;
-    public int map4Star = 0;
+
+    public bool stage1Space = false;
+    public bool stage2Space = false;
+    public bool stage3Space = false;
 
     public int tipMoney = 0;
     public int success = 0;
     public int fail = 0;
     public int totalMoney = 0;
+    public int failMoney = 0;
+    public int successMoney = 0;
 
     private void Awake()
     {

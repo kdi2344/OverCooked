@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Star Limit
   m_EditorClassIdentifier: 
   Stage: 3
-  oneStarLimit: 0
-  twoStarLimit: 0
-  threeStarLimit: 0
+  oneStarLimit: 120
+  twoStarLimit: 300
+  threeStarLimit: 500
+  successMoney: 0

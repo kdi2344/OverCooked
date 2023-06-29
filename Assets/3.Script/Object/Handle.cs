@@ -12,8 +12,8 @@ public class Handle : MonoBehaviour
     [SerializeField] private Mesh cookedIngredient;
     [SerializeField] private Material cookedFish;
 
-    private Vector3 fishLocalPos = new Vector3(0, 0.138f, 0.08f);
-    private Vector3 shrimpLocalPos = new Vector3(-0.365000874f, -0.0890001357f, -0.423000485f);
+    public Vector3 fishLocalPos = new Vector3(0, 0.138f, 0.08f);
+    public Vector3 shrimpLocalPos = new Vector3(-0.365000874f, -0.0890001357f, -0.423000485f);
 
     private Quaternion shrimpLocalRotation = new Quaternion(0.287927657f, 0.0875888839f, -0.277543157f, 0.912357152f);
 
@@ -174,6 +174,23 @@ public class Handle : MonoBehaviour
         else if (handType == HandleType.Tomato)
         {
             transform.parent.GetComponent<MeshCollider>().sharedMesh = cookedIngredient;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("deadZone"))
+        {
+            if (hand != HandleType.Plate)
+            {
+                GameObject parent = transform.parent.parent.gameObject;
+                parent.GetComponent<DestroyIngredient>().DestroySelf();
+            }
+            else //접시가 떨어지면 접시만 리스폰
+            {
+                Destroy(gameObject);
+                GameManager.instance.PlateReturn();
+            }
         }
     }
 }

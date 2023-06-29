@@ -1941,7 +1941,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: asdfdfdf
+  m_Text: Player 2
 --- !u!222 &735124572
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3931,7 +3931,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: something
+  m_Text: Player 1
 --- !u!222 &1628883394
 CanvasRenderer:
   m_ObjectHideFlags: 0

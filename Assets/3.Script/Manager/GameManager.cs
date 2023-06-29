@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
+
+    private Coroutine alphaCo = null;
     public enum State { stage1, stage2, stage3 };
     [SerializeField] State state = State.stage1;
     public Coroutine activeCo = null;
@@ -17,15 +19,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float StartTime = 0;
     [SerializeField] private GameObject Ready;
     [SerializeField] private GameObject Go;
+    [SerializeField] private GameObject Timesup;
     private bool PlayOnce = false;
     private bool PlayTwice = false;
     private bool StartSetting = false;
     private bool once = false;
+    private bool isDone = false;
+    private float lastSec = 0f;
 
     //시간 UI
-    [SerializeField] private float GameTime = 160f;
+    [SerializeField] public float GameTime = 160f;
     [SerializeField] private Slider TimeSlider;
     [SerializeField] private Text TextTime;
+    [SerializeField] private GameObject SandTimer;
 
     //돈 UI
     [SerializeField] private GameObject CoinOb;
@@ -35,8 +41,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text TextCoin;
     [SerializeField] private Text TextTip;
     public int tipCombo;
-    bool canCombo;
+    [SerializeField] private GameObject flame;
     [SerializeField] GameObject TextPrefabs;
+
+    [SerializeField] public GameObject wrong;
+    //[SerializeField] private GameObject right;
 
     //접시 리스폰 관련
     [SerializeField] private GameObject platePrefabs;
@@ -55,12 +64,12 @@ public class GameManager : MonoBehaviour
     public int i = -1;
     private int j = -1;
 
-    float duration = 75; // This will be your time in seconds.
-    float smoothness = 0.1f; // This will determine the smoothness of the lerp. Smaller values are smoother. Really it's the time between updates.
+    float duration = 75; 
+    float smoothness = 0.1f; 
     Color Start = new Color(0, 192 / 255f, 5 / 255f, 255 / 255f); //초록
-    Color Middle = new Color(243 / 255f, 239 / 255f, 0, 255 / 255f);
-    Color End = new Color(215 / 255f, 11 / 255f, 0, 1f);
-    Color currentColor; // This is the state of the color in the current interpolation.
+    Color Middle = new Color(243 / 255f, 239 / 255f, 0, 255 / 255f); //노랑
+    Color End = new Color(215 / 255f, 11 / 255f, 0, 1f); //빨강
+    Color currentColor;
 
     IEnumerator LerpColor1()
     {
@@ -88,6 +97,30 @@ public class GameManager : MonoBehaviour
         }
 
     }
+    
+    public IEnumerator TurnAlpha(GameObject panel)
+    {
+        while (panel.GetComponent<Image>().color.a < 0.4f)
+        {
+            float alpha = panel.GetComponent<Image>().color.a;
+            alpha += 0.05f;
+            panel.GetComponent<Image>().color = new Color(panel.GetComponent<Image>().color.r, panel.GetComponent<Image>().color.g, panel.GetComponent<Image>().color.b, alpha);
+            yield return new WaitForSeconds(0.01f);
+        }
+        StartCoroutine(TurnAlphaZero(panel));
+    }
+    public IEnumerator TurnAlphaZero(GameObject panel)
+    {
+        while (panel.GetComponent<Image>().color.a > 0)
+        {
+            float alpha = panel.GetComponent<Image>().color.a;
+            alpha -= 0.05f;
+            panel.GetComponent<Image>().color = new Color(panel.GetComponent<Image>().color.r, panel.GetComponent<Image>().color.g, panel.GetComponent<Image>().color.b, alpha);
+            yield return new WaitForSeconds(0.01f);
+        }
+        alphaCo = null;
+    }
+
 
     void Awake()
     {
@@ -107,6 +140,8 @@ public class GameManager : MonoBehaviour
             StageManager.instance.tipMoney = 0;
             StageManager.instance.fail = 0;
             StageManager.instance.totalMoney = 0;
+            StageManager.instance.successMoney = 0;
+            StageManager.instance.failMoney = 0;
             if (state == State.stage1)
             {
                 StageManager.instance.playStage = StageManager.State.stage1;
@@ -200,24 +235,52 @@ public class GameManager : MonoBehaviour
         
         GameTime -= Time.deltaTime;
         ToClock();
-        if (GameTime <= 0) //시간 지나면 멈추기
+        if (GameTime < 30)
+        {
+            SandTimer.GetComponent<Animator>().SetTrigger("shake");
+        }
+        if (GameTime <= 0 && !isDone) //시간 지나면 멈추기
         {
             Time.timeScale = 0;
-            if (state == State.stage1)
-            {
-                StageManager.instance.isClearMap1 = true;
-            }
-            else if (state == State.stage2) 
-            {
-                StageManager.instance.isClearMap2 = true;
-            }
-            else if (state == State.stage3)
-            {
-                StageManager.instance.isClearMap3 = true;
-            }
             StageManager.instance.totalMoney = Coin;
-            SceneManager.LoadScene("ResultScene");
+            Timesup.SetActive(true);
+            if (StageManager.instance.totalMoney >= 0)
+            {
+                if (state == State.stage1)
+                {
+                    StageManager.instance.isClearMap1 = true;
+                }
+                else if (state == State.stage2)
+                {
+                    StageManager.instance.isClearMap2 = true;
+                }
+                else if (state == State.stage3)
+                {
+                    StageManager.instance.isClearMap3 = true;
+                }
+            }
+            isDone = true;
         }
+        else if (GameTime <= 0 && isDone)
+        {
+            if (Timesup.transform.localScale.x < 1)
+            {
+                Vector3 scale = Timesup.transform.localScale;
+                scale.x += Time.unscaledDeltaTime;
+                scale.y += Time.unscaledDeltaTime;
+                scale.z += Time.unscaledDeltaTime;
+                Timesup.transform.localScale = scale;
+            }
+            else
+            {
+                lastSec += Time.unscaledDeltaTime;
+                if (lastSec > 1)
+                {
+                    SceneManager.LoadScene("ResultScene");
+                }
+            }
+        }
+
     }
     private void ToClock()
     {
@@ -237,6 +300,10 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(respawnTime);
         GameObject newPlate = Instantiate(platePrefabs, Vector3.zero, Quaternion.identity);
         if (state == State.stage2)
+        {
+            newPlate.GetComponent<Plates>().limit = 3;
+        }
+        else if (state == State.stage3)
         {
             newPlate.GetComponent<Plates>().limit = 3;
         }
@@ -325,12 +392,18 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    private void SuccessEffect() 
+    {
+        //CurrentOrderUI[i].GetComponent<>
+        //textColor = Color.Lerp(Color.white, Start, progress);
+    }
 
     public bool CheckMenu(List<Handle.HandleType> containIngredients) //plate의 재료 list들 통으로 받아서 비교
     {
         if (containIngredients == null) //빈 접시만 내면 무조건 탈롹
         {
             //빨간색 띵
+            //StartCoroutine(TurnAlpha(wrong));
             return false;
         }
         else
@@ -339,6 +412,7 @@ public class GameManager : MonoBehaviour
             {
                 if (containIngredients.Count != CurrentOrder[i].Ingredient.Count) //둘이 재료 개수부터 다르면 땡
                 {
+                    //StartCoroutine(TurnAlpha(wrong));
                     continue;
                 }
                 else //둘이 재료 개수가 같다면
@@ -350,17 +424,23 @@ public class GameManager : MonoBehaviour
                             if (i == 0) //순서대로 메뉴를 냈다면 콤보
                             {
                                 tipCombo += 1;
-                                if (tipCombo > 4)
+                                if (tipCombo >= 4)
                                 {
+                                    if (!flame.activeSelf)
+                                    {
+                                        flame.SetActive(true);
+                                    }
                                     tipCombo = 4; //최대 4콤보까지
                                 }
                             }
                             else
                             {
+                                flame.SetActive(false);
                                 tipCombo = 0;
                             }
                             CurrentOrderUI[i].transform.position = poolPos;
                             CurrentOrderUI[i].SetActive(false);
+                            StageManager.instance.successMoney += CurrentOrder[i].Price;
                             Coin += CurrentOrder[i].Price;
                             CoinOb.transform.parent.GetChild(1).GetComponent<Animator>().SetTrigger("spin");
                             AddTip(i);
@@ -378,17 +458,23 @@ public class GameManager : MonoBehaviour
                             if (i == 0) //순서대로 메뉴를 냈다면 콤보
                             {
                                 tipCombo += 1;
-                                if (tipCombo > 4)
+                                if (tipCombo >= 4)
                                 {
+                                    if (!flame.activeSelf)
+                                    {
+                                        flame.SetActive(true);
+                                    }
                                     tipCombo = 4; //최대 4콤보까지
                                 }
                             }
                             else
                             {
+                                flame.SetActive(false);
                                 tipCombo = 0;
                             }
                             CurrentOrderUI[i].transform.position = poolPos;
                             CurrentOrderUI[i].SetActive(false);
+                            StageManager.instance.successMoney += CurrentOrder[i].Price;
                             Coin += CurrentOrder[i].Price;
                             CoinOb.transform.parent.GetChild(1).GetComponent<Animator>().SetTrigger("spin");
                             AddTip(i);
@@ -418,17 +504,23 @@ public class GameManager : MonoBehaviour
                             if (i == 0) //순서대로 메뉴를 냈다면 콤보
                             {
                                 tipCombo += 1;
-                                if (tipCombo > 4)
+                                if (tipCombo >= 4)
                                 {
+                                    if (!flame.activeSelf)
+                                    {
+                                        flame.SetActive(true);
+                                    }
                                     tipCombo = 4; //최대 4콤보까지
                                 }
                             }
                             else
                             {
+                                flame.SetActive(false);
                                 tipCombo = 0;
                             }
                             CurrentOrderUI[i].transform.position = poolPos;
                             CurrentOrderUI[i].SetActive(false);
+                            StageManager.instance.successMoney += CurrentOrder[i].Price;
                             Coin += CurrentOrder[i].Price;
                             CoinOb.transform.parent.GetChild(1).GetComponent<Animator>().SetTrigger("spin");
                             AddTip(i);
@@ -440,12 +532,14 @@ public class GameManager : MonoBehaviour
                         }
                         else
                         {
+                            //StartCoroutine(TurnAlpha(wrong));
                             return false;
                         }
                     }
                 }
             }
         }
+        //StartCoroutine(TurnAlpha(wrong));
         return false;
     }
 
@@ -539,9 +633,13 @@ public class GameManager : MonoBehaviour
                 Tip = 0;
                 TextTip.text = "";
                 TipSlider.value = tipCombo;
+                StageManager.instance.failMoney += (int)(CurrentOrder[i].Price * 0.5f);
                 Coin -= (int)(CurrentOrder[i].Price * 0.5f);
                 TextCoin.text = Coin.ToString(); //돈 얼마됐다고 업데이트
-                //점수나 뭐 깎기 + 빨간 효과
+                if (alphaCo == null)
+                {
+                    alphaCo = StartCoroutine(TurnAlpha(wrong));
+                }
                 whichUI.transform.position = poolPos;
                 whichUI.SetActive(false);
                 SetPosition(i);
@@ -549,6 +647,10 @@ public class GameManager : MonoBehaviour
                 CurrentOrder.RemoveAt(i);
                 MakeOrder();
             }
+        }
+        if (flame.activeSelf)
+        {
+            flame.SetActive(false);
         }
     }
 
@@ -561,7 +663,7 @@ public class GameManager : MonoBehaviour
             if (i < j && !CurrentOrderUI[j].GetComponent<OrderUI>().goLeft)
             {
                 Vector3 CurrentPosition = CurrentOrderUI[j].transform.position;
-                CurrentPosition.x -= width * 0.9f;
+                CurrentPosition.x -= width * 0.92f;
                 CurrentOrderUI[j].transform.position = CurrentPosition;
             }
         }

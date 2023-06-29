@@ -34,7 +34,7 @@ public class CuttingBoard : MonoBehaviour
             transform.GetChild(0).GetChild(0).gameObject.SetActive(true); //Ä® ÄÑ±â
         }
     }
-    public void StartCutting(UnityAction EndCallBack = null)
+    public void StartCutting1(UnityAction EndCallBack = null)
     {
         if (parentObject.onSomething)
         {
@@ -43,6 +43,17 @@ public class CuttingBoard : MonoBehaviour
             _CoTimer = StartCoroutine(CoStartCutting(EndCallBack));
             FindObjectOfType<PlayerController>().anim.SetTrigger("startCut");
             FindObjectOfType<PlayerController>().anim.SetBool("canCut", true);
+        }
+    }
+    public void StartCutting2(UnityAction EndCallBack = null)
+    {
+        if (parentObject.onSomething)
+        {
+            cookingBar.gameObject.SetActive(true);
+            ClearTime();
+            _CoTimer = StartCoroutine(CoStartCutting(EndCallBack));
+            FindObjectOfType<Player2Controller>().anim.SetTrigger("startCut");
+            FindObjectOfType<Player2Controller>().anim.SetBool("canCut", true);
         }
     }
     public void PauseSlider(bool pause)
@@ -82,11 +93,22 @@ public class CuttingBoard : MonoBehaviour
     {
         cookingBar.value = 0f;
         cookingBar.gameObject.SetActive(false);
-        FindObjectOfType<PlayerController>().anim.SetBool("canCut", false);
+        if (FindObjectOfType<PlayerController>().activeObject == transform.parent.gameObject)
+        {
+            FindObjectOfType<PlayerController>().anim.SetBool("canCut", false);
+        }
+        else if (FindObjectOfType<Player2Controller>().activeObject == transform.parent.gameObject)
+        {
+            FindObjectOfType<Player2Controller>().anim.SetBool("canCut", false);
+        }
         Handle Ingredient = transform.parent.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Handle>();
         Ingredient.isCooked = true;
         Ingredient.changeMesh(Ingredient.hand);
         InstantiateUI();
+    }
+    public void OffAnim1()
+    {
+
     }
     public void InstantiateUI()
     {

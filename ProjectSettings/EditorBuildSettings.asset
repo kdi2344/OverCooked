@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/1.Scene/ResultScene.unity
     guid: 9b1ae75f32069cd47ac2060ddef63758
+  - enabled: 1
+    path: Assets/1.Scene/StagePotato.unity
+    guid: f22e64c1033fd6a468878b9c180d667a
+  - enabled: 1
+    path: Assets/1.Scene/LoadingScene.unity
+    guid: fa5833fe2f283264f9cd4d594d3f10ad
   m_configObjects: {}

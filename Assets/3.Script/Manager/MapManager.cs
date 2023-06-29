@@ -58,12 +58,19 @@ public class MapManager : MonoBehaviour
         else if (StageManager.instance.playStage == StageManager.State.stage1)
         {
             bus.transform.position = positions[1];
+            
             if (!isStage2open && StageManager.instance.isClearMap1)
             {
                 focus.transform.position = targetPositions[0];
                 Cam.Follow = focus.transform;
                 Cam.LookAt = focus.transform;
                 StartCoroutine(FlipSecondMap());
+            }
+            else
+            {
+                Cam.Follow = focus.transform;
+                Cam.LookAt = focus.transform;
+                bus.SetActive(true);
             }
         }
         else if (StageManager.instance.playStage == StageManager.State.stage2)

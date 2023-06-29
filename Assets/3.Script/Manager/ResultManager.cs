@@ -13,7 +13,7 @@ public class ResultManager : MonoBehaviour
     [SerializeField] private GameObject tip;
     [SerializeField] private GameObject fail;
     [SerializeField] private GameObject total;
-    private bool canSkip = false;
+    [SerializeField] private bool canSkip = false;
 
     private int successMoney;
 
@@ -29,7 +29,7 @@ public class ResultManager : MonoBehaviour
     {
         if (canSkip && Input.GetKeyDown(KeyCode.Space))
         {
-            SceneManager.LoadScene("Map");
+            LoadingSceneManager.LoadScene("Map");
         }
     }
     private void SetStar()
@@ -39,17 +39,11 @@ public class ResultManager : MonoBehaviour
             if (StageManager.instance.totalMoney > limits[0].oneStarLimit)
             {
                 if (StageManager.instance.map1Star<1) StageManager.instance.map1Star = 1;
-                StartCoroutine(BiggerStar(newStars[0]));
-                if (StageManager.instance.totalMoney > limits[0].twoStarLimit)
-                {
-                    if (StageManager.instance.map1Star < 2)  StageManager.instance.map1Star = 2;
-                    StartCoroutine(BiggerStar(newStars[1]));
-                    if (StageManager.instance.totalMoney > limits[0].threeStarLimit)
-                    {
-                        if (StageManager.instance.map1Star < 3)  StageManager.instance.map1Star = 3;
-                        StartCoroutine(BiggerStar(newStars[2]));
-                    }
-                }
+                StartCoroutine(BiggerStar(newStars[0], 0));
+            }
+            else
+            {
+                canSkip = true;
             }
         }
         else if (StageManager.instance.playStage == StageManager.State.stage2)
@@ -57,17 +51,11 @@ public class ResultManager : MonoBehaviour
             if (StageManager.instance.totalMoney > limits[1].oneStarLimit)
             {
                 if (StageManager.instance.map2Star < 1) StageManager.instance.map2Star = 1;
-                StartCoroutine(BiggerStar(newStars[0]));
-                if (StageManager.instance.totalMoney > limits[1].twoStarLimit)
-                {
-                    if (StageManager.instance.map2Star < 2) StageManager.instance.map2Star = 2;
-                    StartCoroutine(BiggerStar(newStars[1]));
-                    if (StageManager.instance.totalMoney > limits[1].threeStarLimit)
-                    {
-                        if (StageManager.instance.map2Star < 3) StageManager.instance.map2Star = 3;
-                        StartCoroutine(BiggerStar(newStars[2]));
-                    }
-                }
+                StartCoroutine(BiggerStar(newStars[0], 1));
+            }
+            else
+            {
+                canSkip = true;
             }
         }
         else if (StageManager.instance.playStage == StageManager.State.stage3)
@@ -75,22 +63,16 @@ public class ResultManager : MonoBehaviour
             if (StageManager.instance.totalMoney > limits[2].oneStarLimit)
             {
                 if (StageManager.instance.map3Star < 1) StageManager.instance.map3Star = 1;
-                StartCoroutine(BiggerStar(newStars[0]));
-                if (StageManager.instance.totalMoney > limits[2].twoStarLimit)
-                {
-                    if (StageManager.instance.map3Star < 2) StageManager.instance.map3Star = 2;
-                    StartCoroutine(BiggerStar(newStars[1]));
-                    if (StageManager.instance.totalMoney > limits[2].threeStarLimit)
-                    {
-                        if (StageManager.instance.map3Star < 3) StageManager.instance.map3Star = 3;
-                        StartCoroutine(BiggerStar(newStars[2]));
-                    }
-                }
+                StartCoroutine(BiggerStar(newStars[0], 2));
+            }
+            else
+            {
+                canSkip = true;
             }
         }
-        canSkip = true;
+        
     }
-    IEnumerator BiggerStar(GameObject star)
+    IEnumerator BiggerStar(GameObject star, int i)
     {
         star.SetActive(true);
         float time = 0;
@@ -100,7 +82,71 @@ public class ResultManager : MonoBehaviour
             time += 0.01f;
             yield return new WaitForSeconds(0.005f);
         }
+        if (StageManager.instance.totalMoney > limits[i].twoStarLimit)
+        {
+            if (i == 0)
+            {
+                if (StageManager.instance.map1Star < 2) StageManager.instance.map1Star = 2;
+            }
+            else if (i == 1)
+            {
+                if (StageManager.instance.map2Star < 2) StageManager.instance.map2Star = 2;
+            }
+            else if (i == 2)
+            {
+                if (StageManager.instance.map3Star < 2) StageManager.instance.map3Star = 2;
+            }
+            
+            StartCoroutine(BiggerStar1(newStars[1], i));
+        }
+        else
+        {
+            canSkip = true;
+        }
+    }
+    IEnumerator BiggerStar1(GameObject star, int i)
+    {
+        star.SetActive(true);
+        float time = 0;
+        while (time < 1f)
+        {
+            star.transform.localScale = Vector3.one * (1 + time);
+            time += 0.01f;
+            yield return new WaitForSeconds(0.005f);
+        }
+        if (StageManager.instance.totalMoney > limits[i].threeStarLimit)
+        {
+            if (i == 0)
+            {
+                if (StageManager.instance.map1Star < 3) StageManager.instance.map1Star = 3;
+            }
+            else if (i == 1)
+            {
+                if (StageManager.instance.map2Star < 3) StageManager.instance.map2Star = 3;
+            }
+            else if (i == 2)
+            {
+                if (StageManager.instance.map3Star < 3) StageManager.instance.map3Star = 3;
+            }
+            StartCoroutine(BiggerStar2(newStars[2]));
+        }
+        else
+        {
+            canSkip = true;
+        }
+    }
+    IEnumerator BiggerStar2(GameObject star)
+    {
+        star.SetActive(true);
+        float time = 0;
+        while (time < 1f)
+        {
+            star.transform.localScale = Vector3.one * (1 + time);
+            time += 0.01f;
+            yield return new WaitForSeconds(0.005f);
+        }
         yield return null;
+        canSkip = true;
     }
     private void SetScoreLimit()
     {
@@ -135,7 +181,7 @@ public class ResultManager : MonoBehaviour
     }
     private void ShowSuccessMoney()
     {
-        success.transform.GetChild(1).GetComponent<Text>().text = (StageManager.instance.success * successMoney).ToString();
+        success.transform.GetChild(1).GetComponent<Text>().text = (StageManager.instance.successMoney).ToString();
         success.transform.GetChild(1).gameObject.SetActive(true);
         Invoke("ShowTip", 1f);
     }
@@ -158,7 +204,7 @@ public class ResultManager : MonoBehaviour
     }
     private void ShowFailMoney()
     {
-        fail.transform.GetChild(1).GetComponent<Text>().text = "-" + ((int)(StageManager.instance.fail * successMoney * 0.5)).ToString();
+        fail.transform.GetChild(1).GetComponent<Text>().text = "-" + StageManager.instance.failMoney.ToString();
         fail.transform.GetChild(1).gameObject.SetActive(true);
         Invoke("ShowTotal", 1f);
     }
