@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class ResultManager : MonoBehaviour
 {
+    [SerializeField] private Text Stagename;
+    [SerializeField] private Text name1;
+    [SerializeField] private Text name2;
     [SerializeField] private StarLimit[] limits;
     [SerializeField] private GameObject[] newStars;
     [SerializeField] private Text[] txtStars;
@@ -19,8 +22,25 @@ public class ResultManager : MonoBehaviour
 
     private void Awake()
     {
+        if (NameManager.instance != null)
+        {
+            name1.text = NameManager.instance.name1;
+            name2.text = NameManager.instance.name2;
+        }
         canSkip = false;
         Time.timeScale = 1;
+        if (StageManager.instance.playStage == StageManager.State.stage1)
+        {
+            Stagename.text = "Stage 1";
+        }
+        else if (StageManager.instance.playStage == StageManager.State.stage2)
+        {
+            Stagename.text = "Stage 2";
+        }
+        else if (StageManager.instance.playStage == StageManager.State.stage3)
+        {
+            Stagename.text = "Stage 3";
+        }
         SetScoreLimit();
         Invoke("ShowSuccess", 1f);
         Invoke("SetStar", 2f);

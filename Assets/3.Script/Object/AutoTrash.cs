@@ -6,7 +6,7 @@ public class AutoTrash : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Ingredient") && !FindObjectOfType<PlayerController>().isHolding)
+        if (other.CompareTag("Ingredient") && (!other.transform.parent.IsChildOf(FindObjectOfType<PlayerController>().transform) && !other.transform.parent.IsChildOf(FindObjectOfType<Player2Controller>().transform)))
         {
             //없어지는 scale 조정느낌
             StartCoroutine(ScaleSmaller(other));

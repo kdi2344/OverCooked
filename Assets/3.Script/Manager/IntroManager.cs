@@ -5,6 +5,7 @@ using UnityEngine;
 public class IntroManager : MonoBehaviour
 {
     private bool isSpace = false;
+    [SerializeField] GameObject name;
     [SerializeField] GameObject Shutter;
     [SerializeField] GameObject SpaceToStart;
     [SerializeField] GameObject buttons;
@@ -15,6 +16,7 @@ public class IntroManager : MonoBehaviour
         Shutter.SetActive(true);
         SpaceToStart.SetActive(true);
         buttons.SetActive(false);
+        name.SetActive(false);
     }
     private void Update()
     {
@@ -26,6 +28,7 @@ public class IntroManager : MonoBehaviour
             Shutter.SetActive(false);
             SpaceToStart.SetActive(false);
             buttons.SetActive(true);
+            name.SetActive(true);
         }
     }
 
