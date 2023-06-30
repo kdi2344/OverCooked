@@ -397,7 +397,7 @@ public class Player2Controller : MonoBehaviour
     }
     private void Respawn()
     {
-        gameObject.transform.localPosition = new Vector3(20.6200008f, 1.33632302f, -6.61000013f);
+        gameObject.transform.localPosition = new Vector3(47.7299995f, 1.33632302f, -18.5499992f);
         gameObject.transform.localRotation = new Quaternion(0, 1, 0, 0);
         gameObject.SetActive(true);
     }

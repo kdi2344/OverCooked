@@ -3580,7 +3580,7 @@ MonoBehaviour:
   Ready: {fileID: 402411302}
   Go: {fileID: 1198578893}
   Timesup: {fileID: 723357199458429609}
-  GameTime: 10
+  GameTime: 71
   TimeSlider: {fileID: 316209927}
   TextTime: {fileID: 2131289415}
   SandTimer: {fileID: 1146397183}
