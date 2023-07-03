@@ -12,6 +12,10 @@ public class SoundManager : MonoBehaviour
     public string StageName;
     public float volumeBGM = 1;
     public float volumeEffect = 1;
+    //음량 저장 기능
+
+    [SerializeField] private GameObject[] BGMSquares;
+    [SerializeField] private GameObject[] effectSquares;
 
     [Header("배경음악들")]
     public AudioSource asBGM; 
@@ -88,7 +92,14 @@ public class SoundManager : MonoBehaviour
         //    PlayBGM(FindObjectOfType<LoadingSceneManager>().nextName);
         //}
     }
+    private void SetBGMSquares()
+    {
 
+    }
+    private void SetEffectSquares()
+    {
+
+    }
     public void upBGM()
     {
         volumeBGM += 0.1f;
@@ -97,6 +108,7 @@ public class SoundManager : MonoBehaviour
             volumeBGM = 1;
         }
         asBGM.volume = volumeBGM;
+        SetBGMSquares();
     }
     public void downBGM()
     {
@@ -106,6 +118,7 @@ public class SoundManager : MonoBehaviour
             volumeBGM = 0;
         }
         asBGM.volume = volumeBGM;
+        SetBGMSquares();
     }
 
     public void effectUp()
@@ -116,6 +129,7 @@ public class SoundManager : MonoBehaviour
             volumeEffect = 1;
         }
         asEffect.volume = volumeEffect;
+        SetEffectSquares();
     }
     public void effectDown()
     {
@@ -125,6 +139,7 @@ public class SoundManager : MonoBehaviour
             volumeEffect = 0;
         }
         asEffect.volume = volumeEffect;
+        SetEffectSquares();
     }
 
     void OnEnable()
