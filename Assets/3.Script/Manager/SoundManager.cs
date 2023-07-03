@@ -12,7 +12,6 @@ public class SoundManager : MonoBehaviour
     public string StageName;
     public float volumeBGM = 1;
     public float volumeEffect = 1;
-    public AudioMixer bgmMixer;
 
     [Header("πË∞Ê¿Ωæ«µÈ")]
     public AudioSource asBGM; 
@@ -97,8 +96,7 @@ public class SoundManager : MonoBehaviour
         {
             volumeBGM = 1;
         }
-        bgmMixer.SetFloat("bgmVolume", Mathf.Log10(volumeBGM) * 20);
-        PlayerPrefs.SetFloat("bgmVolume", volumeBGM);
+        asBGM.volume = volumeBGM;
     }
     public void downBGM()
     {
@@ -107,8 +105,7 @@ public class SoundManager : MonoBehaviour
         {
             volumeBGM = 0;
         }
-        bgmMixer.SetFloat("bgmVolume", Mathf.Log10(volumeBGM) * 20);
-        PlayerPrefs.SetFloat("bgmVolume", volumeBGM);
+        asBGM.volume = volumeBGM;
     }
 
     void OnEnable()
