@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
@@ -11,6 +12,7 @@ public class SoundManager : MonoBehaviour
     public string StageName;
     public float volumeBGM = 1;
     public float volumeEffect = 1;
+    public AudioMixer bgmMixer;
 
     [Header("배경음악들")]
     public AudioSource asBGM; 
@@ -87,6 +89,28 @@ public class SoundManager : MonoBehaviour
         //    PlayBGM(FindObjectOfType<LoadingSceneManager>().nextName);
         //}
     }
+
+    public void upBGM()
+    {
+        volumeBGM += 0.1f;
+        if (volumeBGM >= 1)
+        {
+            volumeBGM = 1;
+        }
+        bgmMixer.SetFloat("bgmVolume", Mathf.Log10(volumeBGM) * 20);
+        PlayerPrefs.SetFloat("bgmVolume", volumeBGM);
+    }
+    public void downBGM()
+    {
+        volumeBGM -= 0.1f;
+        if (volumeBGM <= 0)
+        {
+            volumeBGM = 0;
+        }
+        bgmMixer.SetFloat("bgmVolume", Mathf.Log10(volumeBGM) * 20);
+        PlayerPrefs.SetFloat("bgmVolume", volumeBGM);
+    }
+
     void OnEnable()
     {
         // 씬 매니저의 sceneLoaded에 체인을 건다.
