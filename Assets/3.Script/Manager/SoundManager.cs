@@ -108,6 +108,25 @@ public class SoundManager : MonoBehaviour
         asBGM.volume = volumeBGM;
     }
 
+    public void effectUp()
+    {
+        volumeEffect += 0.1f;
+        if (volumeEffect >= 1)
+        {
+            volumeEffect = 1;
+        }
+        asEffect.volume = volumeEffect;
+    }
+    public void effectDown()
+    {
+        volumeEffect -= 0.1f;
+        if (volumeEffect <= 0)
+        {
+            volumeEffect = 0;
+        }
+        asEffect.volume = volumeEffect;
+    }
+
     void OnEnable()
     {
         // 씬 매니저의 sceneLoaded에 체인을 건다.

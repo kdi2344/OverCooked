@@ -5489,7 +5489,6 @@ MonoBehaviour:
   StageName: 
   volumeBGM: 1
   volumeEffect: 1
-  bgmMixer: {fileID: 24100000, guid: 27d38e983bd3e7042a58a02953a13e8d, type: 2}
   asBGM: {fileID: 1907870690}
   introBGM: {fileID: 8300000, guid: 01b1aaca2935834478c244b44a7ce6ee, type: 3}
   mapBGM: {fileID: 8300000, guid: 744a78525d45b0142bd2c0abb9a59aec, type: 3}
@@ -7925,6 +7924,18 @@ MonoBehaviour:
           m_StringArgument: btn
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1073352845}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: effectUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1545866260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8250,6 +8261,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: btn
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1073352845}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: effectDown
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1616565973
