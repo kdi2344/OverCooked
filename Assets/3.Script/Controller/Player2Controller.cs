@@ -39,7 +39,7 @@ public class Player2Controller : MonoBehaviour
     {
         rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
         SetHand(); //손 세팅
-        if (Input.GetKeyDown(KeyCode.RightShift) && activeObject != null) //사용 가능한 물체가 있고 Space 눌렀다면
+        if (Input.GetKeyDown(KeySetting2.keys[KeyAction1.ACTIVE]) && activeObject != null) //사용 가능한 물체가 있고 Space 눌렀다면
         {
             if (activeObjectOb.type == Object.ObjectType.CounterTop || activeObjectOb.type == Object.ObjectType.Board) //counterTop과 상호작용
             {
@@ -268,7 +268,7 @@ public class Player2Controller : MonoBehaviour
                 }
             }
         }
-        else if (Input.GetKeyDown(KeyCode.RightShift) && isHolding) //앞에 아무것도 없는데 뭘 들고있다 -> 바닥에 버리기
+        else if (Input.GetKeyDown(KeySetting2.keys[KeyAction1.ACTIVE]) && isHolding) //앞에 아무것도 없는데 뭘 들고있다 -> 바닥에 버리기
         {
             SoundManager.instance.PlayEffect("add");
             if (transform.GetChild(1).CompareTag("Plate"))
@@ -285,7 +285,7 @@ public class Player2Controller : MonoBehaviour
             anim.SetBool("isHolding", isHolding);
         }
 
-        if (Input.GetKeyDown(KeyCode.KeypadEnter) && activeObjectOb.type == Object.ObjectType.Board && activeObject.transform.parent.childCount > 2 && !activeObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Handle>().isCooked && !isHolding)
+        if (Input.GetKeyDown(KeySetting2.keys[KeyAction1.CUT]) && activeObjectOb.type == Object.ObjectType.Board && activeObject.transform.parent.childCount > 2 && !activeObject.transform.parent.GetChild(2).GetChild(0).GetChild(0).GetComponent<Handle>().isCooked && !isHolding)
         {//자르기
             if (activeObject.transform.GetChild(0).GetComponent<CuttingBoard>()._CoTimer == null) //한번도 실행 안된거면 시작 가능
             {
@@ -301,7 +301,7 @@ public class Player2Controller : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.I) && isHolding && transform.GetChild(1).GetComponent<Handle>() == null)
+        if (Input.GetKeyDown(KeySetting2.keys[KeyAction1.THROW]) && isHolding && transform.GetChild(1).GetComponent<Handle>() == null)
         { //ingredient 던지기 가능
             SoundManager.instance.PlayEffect("throw");
             Vector3 dir = transform.TransformDirection(throwPower);
@@ -316,7 +316,7 @@ public class Player2Controller : MonoBehaviour
             transform.GetChild(1).SetParent(transform.parent);
         }
 
-        if (Input.GetKeyDown(KeyCode.RightControl) && !isDash && isMoving)
+        if (Input.GetKeyDown(KeySetting2.keys[KeyAction1.RUN]) && !isDash && isMoving)
         {
             SoundManager.instance.PlayEffect("dash");
             isDash = true;

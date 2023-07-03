@@ -16,6 +16,7 @@ TagManager:
   - stage2
   - deadZone
   - stage3
+  - setting
   layers:
   - Default
   - TransparentFX

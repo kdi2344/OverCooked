@@ -108,6 +108,8 @@ MonoBehaviour:
   isCooked: 0
   cookedIngredient: {fileID: 0}
   cookedFish: {fileID: 0}
+  fishLocalPos: {x: 0, y: 0.138, z: 0.08}
+  shrimpLocalPos: {x: -0.36500087, y: -0.089000136, z: -0.42300048}
 --- !u!114 &1364499918352199879
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -43,6 +43,7 @@ public class IntroManager : MonoBehaviour
     {
         Setting.SetActive(true);
         //소리 화면만 켜주기 설정
+        SoundManager.instance.ShowSoundTab();
     }
 
     public void BtnExit()

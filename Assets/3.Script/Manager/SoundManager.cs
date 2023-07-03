@@ -1,20 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
+public enum KeyAction1 { CUT, THROW, RUN, ACTIVE, KEYCOUNT }
+public static class KeySetting1 { public static Dictionary<KeyAction1, KeyCode> keys = new Dictionary<KeyAction1, KeyCode>(); }
+public static class KeySetting2 { public static Dictionary<KeyAction1, KeyCode> keys = new Dictionary<KeyAction1, KeyCode>(); }
 
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance = null;
+    private bool isStop = false;
+    //해상도 설정
+    List<Resolution> resolutions = new List<Resolution>();
+    [SerializeField] private Dropdown resolutionDropdown;
+    int resolutionNum;
+    FullScreenMode screenMode;
+    public Toggle fullscreenBtn;
+
+    //설정 창
+    [SerializeField] public GameObject Setting;
+    [SerializeField] public GameObject Sound;
+    [SerializeField] public GameObject Control;
+    [SerializeField] public GameObject Resolution;
+
+    //씬 바뀔때를 감지해서 자연스럽게 bgm 바꾸는 용도
     public bool WantChange = false;
     private Scene currentScene;
     public string StageName;
-    public float volumeBGM = 1;
-    public float volumeEffect = 1;
-    //음량 저장 기능
 
-    [SerializeField] private GameObject[] BGMSquares;
+    //고정키 바꾸는 변수
+    [SerializeField] Text[] txt1;
+    [SerializeField] Text[] txt2;
+    KeyCode[] defaultKeys1 = new KeyCode[] { KeyCode.C, KeyCode.Q, KeyCode.LeftShift, KeyCode.Space };
+    KeyCode[] defaultKeys2 = new KeyCode[] { KeyCode.KeypadEnter, KeyCode.Semicolon, KeyCode.Quote, KeyCode.RightShift };
+
+    [Header("음량 관련")]
+    public float volumeBGM = 1f;
+    public float volumeEffect = 1f;
+    [SerializeField] private GameObject[] BGMSquares; //음량 네모네모
     [SerializeField] private GameObject[] effectSquares;
 
     [Header("배경음악들")]
@@ -76,36 +101,191 @@ public class SoundManager : MonoBehaviour
         asEffect.loop = false;
         asEffect.playOnAwake = false;
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (!currentScene.name.Equals("LoadingScene") && (!currentScene.name.Equals("IntroScene")))
+            {
+                if (!isStop)
+                {
+                    isStop = true;
+                    Time.timeScale = 0;
+                    Setting.SetActive(true);
+                    ShowSoundTab();
+                }
+                else
+                {
+                    isStop = false;
+                    Time.timeScale = 1;
+                    Setting.SetActive(false);
+                }
+            }
+        }
+    }
     void Start()
     {
-        //if (SceneManager.GetActiveScene().name.Equals("IntroScene"))
-        //{
-        //    PlayBGM("IntroScene");
-        //}
-        //else if (SceneManager.GetActiveScene().name.Equals("LoadingScene"))
-        //{
-        //    while (asBGM.volume > 0)
-        //    {
-        //        asBGM.volume -= Time.deltaTime;
-        //    }
+        for (int i = 0; i < (int)KeyAction1.KEYCOUNT; i++)
+        {
+            KeySetting1.keys.Add((KeyAction1) i, defaultKeys1[i]);
+            KeySetting2.keys.Add((KeyAction1) i, defaultKeys2[i]);
+        }
+        SetBtnText();
+        ResolutionOptions();
+    }
+    public void DropboxOptionChange(int x)
+    {
+        resolutionNum = x;
+    }
+    public void ResolutionOptions()
+    {
+        for (int i =0; i < Screen.resolutions.Length; i++)
+        {
+            if (Screen.resolutions[i].refreshRate == 60)
+            {
+                resolutions.Add(Screen.resolutions[i]);
+            }
+        }
 
-        //    PlayBGM(FindObjectOfType<LoadingSceneManager>().nextName);
-        //}
+        resolutions.AddRange(Screen.resolutions);
+        resolutionDropdown.options.Clear();
+        int optionNum = 0;
+        foreach (Resolution item in resolutions)
+        {
+            Dropdown.OptionData option = new Dropdown.OptionData();
+            option.text = item.width + " X " + item.height + " " + item.refreshRate + "hz";
+            resolutionDropdown.options.Add(option);
+
+            if (item.width == Screen.width && item.height == Screen.height)
+            {
+                resolutionDropdown.value = optionNum;
+            }
+            optionNum++;
+        }
+        resolutionDropdown.RefreshShownValue();
+        fullscreenBtn.isOn = Screen.fullScreenMode.Equals(FullScreenMode.FullScreenWindow) ? true : false;
+    }
+    public void OffSetting()
+    {
+        Setting.SetActive(false);
+        Time.timeScale = 1;
+    }
+    public void FullScreen(bool isFull)
+    {
+        screenMode = isFull ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+    }
+    public void OKResolutionbtn()
+    {
+        Screen.SetResolution(resolutions[resolutionNum].width, resolutions[resolutionNum].height, screenMode);
+    }
+    public void ShowSoundTab()
+    {
+        Sound.SetActive(true);
+        Control.SetActive(false);
+        Resolution.SetActive(false);
+    }
+    public void ShowControlTab()
+    {
+        Sound.SetActive(false);
+        Control.SetActive(true);
+        Resolution.SetActive(false);
+    }
+    public void ShowResolutionTab()
+    {
+        Sound.SetActive(false);
+        Control.SetActive(false);
+        Resolution.SetActive(true);
+    }
+
+    private void SetBtnText()
+    { //8 9 10 11   12 13 14 15
+        for (int i = 0; i < txt1.Length; i++)
+        {
+            txt1[i] = Setting.transform.GetChild(4).GetChild(i + 8).GetChild(0).GetComponent<Text>();
+        }
+        for (int i = 0; i < txt2.Length; i++)
+        {
+            txt2[i] = Setting.transform.GetChild(4).GetChild(i + 12).GetChild(0).GetComponent<Text>();
+        }
+        for (int i = 0; i < txt1.Length; i++)
+        {
+            txt1[i].text = KeySetting1.keys[(KeyAction1)i].ToString();
+        }
+        for (int i = 0; i < txt2.Length; i++)
+        {
+            txt2[i].text = KeySetting2.keys[(KeyAction1)i].ToString();
+        }
+    }
+    private void OnGUI()
+    {
+        Event keyEvent = Event.current;
+        if (keyEvent.isKey)
+        {
+            if (key != -1)
+            {
+                KeySetting1.keys[(KeyAction1)key] = keyEvent.keyCode;
+                key = -1;
+            }
+            else
+            {
+                KeySetting2.keys[(KeyAction1)key2] = keyEvent.keyCode;
+                key2 = -1;
+            }
+            SetBtnText();
+        }
+    }
+    int key = -1;
+    int key2 = -1;
+    public void ChangeKey(int num)
+    {
+        key = num;
+    }
+    public void ChangeKey2(int num)
+    {
+        key2 = num;
     }
     private void SetBGMSquares()
     {
-
+            int j = 0;
+        for (float i =0; i < 1; i+=0.1f)
+        {
+            if (i < volumeBGM) //켜있는거
+            {
+                BGMSquares[j].transform.GetChild(0).gameObject.SetActive(false);
+                BGMSquares[j].transform.GetChild(1).gameObject.SetActive(true);
+            }
+            else //꺼있는거
+            {
+                BGMSquares[j].transform.GetChild(0).gameObject.SetActive(true);
+                BGMSquares[j].transform.GetChild(1).gameObject.SetActive(false);
+            }
+            j++;
+        }
     }
     private void SetEffectSquares()
     {
-
+            int j = 0;
+        for (float i = 0; i < 1; i+=0.1f)
+        {
+            if (i < volumeEffect) //켜있는거
+            {
+                effectSquares[j].transform.GetChild(0).gameObject.SetActive(false);
+                effectSquares[j].transform.GetChild(1).gameObject.SetActive(true);
+            }
+            else //꺼있는거
+            {
+                effectSquares[j].transform.GetChild(0).gameObject.SetActive(true);
+                effectSquares[j].transform.GetChild(1).gameObject.SetActive(false);
+            }
+            j++;
+        }
     }
     public void upBGM()
     {
         volumeBGM += 0.1f;
         if (volumeBGM >= 1)
         {
-            volumeBGM = 1;
+            volumeBGM = 1f;
         }
         asBGM.volume = volumeBGM;
         SetBGMSquares();
@@ -126,7 +306,7 @@ public class SoundManager : MonoBehaviour
         volumeEffect += 0.1f;
         if (volumeEffect >= 1)
         {
-            volumeEffect = 1;
+            volumeEffect = 1f;
         }
         asEffect.volume = volumeEffect;
         SetEffectSquares();
@@ -151,6 +331,10 @@ public class SoundManager : MonoBehaviour
     {
         //Debug.Log("OnSceneLoaded: " + scene.name);
         //Debug.Log(mode);
+        if (Setting == null)
+        {
+            Setting = FindObjectOfType<setting>().gameObject;
+        }
         currentScene = scene;
         if (asBGM != null && WantChange && scene.name == "LoadingScene")
         {
