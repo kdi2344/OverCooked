@@ -15,6 +15,7 @@ TagManager:
   - focus
   - stage2
   - deadZone
+  - stage3
   layers:
   - Default
   - TransparentFX

@@ -43,7 +43,7 @@ public class StageManager : MonoBehaviour
 
     public void SetMap(GameObject[] flags, Material[] flags_m)
     {
-        if (isClearMap1)
+        if (stage1Space)
         {
             GameObject[] something = GameObject.FindGameObjectsWithTag("stage1");
             for (int i =0; i < something.Length; i++)
@@ -69,7 +69,7 @@ public class StageManager : MonoBehaviour
             }
             flags[0].GetComponent<MeshRenderer>().materials = materials;
         }
-        if (isClearMap2)
+        if (stage2Space)
         {
             GameObject[] something = GameObject.FindGameObjectsWithTag("stage2");
             for (int i = 0; i < something.Length; i++)
@@ -95,13 +95,31 @@ public class StageManager : MonoBehaviour
             }
             flags[1].GetComponent<MeshRenderer>().materials = materials;
         }
-        if (isClearMap3)
+        if (stage3Space)
         {
-
-        }
-        if (isClearMap3 && !isAllClear)
-        {
-            isAllClear = true;
+            GameObject[] something = GameObject.FindGameObjectsWithTag("stage3");
+            for (int i = 0; i < something.Length; i++)
+            {
+                something[i].transform.GetChild(0).GetComponent<Animator>().enabled = false;
+            }
+            Material[] materials = flags[1].GetComponent<MeshRenderer>().materials;
+            if (map2Star == 0)
+            {
+                materials[0].mainTexture = flags_m[0].mainTexture;
+            }
+            else if (map2Star == 1)
+            {
+                materials[0].mainTexture = flags_m[1].mainTexture;
+            }
+            else if (map2Star == 2)
+            {
+                materials[0].mainTexture = flags_m[2].mainTexture;
+            }
+            else
+            {
+                materials[0].mainTexture = flags_m[3].mainTexture;
+            }
+            flags[1].GetComponent<MeshRenderer>().materials = materials;
         }
     }
 }

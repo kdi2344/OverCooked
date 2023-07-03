@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class LoadingSceneManager : MonoBehaviour
 {
     public static string nextScene;
+    public string nextName = "";
     [SerializeField] Image progressBar;
 
     private void Start()
@@ -16,12 +17,14 @@ public class LoadingSceneManager : MonoBehaviour
 
     public static void LoadScene(string sceneName)
     {
+        SoundManager.instance.WantChange = true;
         nextScene = sceneName;
         SceneManager.LoadScene("LoadingScene");
     }
 
     IEnumerator LoadScene()
     {
+        nextName = nextScene;
         yield return null;
         AsyncOperation op = SceneManager.LoadSceneAsync(nextScene);
         op.allowSceneActivation = false;

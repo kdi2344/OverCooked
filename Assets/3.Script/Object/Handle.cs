@@ -114,13 +114,20 @@ public class Handle : MonoBehaviour
         transform.parent.parent.SetParent(parent);
         transform.parent.parent.localPosition = target;
         transform.parent.parent.localRotation = Quaternion.identity;
-        if (handle == HandleType.Shrimp && !isCooked)
+        if (handle == HandleType.Shrimp)
         {
-            transform.parent.parent.localRotation = Quaternion.Euler(new Vector3(0, 244.302612f, 0));
+            if (!isCooked)
+            {
+                transform.parent.parent.localRotation = Quaternion.Euler(new Vector3(0, 244.302612f, 0));
+            }
+            else
+            {
+                transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.0008f, transform.parent.parent.localPosition.z);
+            }
         }
         else if (handle == HandleType.Fish && isCooked)
         {
-            transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.0037f, transform.parent.parent.localPosition.z);
+            transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.00146f, transform.parent.parent.localPosition.z);
         }
         else if (handle == HandleType.Fish || handle == HandleType.Cucumber || handle == HandleType.Tomato)
         {
@@ -130,11 +137,22 @@ public class Handle : MonoBehaviour
         {
             if (isCooked)
             {
-                transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.0052f, transform.parent.parent.localPosition.z);
+                //transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.5f, transform.parent.parent.localPosition.z);
             }
             else
             {
-                transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.005f, transform.parent.parent.localPosition.z);
+                //transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.095f, transform.parent.parent.localPosition.z);
+            }
+        }
+        else if (handle == HandleType.Tomato)
+        {
+            if (!isCooked)
+            {
+                transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y -0.08f, transform.parent.parent.localPosition.z);
+            }
+            else
+            {
+                transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.21f, transform.parent.parent.localPosition.z);
             }
         }
         else
@@ -193,25 +211,42 @@ public class Handle : MonoBehaviour
         transform.parent.parent.localPosition = target;
         if (handle == HandleType.Shrimp && !isCooked)
         {
-            transform.parent.parent.localRotation = Quaternion.Euler(new Vector3(0, 244.302612f, 0));
+            if (!isCooked)
+            {
+                transform.parent.parent.localRotation = Quaternion.Euler(new Vector3(0, 244.302612f, 0));
+            }
+            else
+            {
+                transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y- 0.0023f, transform.parent.parent.localPosition.z);
+            }
         }
         else if (handle == HandleType.Fish && isCooked)
         {
-            transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.0037f, transform.parent.parent.localPosition.z);
-        }
-        else if (handle == HandleType.Fish)
-        {
-
+            if (isCooked)
+            {
+                transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.00224f, transform.parent.parent.localPosition.z);
+            }
         }
         else if (handle == HandleType.Lettuce)
         {
             if (isCooked)
             {
-                transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.0052f, transform.parent.parent.localPosition.z);
+                //transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.5f, transform.parent.parent.localPosition.z);
             }
             else
             {
-                transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.005f, transform.parent.parent.localPosition.z);
+                transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.095f, transform.parent.parent.localPosition.z);
+            }
+        }
+        else if (handle == HandleType.Tomato)
+        {
+            if (!isCooked)
+            {
+                transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.08f, transform.parent.parent.localPosition.z);
+            }
+            else
+            {
+                transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.21f, transform.parent.parent.localPosition.z);
             }
         }
             //}
@@ -241,7 +276,7 @@ public class Handle : MonoBehaviour
         {
             MeshRenderer mesh = transform.parent.GetComponent<MeshRenderer>();
             mesh.material = cookedFish;
-            transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.0037f, transform.parent.parent.localPosition.z);
+            transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.0017f, transform.parent.parent.localPosition.z);
         }
         else if (handType == HandleType.Tomato)
         {
@@ -252,14 +287,17 @@ public class Handle : MonoBehaviour
             transform.parent.localPosition = Vector3.zero;
             transform.parent.localRotation = Quaternion.identity;
             transform.parent.parent.localRotation = Quaternion.identity;
+            transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.0013f, transform.parent.parent.localPosition.z);
         }
-        else if (handType == HandleType.Cucumber)
+        else if (handType == HandleType.Tomato)
         {
-
+            transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.017f, transform.parent.parent.localPosition.z);
         }
         else if (handType == HandleType.Lettuce)
         {
-            transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.0002f, transform.parent.parent.localPosition.z);
+            MeshRenderer mesh = transform.parent.GetComponent<MeshRenderer>();
+            mesh.material = cookedFish;
+            transform.parent.parent.localPosition = new Vector3(transform.parent.parent.localPosition.x, transform.parent.parent.localPosition.y - 0.0028f, transform.parent.parent.localPosition.z);
         }
         else
         {

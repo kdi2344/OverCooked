@@ -24,9 +24,11 @@ public class busController : MonoBehaviour
                 if (!StageManager.instance.stage1Space)
                 {
                     StageManager.instance.stage1Space = true;
+                    SoundManager.instance.PlayEffect("mapRoad");
                 }
                 else
                 {
+                    SoundManager.instance.PlayEffect("start");
                     LoadingSceneManager.LoadScene(ActiveScene.SceneName);
                 }
             }
@@ -35,9 +37,11 @@ public class busController : MonoBehaviour
                 if (!StageManager.instance.stage2Space && StageManager.instance.map1Star >= 2)
                 {
                     StageManager.instance.stage2Space = true;
+                    SoundManager.instance.PlayEffect("mapRoad");
                 }
                 else if (StageManager.instance.stage2Space)
                 {
+                    SoundManager.instance.PlayEffect("start");
                     LoadingSceneManager.LoadScene(ActiveScene.SceneName);
                 }
             }
@@ -46,11 +50,33 @@ public class busController : MonoBehaviour
                 if (!StageManager.instance.stage3Space && StageManager.instance.map1Star + StageManager.instance.map2Star >= 4)
                 {
                     StageManager.instance.stage3Space = true;
+                    SoundManager.instance.PlayEffect("mapRoad");
                 }
                 else if (StageManager.instance.stage3Space)
                 {
+                    SoundManager.instance.PlayEffect("start");
                     LoadingSceneManager.LoadScene(ActiveScene.SceneName);
                 }
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Space))
+        {
+            int i = Random.Range(0, 4);
+            if (i == 0)
+            {
+                SoundManager.instance.PlayEffect("van1");
+            }
+            else if (i == 1)
+            {
+                SoundManager.instance.PlayEffect("van2");
+            }
+            else if (i == 2)
+            {
+                SoundManager.instance.PlayEffect("van3");
+            }
+            else if (i == 3)
+            {
+                SoundManager.instance.PlayEffect("van4");
             }
         }
     }

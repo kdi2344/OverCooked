@@ -9,7 +9,9 @@ public class AutoTrash : MonoBehaviour
         if (other.CompareTag("Ingredient") && (!other.transform.parent.IsChildOf(FindObjectOfType<PlayerController>().transform) && !other.transform.parent.IsChildOf(FindObjectOfType<Player2Controller>().transform)))
         {
             //없어지는 scale 조정느낌
-            StartCoroutine(ScaleSmaller(other));
+            //StartCoroutine(ScaleSmaller(other));
+            SoundManager.instance.PlayEffect("bin");
+            Destroy(other.transform.parent.parent.gameObject);
         }
     }
     IEnumerator ScaleSmaller(Collider other)

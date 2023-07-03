@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     private bool once = false;
     private bool isDone = false;
     private float lastSec = 0f;
+    private float countSec = 0f;
 
     //시간 UI
     [SerializeField] public float GameTime = 160f;
@@ -124,6 +125,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        duration = GameTime / 2;
         currentColor = TimeSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>().color;
         if (null == instance)
         {
@@ -172,6 +174,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             if (StartTime > 1 && !PlayOnce)
             {
+                SoundManager.instance.PlayEffect("ready");
                 Ready.SetActive(true);
                 PlayOnce = true;
             }
@@ -188,6 +191,7 @@ public class GameManager : MonoBehaviour
                 Ready.SetActive(false);
                 PlayTwice = true;
                 Go.SetActive(true);
+                SoundManager.instance.PlayEffect("go");
             }
             else if (PlayTwice && Go.transform.localScale.x < 1)
             {
@@ -199,6 +203,7 @@ public class GameManager : MonoBehaviour
             }
             else if (StartTime > 6 && PlayTwice && Go.transform.localScale.x > 1)
             {
+                SoundManager.instance.StagePlay(SoundManager.instance.StageName);
                 Go.SetActive(false);
                 isStop = false;
                 StartSetting = true;
@@ -235,12 +240,30 @@ public class GameManager : MonoBehaviour
         
         GameTime -= Time.deltaTime;
         ToClock();
+        if (GameTime < 30 && SoundManager.instance.asBGM.pitch == 1)
+        {
+            SoundManager.instance.asBGM.pitch = 1.5f;
+        }
+        else if (GameTime < 15 && SoundManager.instance.asBGM.pitch == 1.5f)
+        {
+            SoundManager.instance.asBGM.pitch = 2;
+        }
+
         if (GameTime < 30)
         {
+            countSec += Time.deltaTime;
             SandTimer.GetComponent<Animator>().SetTrigger("shake");
+        }
+        if (countSec >=1)
+        {
+            countSec = 0;
+            SoundManager.instance.PlayEffect("beep");
         }
         if (GameTime <= 0 && !isDone) //시간 지나면 멈추기
         {
+            SoundManager.instance.asBGM.pitch = 1;
+            SoundManager.instance.asBGM.Stop();
+            SoundManager.instance.PlayEffect("timesUp");
             Time.timeScale = 0;
             StageManager.instance.totalMoney = Coin;
             Timesup.SetActive(true);

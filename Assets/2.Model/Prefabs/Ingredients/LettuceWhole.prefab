@@ -220,7 +220,10 @@ MonoBehaviour:
   isOnDesk: 1
   isCooked: 0
   cookedIngredient: {fileID: 8097617054539991953, guid: 12a386c2dfdf6504791895fae95723f0, type: 3}
-  cookedFish: {fileID: 0}
+  cookedFish: {fileID: 2100000, guid: e3beb2d12aec27f45a3b339277d2132b, type: 2}
+  fishLocalPos: {x: 0, y: 0.138, z: 0.08}
+  shrimpLocalPos: {x: -0.36500087, y: -0.089000136, z: -0.42300048}
+  lettuceLocalPos: {x: 0, y: 0.418, z: 0}
 --- !u!114 &2855440528487687716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,6 +241,6 @@ MonoBehaviour:
   materials:
   - {fileID: 2100000, guid: 06c0d51b1a8afff46bd673388575a967, type: 2}
   - {fileID: 2100000, guid: 3de0d8fab1999f945b642031c415f250, type: 2}
-  - {fileID: 2100000, guid: 06c0d51b1a8afff46bd673388575a967, type: 2}
-  - {fileID: 2100000, guid: 3de0d8fab1999f945b642031c415f250, type: 2}
+  - {fileID: 2100000, guid: e3beb2d12aec27f45a3b339277d2132b, type: 2}
+  - {fileID: 2100000, guid: 508aa4f3f5ad202488bae6e4ba9fbe8a, type: 2}
   type: 5

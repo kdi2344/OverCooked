@@ -480,6 +480,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SideCountertop-Woods
       objectReference: {fileID: 0}
+    - target: {fileID: 6087733764881344372, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.004
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
 --- !u!4 &116799583 stripped
@@ -545,6 +549,10 @@ PrefabInstance:
     - target: {fileID: 683384350485747876, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
       propertyPath: m_Name
       value: SideCountertop-Woods (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6087733764881344372, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.004
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
@@ -882,6 +890,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CounterNoEdge (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6688450683314586160, guid: 9ad131eff27935447b3d0c05faf2398e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.008
+      objectReference: {fileID: 0}
+    - target: {fileID: 6688450683314586160, guid: 9ad131eff27935447b3d0c05faf2398e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6688450683314586160, guid: 9ad131eff27935447b3d0c05faf2398e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: 8149950734416596912, guid: 9ad131eff27935447b3d0c05faf2398e, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1022,7 +1042,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6087733764881344372, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0077
+      value: 0.00667
       objectReference: {fileID: 0}
     - target: {fileID: 6780830295701542597, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
       propertyPath: m_Size.y
@@ -1341,6 +1361,10 @@ PrefabInstance:
     - target: {fileID: 683384350485747876, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
       propertyPath: m_Name
       value: SideCountertop-Woods (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6087733764881344372, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.004
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
@@ -1975,7 +1999,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6087733764881344372, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0077
+      value: 0.00647
       objectReference: {fileID: 0}
     - target: {fileID: 6780830295701542597, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
       propertyPath: m_Size.y
@@ -2063,6 +2087,10 @@ PrefabInstance:
     - target: {fileID: 683384350485747876, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
       propertyPath: m_Name
       value: SideCountertop-Woods (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6087733764881344372, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.004
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
@@ -3410,6 +3438,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SideCountertop-Woods (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6087733764881344372, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.004
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
 --- !u!4 &948251636 stripped
@@ -4198,6 +4230,10 @@ PrefabInstance:
     - target: {fileID: 683384350485747876, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
       propertyPath: m_Name
       value: SideCountertop-Woods (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6087733764881344372, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.004
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
@@ -5136,7 +5172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6087733764881344372, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0077
+      value: 0.00627
       objectReference: {fileID: 0}
     - target: {fileID: 6780830295701542597, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
       propertyPath: m_Size.y
@@ -6514,6 +6550,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SideCountertop-Woods (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 6087733764881344372, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.004
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
 --- !u!4 &1768859467 stripped
@@ -7537,7 +7577,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6087733764881344372, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0077
+      value: 0.0062
       objectReference: {fileID: 0}
     - target: {fileID: 6780830295701542597, guid: a3c20c3c80bd4bd4c90d0d63717e397a, type: 3}
       propertyPath: m_Size.y

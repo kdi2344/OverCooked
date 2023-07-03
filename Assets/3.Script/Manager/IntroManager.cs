@@ -9,6 +9,7 @@ public class IntroManager : MonoBehaviour
     [SerializeField] GameObject Shutter;
     [SerializeField] GameObject SpaceToStart;
     [SerializeField] GameObject buttons;
+    [SerializeField] GameObject Setting;
     private void Awake()
     {
         Camera.main.transform.position = new Vector3(-1.83f, 0.58f, -7.84f);
@@ -34,12 +35,14 @@ public class IntroManager : MonoBehaviour
 
     public void BtnStart()
     {
+        SoundManager.instance.WantChange = true;
         LoadingSceneManager.LoadScene("Map");
     }
 
     public void BtnSetting()
     {
-
+        Setting.SetActive(true);
+        //소리 화면만 켜주기 설정
     }
 
     public void BtnExit()
@@ -49,5 +52,14 @@ public class IntroManager : MonoBehaviour
         #else
             Application.Quit();
         #endif
+    }
+    
+    public void BtnSettingSave()
+    {
+
+    }
+    public void BtnSettingExit()
+    {
+        Setting.SetActive(false);
     }
 }

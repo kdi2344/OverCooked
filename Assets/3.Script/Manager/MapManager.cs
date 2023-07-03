@@ -101,100 +101,103 @@ public class MapManager : MonoBehaviour
     }
     IEnumerator FlipFirst()
     {
+        SoundManager.instance.PlayEffect("mapExpose");
         for (int i = 0; i < first.Length; i++)
         {
             first[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("flip");
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < second.Length; i++)
         {
             second[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("flip");
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < third.Length; i++)
         {
             third[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("flip");
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < fourth.Length; i++)
         {
             fourth[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("flip");
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < fifth.Length; i++)
         {
             fifth[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("flip");
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         isStage1open = true;
-        Invoke("BusOn", 2f);
+        Invoke("BusOn", 1.5f);
     }
 
     IEnumerator FlipSecondMap()
     {
+        SoundManager.instance.PlayEffect("mapExpose");
         for (int i = 0; i < first2.Length; i++)
         {
             first2[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("flip");
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < second2.Length; i++)
         {
             second2[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("flip");
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < third2.Length; i++)
         {
             third2[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("flip");
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < fourth2.Length; i++)
         {
             fourth2[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("flip");
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < fifth2.Length; i++)
         {
             fifth2[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("flip");
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         isStage2open = true;
-        Invoke("BusOn", 2f);
+        Invoke("BusOn", 1.5f);
     }
 
     IEnumerator FlipThirdMap()
     {
+        SoundManager.instance.PlayEffect("mapExpose");
         for (int i = 0; i < first3.Length; i++)
         {
             first3[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("flip");
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < second3.Length; i++)
         {
             second3[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("flip");
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < third3.Length; i++)
         {
             third3[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("flip");
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < fourth3.Length; i++)
         {
             fourth3[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("flip");
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < fifth3.Length; i++)
         {
             fifth3[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("flip");
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < sixth3.Length; i++)
         {
             sixth3[i].transform.GetChild(0).GetComponent<Animator>().SetTrigger("flip");
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         isStage3open = true;
-        Invoke("BusOn", 2f);
+        Invoke("BusOn", 1.5f);
     }
     private void BusOn()
     {

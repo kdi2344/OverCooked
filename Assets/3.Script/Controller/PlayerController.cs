@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
                     }
                     else
                     {
+                        SoundManager.instance.PlayEffect("take");
                         activeObjectOb.onSomething = false;
                         isHolding = true;
                         anim.SetBool("isHolding", isHolding);
@@ -73,6 +74,7 @@ public class PlayerController : MonoBehaviour
                     //선반에 있는게 접시이고 내가 손질된 재료를 들고있다면 놓기
                     if (activeObject.transform.parent.GetChild(2).GetComponent<Plates>().AddIngredient(transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Handle>().hand))
                     {
+                        SoundManager.instance.PlayEffect("put");
                         activeObject.transform.parent.GetChild(2).GetComponent<Plates>().InstantiateUI();
                         Destroy(transform.GetChild(1).gameObject);
                         isHolding = false;
@@ -81,6 +83,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (canActive && !activeObjectOb.onSomething && isHolding) //선반에 없는데 내가 뭔가 들고 있다면 놓기
                 {
+                    SoundManager.instance.PlayEffect("put");
                     GameObject handleThing = transform.GetChild(1).gameObject;
                     if (handleThing.CompareTag("Ingredient"))
                     {
@@ -104,6 +107,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (canActive && isHolding && activeObjectOb.onSomething) //내가 뭘 들고있고 상호작용 가능한 것도 있는데 누르면 그냥 바닥에 버림
                 {
+                    SoundManager.instance.PlayEffect("put");
                     if (transform.GetChild(1).CompareTag("Plate"))
                     {
                         transform.GetChild(1).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
@@ -122,6 +126,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (!activeObjectOb.onSomething && !isHolding) //Crate위에 뭐가 없고 나도 안들고 있으면
                 {
+                    SoundManager.instance.PlayEffect("take");
                     activeObject.GetComponent<Craft>().OpenCraftPlayer1(); //꺼내기
                     activeObjectOb.onSomething = false;
                     isHolding = true;
@@ -130,6 +135,7 @@ public class PlayerController : MonoBehaviour
                 else if (!activeObjectOb.onSomething && isHolding) //Craft위에 뭐가 없고 내가 들고있으면
                 {
                     GameObject handleThing = transform.GetChild(1).gameObject;
+                    SoundManager.instance.PlayEffect("put");
                     if (handleThing.CompareTag("Ingredient"))
                     {
                         activeObjectOb.onSomething = true;
@@ -155,6 +161,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (activeObjectOb.onSomething && !isHolding) //crate위에 뭐가 있고 내가 안들고있으면 집기
                 {
+                    SoundManager.instance.PlayEffect("take");
                     activeObjectOb.onSomething = false;
                     isHolding = true;
                     anim.SetBool("isHolding", isHolding);
@@ -173,6 +180,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (!isHolding && activeObject.CompareTag("Ingredient")) //떨어진 재료 줍기
             {
+                SoundManager.instance.PlayEffect("take");
                 isHolding = true;
                 anim.SetBool("isHolding", isHolding);
                 GameObject handleThing = activeObject.transform.parent.gameObject;
@@ -181,6 +189,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (activeObject.CompareTag("Bin")) //쓰레기통과 상호작용
             {
+                SoundManager.instance.PlayEffect("bin");
                 if (isHolding && transform.GetChild(1).gameObject.GetComponent<Handle>()!=null && transform.GetChild(1).gameObject.GetComponent<Handle>().hand == Handle.HandleType.Plate) //접시 들고 쓰레기통 버리려고 하면
                 {
                     transform.GetChild(1).gameObject.GetComponent<Plates>().ClearIngredient();
@@ -198,11 +207,12 @@ public class PlayerController : MonoBehaviour
                 {
                     if (GameManager.instance.CheckMenu(transform.GetChild(1).gameObject.GetComponent<Plates>().containIngredients))
                     {
+                        SoundManager.instance.PlayEffect("right");
                         GameManager.instance.MakeOrder();
                     }
                     else
                     {
-                        Debug.Log("없는 메뉴");
+                        SoundManager.instance.PlayEffect("no");
                         //실패하면 뭐시기 빨간색 불들어오고 뭐 그런거 함수 만들어서 처리하기
                     }
                     Destroy(transform.GetChild(1).gameObject); //접시 통째로 삭제 (시간 되면 재활용으로 바꾸기)
@@ -212,7 +222,8 @@ public class PlayerController : MonoBehaviour
                 }
             }
             else if (!isHolding && activeObject.CompareTag("Plate")) //떨어진 plate 줍기
-            { 
+            {
+                SoundManager.instance.PlayEffect("take");
                 isHolding = true;
                 anim.SetBool("isHolding", isHolding);
                 GameObject handleThing = activeObject.transform.parent.gameObject;
@@ -221,6 +232,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (activeObject.CompareTag("Return") && activeObject.GetComponent<Object>().onSomething && !isHolding) //반환 접시 가져오기
             {
+                SoundManager.instance.PlayEffect("take");
                 isHolding = true;
                 anim.SetBool("isHolding", isHolding);
                 GameObject handleThing = activeObject.GetComponent<Return>().TakePlate(); //하나 꺼내기
@@ -231,6 +243,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (activeObject.CompareTag("Ingredient") && activeObject.GetComponent<Handle>().isCooked) { }
                 {
+                    SoundManager.instance.PlayEffect("add");
                     FindObjectOfType<Return>().returnPlates[FindObjectOfType<Return>().returnPlates.Count-1].GetComponent<Plates>().AddIngredient(transform.GetChild(1).GetChild(0).GetChild(0).gameObject.GetComponent<Handle>().hand);
                     FindObjectOfType<Return>().returnPlates[FindObjectOfType<Return>().returnPlates.Count-1].GetComponent<Plates>().InstantiateUI();
                     isHolding = false;
@@ -242,6 +255,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (activeObject != null && activeObject.CompareTag("Ingredient") && isHolding) //앞에 아무것도 없고 바닥에 두기 (예외처리)
                 {
+                    SoundManager.instance.PlayEffect("put");
                     transform.GetChild(1).GetChild(0).GetComponent<MeshCollider>().isTrigger = false;
                     transform.GetChild(1).GetChild(0).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
                     transform.GetChild(1).SetParent(transform.parent);
@@ -256,6 +270,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Space) && isHolding) //앞에 아무것도 없는데 뭘 들고있다 -> 바닥에 버리기
         {
+            SoundManager.instance.PlayEffect("add");
             if (transform.GetChild(1).CompareTag("Plate"))
             {
                 transform.GetChild(1).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
@@ -288,6 +303,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q) && isHolding && transform.GetChild(1).GetComponent<Handle>() == null)
         { //ingredient 던지기 가능
+            SoundManager.instance.PlayEffect("throw");
             Vector3 dir = transform.TransformDirection(throwPower);
             anim.SetTrigger("throw");
             isHolding = false;
@@ -302,6 +318,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && !isDash && isMoving)
         {
+            SoundManager.instance.PlayEffect("dash");
             isDash = true;
             Rigidbody playerRigid = GetComponent<Rigidbody>();
             playerRigid.AddForce(transform.TransformDirection(new Vector3(0, 0, 30)), ForceMode.Impulse);
@@ -397,6 +414,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Respawn()
     {
+        SoundManager.instance.PlayEffect("respawn");
         gameObject.transform.localPosition = new Vector3(20.6200008f, 1.33632302f, -6.61000013f);
         gameObject.transform.localRotation = new Quaternion(0, 1, 0, 0);
         gameObject.SetActive(true);
@@ -406,6 +424,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("deadZone"))
         {
+            SoundManager.instance.PlayEffect("fall");
             DieRespawn();
             return;
         }

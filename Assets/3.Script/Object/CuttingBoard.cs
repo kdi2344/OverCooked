@@ -38,6 +38,7 @@ public class CuttingBoard : MonoBehaviour
     {
         if (parentObject.onSomething)
         {
+            SoundManager.instance.PlayEffect("cut");
             cookingBar.gameObject.SetActive(true);
             ClearTime();
             _CoTimer = StartCoroutine(CoStartCutting(EndCallBack));
@@ -49,6 +50,7 @@ public class CuttingBoard : MonoBehaviour
     {
         if (parentObject.onSomething)
         {
+            SoundManager.instance.PlayEffect("cut");
             cookingBar.gameObject.SetActive(true);
             ClearTime();
             _CoTimer = StartCoroutine(CoStartCutting(EndCallBack));
@@ -71,6 +73,7 @@ public class CuttingBoard : MonoBehaviour
             }
             yield return new WaitForSeconds(0.5f);
             CuttingTime += 0.25f;
+            SoundManager.instance.PlayEffect("cut");
         }
         EndCallBack?.Invoke();
         OffSlider();

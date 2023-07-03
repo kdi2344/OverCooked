@@ -49,6 +49,7 @@ public class ResultManager : MonoBehaviour
     {
         if (canSkip && Input.GetKeyDown(KeyCode.Space))
         {
+            SoundManager.instance.WantChange = true;
             LoadingSceneManager.LoadScene("Map");
         }
     }
@@ -102,6 +103,7 @@ public class ResultManager : MonoBehaviour
             time += 0.01f;
             yield return new WaitForSeconds(0.005f);
         }
+        SoundManager.instance.PlayEffect("star1");
         if (StageManager.instance.totalMoney > limits[i].twoStarLimit)
         {
             if (i == 0)
@@ -134,6 +136,7 @@ public class ResultManager : MonoBehaviour
             time += 0.01f;
             yield return new WaitForSeconds(0.005f);
         }
+        SoundManager.instance.PlayEffect("star2");
         if (StageManager.instance.totalMoney > limits[i].threeStarLimit)
         {
             if (i == 0)
@@ -165,6 +168,7 @@ public class ResultManager : MonoBehaviour
             time += 0.01f;
             yield return new WaitForSeconds(0.005f);
         }
+        SoundManager.instance.PlayEffect("star3");
         yield return null;
         canSkip = true;
     }
