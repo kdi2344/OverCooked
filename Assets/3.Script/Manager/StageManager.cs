@@ -7,7 +7,6 @@ public class StageManager : MonoBehaviour
     public static StageManager instance = null;
     public enum State { start, stage1, stage2, stage3 };
     public State playStage = State.stage1;
-    public GameObject setting;
 
     private bool isStop = false;
 
@@ -33,10 +32,6 @@ public class StageManager : MonoBehaviour
 
     private void Awake()
     {
-        if (SoundManager.instance.Setting == null)
-        {
-            SoundManager.instance.Setting = setting;
-        }
         if (instance == null)
         {
             instance = this;
@@ -47,30 +42,23 @@ public class StageManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            if (!isStop)
-            {
-                Time.timeScale = 0;
-                SoundManager.instance.Setting = setting;
-                SoundManager.instance.Sound = setting.transform.GetChild(3).gameObject;
-                SoundManager.instance.Control = setting.transform.GetChild(4).gameObject;
-                SoundManager.instance.Resolution = setting.transform.GetChild(5).gameObject;
-
-                setting.SetActive(true);
-                isStop = true;
-            }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.P))
+    //    {
+    //        if (!isStop)
+    //        {
+    //            Time.timeScale = 0;
+    //            isStop = true;
+    //        }
             
-            else
-            {
-                Time.timeScale = 1;
-                setting.SetActive(false);
-                isStop = true;
-            }
-        }
-    }
+    //        else
+    //        {
+    //            Time.timeScale = 1;
+    //            isStop = true;
+    //        }
+    //    }
+    //}
     public void SetMap(GameObject[] flags, Material[] flags_m)
     {
         if (stage1Space)

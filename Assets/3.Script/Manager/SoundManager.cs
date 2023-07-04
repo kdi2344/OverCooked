@@ -113,6 +113,10 @@ public class SoundManager : MonoBehaviour
                     Time.timeScale = 0;
                     Setting.SetActive(true);
                     ShowSoundTab();
+                    if (Setting == null)
+                    {
+                        Setting = FindObjectOfType<setting>().gameObject;
+                    }
                 }
                 else
                 {
