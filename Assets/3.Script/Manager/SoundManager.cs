@@ -34,7 +34,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] Text[] txt1;
     [SerializeField] Text[] txt2;
     KeyCode[] defaultKeys1 = new KeyCode[] { KeyCode.C, KeyCode.Q, KeyCode.LeftShift, KeyCode.Space };
-    KeyCode[] defaultKeys2 = new KeyCode[] { KeyCode.KeypadEnter, KeyCode.Semicolon, KeyCode.Quote, KeyCode.RightShift };
+    KeyCode[] defaultKeys2 = new KeyCode[] { KeyCode.KeypadEnter, KeyCode.Quote, KeyCode.Semicolon, KeyCode.RightShift };
 
     [Header("음량 관련")]
     public float volumeBGM = 1f;
