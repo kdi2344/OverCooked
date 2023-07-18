@@ -2715,6 +2715,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   setting: {fileID: 11400000, guid: 68afde03d75ee2540bbe7f9ed268de23, type: 2}
+  ServerBtn: {fileID: 1707311197}
+  NickName_i: {fileID: 1982208370}
   playerPrefabs: {fileID: 5265518529961989418, guid: ef83ce86d13bf8242945269e6030e768, type: 3}
 --- !u!4 &308156630
 Transform:
