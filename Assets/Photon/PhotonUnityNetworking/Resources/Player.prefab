@@ -1160,6 +1160,7 @@ GameObject:
   - component: {fileID: 5265518529961989393}
   - component: {fileID: 5265518529961989399}
   - component: {fileID: 4977266411913584956}
+  - component: {fileID: 5879253408810104743}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1210,6 +1211,9 @@ MonoBehaviour:
   GribR: {fileID: 3731519959740930594}
   GribL: {fileID: 3036346185458243783}
   Knife: {fileID: 1870155906328477177}
+  colors:
+  - {fileID: 21300000, guid: f4f431671b5563041b7d096155a3502c, type: 3}
+  - {fileID: 21300000, guid: a690fb3ec1d13d242aeb4ea65dbec31b, type: 3}
 --- !u!65 &5265518529961989393
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1257,10 +1261,28 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 5879253408810104743}
+  - {fileID: 2283956084592301307}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &5879253408810104743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5265518529961989418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &5265518530452819521
 GameObject:
   m_ObjectHideFlags: 0
@@ -1451,7 +1473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.74509805}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.74509805}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
