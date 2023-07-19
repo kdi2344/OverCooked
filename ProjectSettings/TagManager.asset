@@ -17,6 +17,8 @@ TagManager:
   - deadZone
   - stage3
   - setting
+  - Bullet
+  - nickname
   layers:
   - Default
   - TransparentFX

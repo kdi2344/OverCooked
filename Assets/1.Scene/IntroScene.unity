@@ -2647,7 +2647,7 @@ GameObject:
   - component: {fileID: 259991566}
   m_Layer: 5
   m_Name: EnterNickname
-  m_TagString: Untagged
+  m_TagString: nickname
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

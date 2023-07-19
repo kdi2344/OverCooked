@@ -28,6 +28,7 @@ public class PUNManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.GameVersion = gameversion;
+        Connect();
     }
 
     private void Start()
@@ -36,7 +37,6 @@ public class PUNManager : MonoBehaviourPunCallbacks
         userId = PlayerPrefs.GetString("USER_ID", $"USER_{Random.Range(0, 100):00}");
         userID_i.text = userId;
         PhotonNetwork.NickName = userId;
-        Connect();
     }
     private void OnApplicationQuit()
     {
@@ -56,6 +56,17 @@ public class PUNManager : MonoBehaviourPunCallbacks
     public void Disconnect()
     {
         PhotonNetwork.Disconnect(); //포톤 서버와 연결 끊기
+    }
+
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        Debug.Log("랜덤 룸 접속 실패");
+        RoomOptions ro = new RoomOptions();
+        ro.IsOpen = true;
+        ro.IsVisible = true;
+        ro.MaxPlayers = 2;
+        roomname_i.text = $"Room_{Random.Range(1, 100):000}";
+        PhotonNetwork.CreateRoom("room_1", ro);
     }
 
     public void JoinRandomRoomORCreateRoom() //랜덤 룸에 들어가거나 없으면 만들기
@@ -104,18 +115,22 @@ public class PUNManager : MonoBehaviourPunCallbacks
         //ServerBtn.transform.GetChild(0).GetComponent<Text>().text = "Join";
         ServerBtn.onClick.AddListener(JoinRandomRoomORCreateRoom);
     }
+    public override void OnCreatedRoom()
+    {
+        Debug.Log("방 생성 완료");
+    }
 
     //콜백 함수
     public override void OnConnectedToMaster()
     {
-        base.OnConnectedToMaster();
+        //base.OnConnectedToMaster();
         Debug.Log("Connect to Master Server");
         PhotonNetwork.JoinLobby(); //대기실로 이동
     }
     public override void OnJoinedLobby()
     {
         Debug.Log("Enter to Lobby");
-        base.OnJoinedLobby();
+        //base.OnJoinedLobby();
         //PhotonNetwork.JoinRandomRoom();
     }
 
@@ -129,8 +144,8 @@ public class PUNManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        base.OnJoinedRoom();
-        Debug.Log("Joined Room");
+        //base.OnJoinedRoom();
+        Debug.Log("방 입장 완료");
         //PhotonNetwork.Instantiate(playerPrefabs.name, Vector3.zero, Quaternion.identity);
         UpdatePlayer();
         if (PhotonNetwork.IsMasterClient)
@@ -171,7 +186,7 @@ public class PUNManager : MonoBehaviourPunCallbacks
         foreach(var room in roomList)
         {
             //룸이 삭제된 경우
-            if (room.RemovedFromList)
+            if (room.RemovedFromList == true)
             {
                 roomDict.TryGetValue(room.Name, out tempRoom);
                 Destroy(tempRoom);
@@ -181,16 +196,18 @@ public class PUNManager : MonoBehaviourPunCallbacks
             else
             {
                 //룸 처음 생성
-                if (!roomDict.ContainsKey(room.Name))
+                if (roomDict.ContainsKey(room.Name) == false)
                 {
                     GameObject _room = Instantiate(roomPrefab, scrollContent);
-                    _room.GetComponent<RoomData>().RoomInfo = room;
+                    _room.GetComponent<RoomData>()._roomInfo = room;
+                    _room.GetComponent<RoomData>().SetText();
                     roomDict.Add(room.Name, _room);
                 }
                 else //룸 정보 갱신
                 {
                     roomDict.TryGetValue(room.Name, out tempRoom);
                     tempRoom.GetComponent<RoomData>().RoomInfo = room;
+                    tempRoom.GetComponent<RoomData>().SetText();
                 }
             }
         }
@@ -204,8 +221,8 @@ public class PUNManager : MonoBehaviourPunCallbacks
             userId = $"USER_{Random.Range(0, 100):00}";
             userID_i.text = userId;
         }
-        //PlayerPrefs.SetString("USER_ID", userID_i.text);
-        //PhotonNetwork.NickName = userID_i.text;
+        PlayerPrefs.SetString("USER_ID", userID_i.text);
+        PhotonNetwork.NickName = userID_i.text;
         PhotonNetwork.JoinRandomRoom();
     }
 

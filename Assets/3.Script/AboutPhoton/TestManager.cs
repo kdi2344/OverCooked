@@ -40,8 +40,6 @@ public class TestManager : MonoBehaviour
 
     private void CreatePlayer()
     {
-        //yield return new WaitUntil(() => isConnect);
-
         spawnPoints = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
 
         Vector3 pos = spawnPoints[PhotonNetwork.CurrentRoom.PlayerCount].position;
@@ -50,7 +48,7 @@ public class TestManager : MonoBehaviour
         GameObject playerTemp = PhotonNetwork.Instantiate("Player", pos, rot, 0);
 
         int colorNum = PhotonNetwork.CurrentRoom.PlayerCount;
-        Debug.Log("colornum " + colorNum);
+        //Debug.Log("colornum " + colorNum);
         PhotonNetwork.CurrentRoom.Players[PhotonNetwork.CurrentRoom.PlayerCount].SetCustomProperties(new Hashtable { { "Color", PhotonNetwork.CurrentRoom.PlayerCount } });
         if (colorNum != -1)
         {
