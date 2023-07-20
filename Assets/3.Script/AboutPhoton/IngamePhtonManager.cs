@@ -21,14 +21,16 @@ public class IngamePhtonManager : MonoBehaviourPunCallbacks
         Quaternion rot = spawnPoints[PhotonNetwork.CurrentRoom.PlayerCount - 1].rotation;
 
         GameObject playerTemp = PhotonNetwork.Instantiate("Player", pos, rot, 0);
-        CP = PhotonNetwork.LocalPlayer.CustomProperties;
-        int colorNum = (int)CP["Color"];
+        playerTemp.GetComponent<PlayerController>().InitColor((int)PhotonNetwork.LocalPlayer.CustomProperties["Color"]);
+        Debug.Log((int)PhotonNetwork.LocalPlayer.CustomProperties["Color"]);
+        //CP = PhotonNetwork.LocalPlayer.CustomProperties;
+        //int colorNum = (int)CP["Color"];
         //Debug.Log("colornum " + colorNum);
         //PhotonNetwork.CurrentRoom.Players[PhotonNetwork.CurrentRoom.PlayerCount - 1].SetCustomProperties(new Hashtable { { "Color", PhotonNetwork.CurrentRoom.PlayerCount } });
-        if (colorNum != -1)
-        {
-            //Debug.Log("Color Custom Properties = " + colorNum);
-            playerTemp.GetComponent<PlayerController>().InitColor(colorNum);
-        }
+        //if (colorNum != -1)
+        //{
+        //    //Debug.Log("Color Custom Properties = " + colorNum);
+        //    playerTemp.GetComponent<PlayerController>().InitColor(colorNum);
+        //}
     }
 }

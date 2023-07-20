@@ -17,7 +17,7 @@ public class LobbyManager : MonoBehaviour
         pv = GetComponent<PhotonView>();
         PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable { { "Color", -1 } });
         CP = PhotonNetwork.LocalPlayer.CustomProperties;
-        Debug.Log("Properties Color : " + CP["Color"]);
+        
     }
     //public void SetColorProperty(int num)
     //{

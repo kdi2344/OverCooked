@@ -648,12 +648,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     public void InitColor(int num)
     {
+        
         pv.RPC(nameof(SetMT), RpcTarget.AllViaServer, num);
     }
 
     [PunRPC]
     private void SetMT(int index)
     {
+        Debug.Log("ÀÌ°Å!!! " + PhotonNetwork.CurrentRoom.Players[PhotonNetwork.CurrentRoom.PlayerCount].NickName + "Properties Color : " + index);
         PhotonNetwork.CurrentRoom.Players[PhotonNetwork.CurrentRoom.PlayerCount].SetCustomProperties(new Hashtable { { "Color", index } });
         transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = colors[index];
     }
