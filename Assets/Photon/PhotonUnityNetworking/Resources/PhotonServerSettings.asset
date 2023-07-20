@@ -41,6 +41,12 @@ MonoBehaviour:
   - RespawnSpaceship
   - SetMaterial
   - SetMT
+  - OnAnimatorMove
+  - Move
+  - test
+  - test2
+  - SetTrue
+  - Check
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

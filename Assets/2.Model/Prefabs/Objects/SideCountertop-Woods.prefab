@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3864041527491481019}
   - component: {fileID: 1331695507229915505}
   - component: {fileID: 6780830295701542597}
+  - component: {fileID: 1386477854351796220}
   m_Layer: 0
   m_Name: SideCountertop-Woods
   m_TagString: CounterTop
@@ -97,6 +98,28 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0120007, y: 0.0050139986, z: 0.013380596}
   m_Center: {x: -0.000000006198883, y: 0.0025069993, z: 0.0006959224}
+--- !u!114 &1386477854351796220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683384350485747876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &4052795716837834784
 GameObject:
   m_ObjectHideFlags: 0

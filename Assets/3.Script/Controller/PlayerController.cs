@@ -4,6 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
@@ -653,11 +654,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     private void SetMT(int index)
     {
+        PhotonNetwork.CurrentRoom.Players[PhotonNetwork.CurrentRoom.PlayerCount].SetCustomProperties(new Hashtable { { "Color", index } });
         transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = colors[index];
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        //Debug.Log($"1.{colorIndex}");
         if (pv.IsMine && colorIndex != -1)
         {
             pv.RPC(nameof(SetMT), newPlayer, colorIndex);

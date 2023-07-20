@@ -183,11 +183,14 @@ public class PUNManager : MonoBehaviourPunCallbacks
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         GameObject tempRoom = null;
-        foreach(var room in roomList)
+        for (int i = 0; i < roomList.Count; i++)
+        //foreach(var room in roomList)
         {
+            var room = roomList[i];
             //룸이 삭제된 경우
             if (room.RemovedFromList == true)
             {
+                Debug.Log("삭제");
                 roomDict.TryGetValue(room.Name, out tempRoom);
                 Destroy(tempRoom);
                 roomDict.Remove(room.Name);
@@ -195,6 +198,7 @@ public class PUNManager : MonoBehaviourPunCallbacks
             //룸 정보가 변경된 경우
             else
             {
+                Debug.Log("변경");
                 //룸 처음 생성
                 if (roomDict.ContainsKey(room.Name) == false)
                 {
@@ -205,6 +209,7 @@ public class PUNManager : MonoBehaviourPunCallbacks
                 }
                 else //룸 정보 갱신
                 {
+                    Debug.Log("정보 갱신");
                     roomDict.TryGetValue(room.Name, out tempRoom);
                     tempRoom.GetComponent<RoomData>().RoomInfo = room;
                     tempRoom.GetComponent<RoomData>().SetText();

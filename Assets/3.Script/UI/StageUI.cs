@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class StageUI : MonoBehaviour
 {
@@ -13,11 +14,24 @@ public class StageUI : MonoBehaviour
     [SerializeField] StarLimit limit;
     Vector3 pos = new Vector3(0, 5, 0);
 
+    private PhotonView pv;
+    private void Awake()
+    {
+        pv = GetComponent<PhotonView>();
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Check();
+            if (SoundManager.instance.isSingle)
+            {
+                Check();
+            }
+            else
+            {
+                pv.RPC("Check", RpcTarget.All);
+            }
+            //Check();
         }
         if (Target != null)
         {
@@ -26,9 +40,18 @@ public class StageUI : MonoBehaviour
     }
     private void OnEnable()
     {
-        Check();
+        if (SoundManager.instance.isSingle)
+        {
+            Check();
+        }
+        else
+        {
+            pv.RPC("Check", RpcTarget.All);
+        }
+        //Check();
     }
 
+    [PunRPC]
     private void Check()
     {
         if (Current == stage.stage1)

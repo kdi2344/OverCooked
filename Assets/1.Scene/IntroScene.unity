@@ -5625,6 +5625,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Crate-Tomato
       objectReference: {fileID: 0}
+    - target: {fileID: 5223177880634721956, guid: ada09468a2ab21d45836e91a7b2bd4d4, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ada09468a2ab21d45836e91a7b2bd4d4, type: 3}
 --- !u!1 &681946311
@@ -9957,6 +9961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 827c649720eaef64f92ad6b7d062b9e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSingle: 1
   resolutionDropdown: {fileID: 1569718497}
   fullscreenBtn: {fileID: 1299745931}
   Setting: {fileID: 1776155454}
@@ -14700,6 +14705,18 @@ MonoBehaviour:
           m_StringArgument: btn
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1073352845}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: SingleTrue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1525213235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16976,6 +16993,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1073352845}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: SingleFalse
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

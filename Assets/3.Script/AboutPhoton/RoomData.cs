@@ -29,6 +29,7 @@ public class RoomData : MonoBehaviour
     {
         //RoomInfoText = GetComponentInChildren<Text>();
         RoomInfoText = transform.GetChild(0).GetComponent<Text>();
+        userIDText = GameObject.FindGameObjectWithTag("nickname").transform.GetChild(2).GetComponent<Text>();
         SetText();
         
         GetComponent<Button>().onClick.AddListener(() => OnEnterRoom(_roomInfo.Name));
@@ -38,9 +39,12 @@ public class RoomData : MonoBehaviour
     }
     public void SetText()
     {
-        RoomInfoText = transform.GetChild(0).GetComponent<Text>();
-        userIDText = GameObject.FindGameObjectWithTag("nickname").transform.GetChild(2).GetComponent<Text>();
-        RoomInfoText.text = $"{_roomInfo.Name} ({_roomInfo.PlayerCount}/{_roomInfo.MaxPlayers})";
+        if (_roomInfo != null)
+        {
+            RoomInfoText = transform.GetChild(0).GetComponent<Text>();
+            //userIDText = GameObject.FindGameObjectWithTag("nickname").transform.GetChild(2).GetComponent<Text>();
+            RoomInfoText.text = $"{_roomInfo.Name} ({_roomInfo.PlayerCount}/{_roomInfo.MaxPlayers})";
+        }
     }
     private void OnEnterRoom(string roomName)
     {
@@ -49,7 +53,6 @@ public class RoomData : MonoBehaviour
         ro.IsVisible = true;
         ro.MaxPlayers = 2;
         userIDText = GameObject.FindGameObjectWithTag("nickname").transform.GetChild(2).GetComponent<Text>();
-        //userIDText = GameObject.Find("EnterNickname").GetComponent<inputfield>();
         PhotonNetwork.NickName = userIDText.text; //틀릴수도 있음
         Debug.Log("OnEnterRoom Nickname : " + PhotonNetwork.NickName);
         PhotonNetwork.JoinOrCreateRoom(roomName, ro, TypedLobby.Default);

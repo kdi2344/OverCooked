@@ -38,6 +38,14 @@ public class TestManager : MonoBehaviour
         CreatePlayer();
     }
 
+    public void MoveMap()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("Lobby");
+        }
+    }
+
     private void CreatePlayer()
     {
         spawnPoints = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
@@ -52,6 +60,7 @@ public class TestManager : MonoBehaviour
         PhotonNetwork.CurrentRoom.Players[PhotonNetwork.CurrentRoom.PlayerCount].SetCustomProperties(new Hashtable { { "Color", PhotonNetwork.CurrentRoom.PlayerCount } });
         if (colorNum != -1)
         {
+            //Debug.Log("ColorNum = " + colorNum);
             playerTemp.GetComponent<PlayerController>().InitColor(colorNum-1);
         }
         

@@ -136,6 +136,13 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (!SoundManager.instance.isSingle)
+        {
+            Destroy(FindObjectOfType<PlayerController>().gameObject);
+            Destroy(FindObjectOfType<Player2Controller>().gameObject);
+        }
+
         if (StageManager.instance != null)
         {
             StageManager.instance.success = 0;

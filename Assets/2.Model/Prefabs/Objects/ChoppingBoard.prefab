@@ -122,6 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5929200414521825235}
   - component: {fileID: 3676491211835712600}
+  - component: {fileID: 1951071335632550158}
   m_Layer: 0
   m_Name: ChoppingBoard
   m_TagString: Untagged
@@ -170,6 +171,28 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 76d14744947c6c5409f533990372ab43, type: 3}
   - {fileID: 21300000, guid: 35470bc04a80228478213f2ff56b6471, type: 3}
   - {fileID: 21300000, guid: 3c7bf3321bd71924aa300a5ac4bfdc15, type: 3}
+--- !u!114 &1951071335632550158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6413988918476950889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &7083673564493514521
 GameObject:
   m_ObjectHideFlags: 0

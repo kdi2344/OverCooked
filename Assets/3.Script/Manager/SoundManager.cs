@@ -12,6 +12,8 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance = null;
     private bool isStop = false;
+    public bool isSingle = true; //싱글 멀티 구분
+
     //해상도 설정
     List<Resolution> resolutions = new List<Resolution>();
     [SerializeField] private Dropdown resolutionDropdown;
@@ -83,6 +85,14 @@ public class SoundManager : MonoBehaviour
     public AudioClip start;
     public AudioClip beep;
 
+    public void SingleTrue()
+    {
+        isSingle = true;
+    }
+    public void SingleFalse()
+    {
+        isSingle = false;
+    }
     private void Awake()
     {
         if (instance == null)

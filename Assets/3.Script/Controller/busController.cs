@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine.SceneManagement;
 
 public class busController : MonoBehaviour
@@ -15,92 +17,207 @@ public class busController : MonoBehaviour
 
     private SceneConnect ActiveScene;
     private bool CanGo = false;
+
+    PhotonView pv;
+
+    private void Awake()
+    {
+        pv = GetComponent<PhotonView>();
+    }
+
+
+    [PunRPC]
+    void test()
+    {
+        if (ActiveScene.SceneName.Equals("SampleScene"))
+        {
+            if (!StageManager.instance.stage1Space)
+            {
+                StageManager.instance.stage1Space = true;
+                SoundManager.instance.PlayEffect("mapRoad");
+            }
+            else
+            {
+                SoundManager.instance.PlayEffect("start");
+                LoadingSceneManager.LoadScene(ActiveScene.SceneName);
+            }
+        }
+        else if (ActiveScene.SceneName.Equals("StageSalad"))
+        {
+            if (!StageManager.instance.stage2Space && StageManager.instance.map1Star >= 2)
+            {
+                StageManager.instance.stage2Space = true;
+                SoundManager.instance.PlayEffect("mapRoad");
+            }
+            else if (StageManager.instance.stage2Space)
+            {
+                SoundManager.instance.PlayEffect("start");
+                LoadingSceneManager.LoadScene(ActiveScene.SceneName);
+            }
+        }
+        else if (ActiveScene.SceneName.Equals("StagePotato"))
+        {
+            if (!StageManager.instance.stage3Space && StageManager.instance.map1Star + StageManager.instance.map2Star >= 4)
+            {
+                StageManager.instance.stage3Space = true;
+                SoundManager.instance.PlayEffect("mapRoad");
+            }
+            else if (StageManager.instance.stage3Space)
+            {
+                SoundManager.instance.PlayEffect("start");
+                LoadingSceneManager.LoadScene(ActiveScene.SceneName);
+            }
+        }
+    }
+
+    [PunRPC]
+    void test2()
+    {
+        int i = Random.Range(0, 4);
+        if (i == 0)
+        {
+            SoundManager.instance.PlayEffect("van1");
+        }
+        else if (i == 1)
+        {
+            SoundManager.instance.PlayEffect("van2");
+        }
+        else if (i == 2)
+        {
+            SoundManager.instance.PlayEffect("van3");
+        }
+        else if (i == 3)
+        {
+            SoundManager.instance.PlayEffect("van4");
+        }
+    }
     private void Update()
     {
         if (ActiveScene != null && CanGo && Input.GetKeyDown(KeyCode.Space))
         {
-            if (ActiveScene.SceneName.Equals("SampleScene"))
+            if (SoundManager.instance.isSingle)
             {
-                if (!StageManager.instance.stage1Space)
+                if (ActiveScene.SceneName.Equals("SampleScene"))
                 {
-                    StageManager.instance.stage1Space = true;
-                    SoundManager.instance.PlayEffect("mapRoad");
+                    if (!StageManager.instance.stage1Space)
+                    {
+                        StageManager.instance.stage1Space = true;
+                        SoundManager.instance.PlayEffect("mapRoad");
+                    }
+                    else
+                    {
+                        SoundManager.instance.PlayEffect("start");
+                        LoadingSceneManager.LoadScene(ActiveScene.SceneName);
+                    }
                 }
-                else
+                else if (ActiveScene.SceneName.Equals("StageSalad"))
                 {
-                    SoundManager.instance.PlayEffect("start");
-                    LoadingSceneManager.LoadScene(ActiveScene.SceneName);
+                    if (!StageManager.instance.stage2Space && StageManager.instance.map1Star >= 2)
+                    {
+                        StageManager.instance.stage2Space = true;
+                        SoundManager.instance.PlayEffect("mapRoad");
+                    }
+                    else if (StageManager.instance.stage2Space)
+                    {
+                        SoundManager.instance.PlayEffect("start");
+                        LoadingSceneManager.LoadScene(ActiveScene.SceneName);
+                    }
+                }
+                else if (ActiveScene.SceneName.Equals("StagePotato"))
+                {
+                    if (!StageManager.instance.stage3Space && StageManager.instance.map1Star + StageManager.instance.map2Star >= 4)
+                    {
+                        StageManager.instance.stage3Space = true;
+                        SoundManager.instance.PlayEffect("mapRoad");
+                    }
+                    else if (StageManager.instance.stage3Space)
+                    {
+                        SoundManager.instance.PlayEffect("start");
+                        LoadingSceneManager.LoadScene(ActiveScene.SceneName);
+                    }
                 }
             }
-            else if (ActiveScene.SceneName.Equals("StageSalad"))
+            else
             {
-                if (!StageManager.instance.stage2Space && StageManager.instance.map1Star >= 2)
-                {
-                    StageManager.instance.stage2Space = true;
-                    SoundManager.instance.PlayEffect("mapRoad");
-                }
-                else if (StageManager.instance.stage2Space)
-                {
-                    SoundManager.instance.PlayEffect("start");
-                    LoadingSceneManager.LoadScene(ActiveScene.SceneName);
-                }
-            }
-            else if (ActiveScene.SceneName.Equals("StagePotato"))
-            {
-                if (!StageManager.instance.stage3Space && StageManager.instance.map1Star + StageManager.instance.map2Star >= 4)
-                {
-                    StageManager.instance.stage3Space = true;
-                    SoundManager.instance.PlayEffect("mapRoad");
-                }
-                else if (StageManager.instance.stage3Space)
-                {
-                    SoundManager.instance.PlayEffect("start");
-                    LoadingSceneManager.LoadScene(ActiveScene.SceneName);
-                }
+                pv.RPC("test", RpcTarget.All);
             }
         }
         else if (Input.GetKeyDown(KeyCode.Space))
         {
-            int i = Random.Range(0, 4);
-            if (i == 0)
+            if (SoundManager.instance.isSingle)
             {
-                SoundManager.instance.PlayEffect("van1");
+                int i = Random.Range(0, 4);
+                if (i == 0)
+                {
+                    SoundManager.instance.PlayEffect("van1");
+                }
+                else if (i == 1)
+                {
+                    SoundManager.instance.PlayEffect("van2");
+                }
+                else if (i == 2)
+                {
+                    SoundManager.instance.PlayEffect("van3");
+                }
+                else if (i == 3)
+                {
+                    SoundManager.instance.PlayEffect("van4");
+                }
             }
-            else if (i == 1)
+            else
             {
-                SoundManager.instance.PlayEffect("van2");
-            }
-            else if (i == 2)
-            {
-                SoundManager.instance.PlayEffect("van3");
-            }
-            else if (i == 3)
-            {
-                SoundManager.instance.PlayEffect("van4");
+                pv.RPC("test2", RpcTarget.All);
             }
         }
     }
 
     void FixedUpdate()
     {
-        //.SetBool("isWalking", isMoving);
-        h = Input.GetAxis("Horizontal");
-        v = Input.GetAxis("Vertical");
-
-
-        Vector3 dir = new Vector3(h, 0, v);
-
-        // 바라보는 방향으로 회전 후 다시 정면을 바라보는 현상을 막기 위해 설정
-        if (!(h == 0 && v == 0))
+        if (SoundManager.instance.isSingle)
         {
-            // 이동과 회전을 함께 처리
-            transform.position += dir * Speed * Time.deltaTime;
-            // 회전하는 부분. Point 1.
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * rotateSpeed);
+            //.SetBool("isWalking", isMoving);
+            h = Input.GetAxis("Horizontal");
+            v = Input.GetAxis("Vertical");
+
+
+            Vector3 dir = new Vector3(h, 0, v);
+
+            // 바라보는 방향으로 회전 후 다시 정면을 바라보는 현상을 막기 위해 설정
+            if (!(h == 0 && v == 0))
+            {
+                // 이동과 회전을 함께 처리
+                transform.position += dir * Speed * Time.deltaTime;
+                // 회전하는 부분. Point 1.
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * rotateSpeed);
+            }
+            else
+            {
+                //isMoving = false;
+            }
         }
-        else
-        {
-            //isMoving = false;
+        else {
+            if (pv.IsMine)
+            {
+                //.SetBool("isWalking", isMoving);
+                h = Input.GetAxis("Horizontal");
+                v = Input.GetAxis("Vertical");
+
+
+                Vector3 dir = new Vector3(h, 0, v);
+
+                // 바라보는 방향으로 회전 후 다시 정면을 바라보는 현상을 막기 위해 설정
+                if (!(h == 0 && v == 0))
+                {
+                    // 이동과 회전을 함께 처리
+                    transform.position += dir * Speed * Time.deltaTime;
+                    // 회전하는 부분. Point 1.
+                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * rotateSpeed);
+                }
+                else
+                {
+                    //isMoving = false;
+                }
+            }
         }
     }
 
