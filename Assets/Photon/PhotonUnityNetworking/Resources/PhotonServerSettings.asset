@@ -47,6 +47,11 @@ MonoBehaviour:
   - test2
   - SetTrue
   - Check
+  - DieRespawn
+  - OffIsDash
+  - SetHand
+  - UpdateMethod
+  - Respawn
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
