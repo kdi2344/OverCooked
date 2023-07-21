@@ -16,6 +16,7 @@ public class TestManager : MonoBehaviour
 
     public bool isConnect = false;
     public Transform[] spawnPoints;
+    private GameObject playerTemp;
 
     //public Sprite[] materials;
 
@@ -46,6 +47,13 @@ public class TestManager : MonoBehaviour
         }
     }
 
+    //[PunRPC]
+    //private void SetPlayer()
+    //{
+    //    //playerTemp.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+    //    playerTemp.GetComponent<PlayerController>().Speed = 5;
+    //}
+
     private void CreatePlayer()
     {
         spawnPoints = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
@@ -53,7 +61,8 @@ public class TestManager : MonoBehaviour
         Vector3 pos = spawnPoints[PhotonNetwork.CurrentRoom.PlayerCount].position;
         Quaternion rot = spawnPoints[PhotonNetwork.CurrentRoom.PlayerCount].rotation;
 
-        GameObject playerTemp = PhotonNetwork.Instantiate("Player", pos, rot, 0);
+        playerTemp = PhotonNetwork.Instantiate("Player", pos, rot, 0);
+        //pv.RPC(nameof(SetPlayer), RpcTarget.AllViaServer);
 
         int colorNum = PhotonNetwork.CurrentRoom.PlayerCount;
         //Debug.Log("colornum " + colorNum);
