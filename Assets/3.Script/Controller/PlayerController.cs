@@ -8,7 +8,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class PlayerController : MonoBehaviourPunCallbacks
 {
-    private PhotonView pv;
+    //private PhotonView pv;
 
     public bool isMoving = false;
     [SerializeField] private bool canActive = false; //내 앞에 테이블 같은거 있는지
@@ -42,13 +42,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
-        pv = GetComponent<PhotonView>();
+        //pv = GetComponent<PhotonView>();
     }
     private void Update()
     {
-        if (pv.IsMine)
-        {
+        //if (pv.IsMine)
+        //{
             rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
+            //pv.RPC("SetHand", RpcTarget.All);
             SetHand(); //손 세팅
             if (Input.GetKeyDown(KeySetting1.keys[KeyAction1.ACTIVE]) && activeObject != null) //사용 가능한 물체가 있고 Space 눌렀다면
             {
@@ -336,7 +337,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 StartCoroutine(ControlSpeed());
                 Invoke("OffIsDash", 0.5f);
             }
-        }
+        //}
     }
     IEnumerator ControlSpeed()
     {
@@ -356,8 +357,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     void FixedUpdate()
     {
-        if (pv.IsMine)
-        {
+        //if (pv.IsMine)
+        //{
             anim.SetBool("isWalking", isMoving);
             h = Input.GetAxis("Horizontal");
             v = Input.GetAxis("Vertical");
@@ -378,7 +379,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             {
                 isMoving = false;
             }
-        }
+        //}
     }
 
     private void DieRespawn()
@@ -615,6 +616,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
     }
 
+    [PunRPC]
     private void SetHand()
     {
         if (isHolding) //뭘 집었다면 손 접기
@@ -646,22 +648,22 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
     }
 
-    public void InitColor(int num)
-    {
-        pv.RPC(nameof(SetMT), RpcTarget.AllViaServer, num);
-    }
+    //public void InitColor(int num)
+    //{
+    //    pv.RPC(nameof(SetMT), RpcTarget.AllViaServer, num);
+    //}
 
-    [PunRPC]
-    private void SetMT(int index)
-    {
-        PhotonNetwork.CurrentRoom.Players[PhotonNetwork.CurrentRoom.PlayerCount].SetCustomProperties(new Hashtable { { "Color", index } });
-        transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = colors[index];
-    }
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        if (pv.IsMine && colorIndex != -1)
-        {
-            pv.RPC(nameof(SetMT), newPlayer, colorIndex);
-        }
-    }
+    //[PunRPC]
+    //private void SetMT(int index)
+    //{
+    //    PhotonNetwork.CurrentRoom.Players[PhotonNetwork.CurrentRoom.PlayerCount].SetCustomProperties(new Hashtable { { "Color", index } });
+    //    transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = colors[index];
+    //}
+    //public override void OnPlayerEnteredRoom(Player newPlayer)
+    //{
+    //    if (pv.IsMine && colorIndex != -1)
+    //    {
+    //        pv.RPC(nameof(SetMT), newPlayer, colorIndex);
+    //    }
+    //}
 }

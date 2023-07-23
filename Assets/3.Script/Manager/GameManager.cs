@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Photon.Pun;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
+
+    public PhotonView pv;
 
     private Coroutine alphaCo = null;
     public enum State { stage1, stage2, stage3 };
@@ -35,6 +39,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject SandTimer;
 
     //돈 UI
+    public int player1Money;
+    public int player2Money;
+
     [SerializeField] private GameObject CoinOb;
     [SerializeField] private Slider TipSlider;
     [SerializeField] private int Coin;
@@ -137,11 +144,11 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (!SoundManager.instance.isSingle)
-        {
-            Destroy(FindObjectOfType<PlayerController>().gameObject);
-            Destroy(FindObjectOfType<Player2Controller>().gameObject);
-        }
+        //if (!SoundManager.instance.isSingle)
+        //{
+        //    Destroy(FindObjectOfType<PlayerController>().gameObject);
+        //    Destroy(FindObjectOfType<Player2Controller>().gameObject);
+        //}
 
         if (StageManager.instance != null)
         {
@@ -470,7 +477,7 @@ public class GameManager : MonoBehaviour
                             }
                             CurrentOrderUI[i].transform.position = poolPos;
                             CurrentOrderUI[i].SetActive(false);
-                            StageManager.instance.successMoney += CurrentOrder[i].Price;
+                            if (StageManager.instance != null) StageManager.instance.successMoney += CurrentOrder[i].Price;
                             Coin += CurrentOrder[i].Price;
                             CoinOb.transform.parent.GetChild(1).GetComponent<Animator>().SetTrigger("spin");
                             AddTip(i);
@@ -504,7 +511,7 @@ public class GameManager : MonoBehaviour
                             }
                             CurrentOrderUI[i].transform.position = poolPos;
                             CurrentOrderUI[i].SetActive(false);
-                            StageManager.instance.successMoney += CurrentOrder[i].Price;
+                            if (StageManager.instance != null) StageManager.instance.successMoney += CurrentOrder[i].Price;
                             Coin += CurrentOrder[i].Price;
                             CoinOb.transform.parent.GetChild(1).GetComponent<Animator>().SetTrigger("spin");
                             AddTip(i);
@@ -550,7 +557,7 @@ public class GameManager : MonoBehaviour
                             }
                             CurrentOrderUI[i].transform.position = poolPos;
                             CurrentOrderUI[i].SetActive(false);
-                            StageManager.instance.successMoney += CurrentOrder[i].Price;
+                            if (StageManager.instance != null) StageManager.instance.successMoney += CurrentOrder[i].Price;
                             Coin += CurrentOrder[i].Price;
                             CoinOb.transform.parent.GetChild(1).GetComponent<Animator>().SetTrigger("spin");
                             AddTip(i);
@@ -591,6 +598,25 @@ public class GameManager : MonoBehaviour
         StartCoroutine(StartBigger()); //---> 커졌다가 작아지는 코루틴 
     }
 
+    [PunRPC]
+    private void SetCoinPhoton()
+    {
+        if (pv.IsMine && (int)PhotonNetwork.LocalPlayer.CustomProperties["Color"] == 1)
+        {
+            PhotonNetwork.CurrentRoom.Players[0].SetCustomProperties(new Hashtable { { "Coin", Coin } });
+            Debug.Log("코인 얼마인지 셋팅 : " + PhotonNetwork.CurrentRoom.Players[0].CustomProperties["Coin"]);
+        }
+        else if (pv.IsMine && (int)PhotonNetwork.LocalPlayer.CustomProperties["Color"] == 0)
+        {
+            PhotonNetwork.CurrentRoom.Players[1].SetCustomProperties(new Hashtable { { "Coin", Coin } });
+            Debug.Log("코인 얼마인지 셋팅 : " + PhotonNetwork.CurrentRoom.Players[1].CustomProperties["Coin"]);
+        }
+        else
+        {
+            Debug.Log("실행 안됨");
+        }
+    }
+
     private void SetCoinText()
     {
         if (tipCombo < 2) //팁 콤보 업데이트
@@ -606,6 +632,9 @@ public class GameManager : MonoBehaviour
         if (StageManager.instance != null) StageManager.instance.tipMoney += Tip;
         Coin += Tip;
         TextCoin.text = Coin.ToString(); //돈 얼마됐다고 업데이트
+
+        pv.RPC("SetCoinPhoton", RpcTarget.All);
+
         if (Tip != 0)
         {
             GameObject tipText = Instantiate(TextPrefabs, Camera.main.WorldToScreenPoint(FindObjectOfType<Station>().transform.position), Quaternion.identity, Canvas.transform);

@@ -27,7 +27,8 @@ public class PlayBtn : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("Map");
+            //LoadingSceneManager.LoadScene("SampleScene");
+            PhotonNetwork.LoadLevel("SampleScene");
         }
         //FindObjectOfType<TestManager>().MoveMap();
     }

@@ -477,6 +477,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2968651987726210862}
   - component: {fileID: 2484040779482123671}
+  - component: {fileID: 2283956084592301307}
   m_Layer: 0
   m_Name: Chef
   m_TagString: Untagged
@@ -518,6 +519,39 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2283956084592301307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2484040779482123668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: isWalking
+  - Type: 4
+    SynchronizeType: 2
+    Name: isHolding
+  - Type: 4
+    SynchronizeType: 2
+    Name: canCut
+  - Type: 9
+    SynchronizeType: 2
+    Name: startCut
+  - Type: 9
+    SynchronizeType: 2
+    Name: throw
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
 --- !u!1 &2807237456832790748
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,11 +1156,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5265518529961989397}
-  - component: {fileID: 5265518529961989396}
   - component: {fileID: 5265518529961989393}
   - component: {fileID: 5265518529961989399}
+  - component: {fileID: 4977266411913584956}
+  - component: {fileID: 5879253408810104743}
+  - component: {fileID: 6961227602182249158}
   m_Layer: 0
-  m_Name: Player
+  m_Name: LobbyPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1147,37 +1183,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &5265518529961989396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5265518529961989418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 058f5711d622b19408c593e9863dd19f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isMoving: 0
-  canActive: 0
-  isHolding: 0
-  anim: {fileID: 2484040779482123671}
-  Speed: 10
-  activeObject: {fileID: 0}
-  activeObjectOb: {fileID: 0}
-  nextActiveObject: {fileID: 0}
-  CountDown: {fileID: 0}
-  throwPower: {x: 0, y: 2, z: 15}
-  rotateSpeed: 10
-  idleR: {fileID: 6602487466136167198}
-  idleL: {fileID: 1794974379860270053}
-  GribR: {fileID: 3731519959740930594}
-  GribL: {fileID: 3036346185458243783}
-  Knife: {fileID: 1870155906328477177}
-  colors:
-  - {fileID: 21300000, guid: f4f431671b5563041b7d096155a3502c, type: 3}
-  - {fileID: 21300000, guid: a690fb3ec1d13d242aeb4ea65dbec31b, type: 3}
 --- !u!65 &5265518529961989393
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1207,6 +1212,72 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &4977266411913584956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5265518529961989418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 5879253408810104743}
+  - {fileID: 2283956084592301307}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &5879253408810104743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5265518529961989418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &6961227602182249158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5265518529961989418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16029640656a6ae4abb7c1cc83c84d7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isMoving: 0
+  canActive: 0
+  isHolding: 0
+  anim: {fileID: 2484040779482123671}
+  Speed: 10
+  rotateSpeed: 10
+  idleR: {fileID: 6602487466136167198}
+  idleL: {fileID: 1794974379860270053}
+  GribR: {fileID: 3731519959740930594}
+  GribL: {fileID: 3036346185458243783}
+  Knife: {fileID: 1870155906328477177}
+  colors:
+  - {fileID: 21300000, guid: f4f431671b5563041b7d096155a3502c, type: 3}
+  - {fileID: 21300000, guid: a690fb3ec1d13d242aeb4ea65dbec31b, type: 3}
 --- !u!1 &5265518530452819521
 GameObject:
   m_ObjectHideFlags: 0

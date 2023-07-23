@@ -61,7 +61,7 @@ public class TestManager : MonoBehaviour
         Vector3 pos = spawnPoints[PhotonNetwork.CurrentRoom.PlayerCount].position;
         Quaternion rot = spawnPoints[PhotonNetwork.CurrentRoom.PlayerCount].rotation;
 
-        playerTemp = PhotonNetwork.Instantiate("Player", pos, rot, 0);
+        playerTemp = PhotonNetwork.Instantiate("LobbyPlayer", pos, rot, 0);
         //pv.RPC(nameof(SetPlayer), RpcTarget.AllViaServer);
 
         int colorNum = PhotonNetwork.CurrentRoom.PlayerCount;
@@ -70,7 +70,7 @@ public class TestManager : MonoBehaviour
         if (colorNum != -1)
         {
             //Debug.Log("ColorNum = " + colorNum);
-            playerTemp.GetComponent<PlayerController>().InitColor(colorNum-1);
+            playerTemp.GetComponent<LobbyPlayerController>().InitColor(colorNum-1);
         }
         
         
