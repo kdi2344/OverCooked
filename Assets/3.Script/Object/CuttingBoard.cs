@@ -71,7 +71,7 @@ public class CuttingBoard : MonoBehaviour
             {
                 yield return null;
             }
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.45f);
             CuttingTime += 0.25f;
             SoundManager.instance.PlayEffect("cut");
         }

@@ -132,9 +132,12 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        pv = GetComponent<PhotonView>();
-        PhotonNetwork.PlayerList[0].SetCustomProperties(new Hashtable() { { "OppositeMoney", 0 } });
-        PhotonNetwork.PlayerList[1].SetCustomProperties(new Hashtable() { { "OppositeMoney", 0 } });
+        if (!SoundManager.instance.isSingle)
+        {
+            pv = GetComponent<PhotonView>();
+            PhotonNetwork.PlayerList[0].SetCustomProperties(new Hashtable() { { "OppositeMoney", 0 } });
+            PhotonNetwork.PlayerList[1].SetCustomProperties(new Hashtable() { { "OppositeMoney", 0 } });
+        }
 
         duration = GameTime / 2;
         currentColor = TimeSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>().color;
@@ -619,7 +622,7 @@ public class GameManager : MonoBehaviour
         Coin += Tip;
         TextCoin.text = Coin.ToString(); //µ· ¾ó¸¶µÆ´Ù°í ¾÷µ¥ÀÌÆ®
 
-        pv.RPC("SetCoinPhoton", RpcTarget.All);
+        if (!SoundManager.instance.isSingle) pv.RPC("SetCoinPhoton", RpcTarget.All);
 
         if (Tip != 0)
         {
