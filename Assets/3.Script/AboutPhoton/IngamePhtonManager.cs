@@ -21,10 +21,4 @@ public class IngamePhtonManager : MonoBehaviourPunCallbacks
             OppositeMoney.SetActive(true);
         }
     }
-
-    [PunRPC]
-    private void SetCoinPhoton()
-    {
-        
-    }
 }

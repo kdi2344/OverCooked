@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
 
     public PhotonView pv;
+    public int OppositeMoney = 0;
 
     private Coroutine alphaCo = null;
     public enum State { stage1, stage2, stage3 };
@@ -39,8 +40,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject SandTimer;
 
     //돈 UI
-    public int player1Money;
-    public int player2Money;
+    public int originMoney;
 
     [SerializeField] private GameObject CoinOb;
     [SerializeField] private Slider TipSlider;
@@ -132,6 +132,10 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        pv = GetComponent<PhotonView>();
+        PhotonNetwork.PlayerList[0].SetCustomProperties(new Hashtable() { { "OppositeMoney", 0 } });
+        PhotonNetwork.PlayerList[1].SetCustomProperties(new Hashtable() { { "OppositeMoney", 0 } });
+
         duration = GameTime / 2;
         currentColor = TimeSlider.transform.GetChild(1).GetChild(0).GetComponent<Image>().color;
         if (null == instance)
@@ -437,6 +441,7 @@ public class GameManager : MonoBehaviour
 
     public bool CheckMenu(List<Handle.HandleType> containIngredients) //plate의 재료 list들 통으로 받아서 비교
     {
+        originMoney = Coin;
         if (containIngredients == null) //빈 접시만 내면 무조건 탈롹
         {
             //빨간색 띵
@@ -598,25 +603,6 @@ public class GameManager : MonoBehaviour
         StartCoroutine(StartBigger()); //---> 커졌다가 작아지는 코루틴 
     }
 
-    [PunRPC]
-    private void SetCoinPhoton()
-    {
-        if (pv.IsMine && (int)PhotonNetwork.LocalPlayer.CustomProperties["Color"] == 1)
-        {
-            PhotonNetwork.CurrentRoom.Players[0].SetCustomProperties(new Hashtable { { "Coin", Coin } });
-            Debug.Log("코인 얼마인지 셋팅 : " + PhotonNetwork.CurrentRoom.Players[0].CustomProperties["Coin"]);
-        }
-        else if (pv.IsMine && (int)PhotonNetwork.LocalPlayer.CustomProperties["Color"] == 0)
-        {
-            PhotonNetwork.CurrentRoom.Players[1].SetCustomProperties(new Hashtable { { "Coin", Coin } });
-            Debug.Log("코인 얼마인지 셋팅 : " + PhotonNetwork.CurrentRoom.Players[1].CustomProperties["Coin"]);
-        }
-        else
-        {
-            Debug.Log("실행 안됨");
-        }
-    }
-
     private void SetCoinText()
     {
         if (tipCombo < 2) //팁 콤보 업데이트
@@ -641,6 +627,38 @@ public class GameManager : MonoBehaviour
             tipText.GetComponent<Text>().text = "+" + Tip + " 팁!";
         }
     }
+
+    [PunRPC]
+    public void SetCoinPhoton()
+    {
+        if (originMoney != Coin && (int)PhotonNetwork.LocalPlayer.CustomProperties["Color"] == 1) 
+        {
+            PhotonNetwork.PlayerList[0].SetCustomProperties(new Hashtable() { { "OppositeMoney", Coin } });
+            Debug.Log(PhotonNetwork.PlayerList[0].CustomProperties["OppositeMoney"]);
+        }
+        if (originMoney != Coin && (int)PhotonNetwork.LocalPlayer.CustomProperties["Color"] == 0)
+        {
+            PhotonNetwork.PlayerList[1].SetCustomProperties(new Hashtable() { { "OppositeMoney", Coin } });
+            Debug.Log(PhotonNetwork.PlayerList[1].CustomProperties["OppositeMoney"]);
+        }
+        //if ((int)PhotonNetwork.LocalPlayer.CustomProperties["Color"] == 1)
+        //{
+        //    if (originMoney != Coin)
+        //    {
+        //        OppositeMoney = Coin;
+        //        Debug.Log(OppositeMoney);
+        //    }
+        //}
+        //else if ((int)PhotonNetwork.LocalPlayer.CustomProperties["Color"] == 0)
+        //{
+        //    if (originMoney != Coin)
+        //    {
+        //        OppositeMoney = Coin;
+        //        Debug.Log(OppositeMoney);
+        //    }
+        //}
+    }
+
     IEnumerator StartBigger()
     {
         float progress = 0;
