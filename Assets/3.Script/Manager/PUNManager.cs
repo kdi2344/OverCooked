@@ -33,7 +33,6 @@ public class PUNManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        Debug.Log("PUN 매니저 시작");
         userId = PlayerPrefs.GetString("USER_ID", $"USER_{Random.Range(0, 100):00}");
         userID_i.text = userId;
         PhotonNetwork.NickName = userId;
@@ -217,6 +216,10 @@ public class PUNManager : MonoBehaviourPunCallbacks
             }
         }
     }
+    public void BtnFight()
+    {
+        if (userID_i.transform.childCount > 2) userID_i.transform.GetChild(2).GetComponent<Text>().text = string.Empty;
+    }
 
     public void BtnRandom()
     {
@@ -233,6 +236,14 @@ public class PUNManager : MonoBehaviourPunCallbacks
 
     public void BtnMakeRoom()
     {
+        if (string.IsNullOrEmpty(userID_i.text))
+        {
+            //랜덤아이디 주기
+            userId = $"USER_{Random.Range(0, 100):00}";
+            userID_i.text = userId;
+        }
+        PlayerPrefs.SetString("USER_ID", userID_i.text);
+        PhotonNetwork.NickName = userID_i.text;
         RoomOptions ro = new RoomOptions();
         ro.IsOpen = true;
         ro.IsVisible = true;

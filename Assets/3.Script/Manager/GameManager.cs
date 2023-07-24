@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
 
     public PhotonView pv;
-    public int OppositeMoney = 0;
 
     private Coroutine alphaCo = null;
     public enum State { stage1, stage2, stage3 };
@@ -40,7 +39,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject SandTimer;
 
     //µ· UI
-    public int originMoney;
+    public int OriginalMoney;
+    public int Player1Money;
+    public int Player2Money;
+    public GameObject OppositeUI;
 
     [SerializeField] private GameObject CoinOb;
     [SerializeField] private Slider TipSlider;
@@ -135,8 +137,12 @@ public class GameManager : MonoBehaviour
         if (!SoundManager.instance.isSingle)
         {
             pv = GetComponent<PhotonView>();
-            PhotonNetwork.PlayerList[0].SetCustomProperties(new Hashtable() { { "OppositeMoney", 0 } });
-            PhotonNetwork.PlayerList[1].SetCustomProperties(new Hashtable() { { "OppositeMoney", 0 } });
+            OppositeUI.SetActive(true);
+            OppositeUI.transform.GetChild(2).GetComponent<Text>().text = PhotonNetwork.PlayerListOthers[0].NickName;
+        }
+        else
+        {
+            OppositeUI.SetActive(false);
         }
 
         duration = GameTime / 2;
@@ -286,9 +292,9 @@ public class GameManager : MonoBehaviour
             SoundManager.instance.asBGM.Stop();
             SoundManager.instance.PlayEffect("timesUp");
             Time.timeScale = 0;
-            StageManager.instance.totalMoney = Coin;
+            if (StageManager.instance != null) StageManager.instance.totalMoney = Coin;
             Timesup.SetActive(true);
-            if (StageManager.instance.totalMoney >= 0)
+            if (StageManager.instance != null && StageManager.instance.totalMoney >= 0)
             {
                 if (state == State.stage1)
                 {
@@ -315,12 +321,19 @@ public class GameManager : MonoBehaviour
                 scale.z += Time.unscaledDeltaTime;
                 Timesup.transform.localScale = scale;
             }
-            else
+            else 
             {
-                lastSec += Time.unscaledDeltaTime;
-                if (lastSec > 1)
-                {
-                    SceneManager.LoadScene("ResultScene");
+                if (SoundManager.instance.isSingle)
+                { //½Ì±Û
+                    lastSec += Time.unscaledDeltaTime;
+                    if (lastSec > 1)
+                    {
+                        SceneManager.LoadScene("ResultScene");
+                    }
+                }
+                else
+                { //¸ÖÆ¼
+                    PhotonNetwork.LoadLevel("FightResultScene");
                 }
             }
         }
@@ -444,7 +457,7 @@ public class GameManager : MonoBehaviour
 
     public bool CheckMenu(List<Handle.HandleType> containIngredients) //plateÀÇ Àç·á listµé ÅëÀ¸·Î ¹Þ¾Æ¼­ ºñ±³
     {
-        originMoney = Coin;
+        OriginalMoney = Coin;
         if (containIngredients == null) //ºó Á¢½Ã¸¸ ³»¸é ¹«Á¶°Ç Å»Žô
         {
             //»¡°£»ö ¶ò
@@ -622,7 +635,7 @@ public class GameManager : MonoBehaviour
         Coin += Tip;
         TextCoin.text = Coin.ToString(); //µ· ¾ó¸¶µÆ´Ù°í ¾÷µ¥ÀÌÆ®
 
-        if (!SoundManager.instance.isSingle) pv.RPC("SetCoinPhoton", RpcTarget.All);
+        if (!SoundManager.instance.isSingle) pv.RPC("SetCoinPhoton", RpcTarget.Others, Coin);
 
         if (Tip != 0)
         {
@@ -632,17 +645,21 @@ public class GameManager : MonoBehaviour
     }
 
     [PunRPC]
-    public void SetCoinPhoton()
+    public void SetCoinPhoton(int Coin)
     {
-        if (originMoney != Coin && (int)PhotonNetwork.LocalPlayer.CustomProperties["Color"] == 1) 
+        if (OriginalMoney != Coin && (int)PhotonNetwork.LocalPlayer.CustomProperties["Color"] == 1) 
         {
-            PhotonNetwork.PlayerList[0].SetCustomProperties(new Hashtable() { { "OppositeMoney", Coin } });
-            Debug.Log(PhotonNetwork.PlayerList[0].CustomProperties["OppositeMoney"]);
+            Player1Money = Coin;
+            OppositeUI.transform.GetChild(0).GetComponent<Text>().text = Player1Money.ToString();
+            //PhotonNetwork.PlayerList[0].SetCustomProperties(new Hashtable() { { "OppositeMoney", Coin } });
+            //Debug.Log(PhotonNetwork.PlayerList[0].CustomProperties["OppositeMoney"]);
         }
-        if (originMoney != Coin && (int)PhotonNetwork.LocalPlayer.CustomProperties["Color"] == 0)
+        else if (OriginalMoney != Coin && (int)PhotonNetwork.LocalPlayer.CustomProperties["Color"] == 0)
         {
-            PhotonNetwork.PlayerList[1].SetCustomProperties(new Hashtable() { { "OppositeMoney", Coin } });
-            Debug.Log(PhotonNetwork.PlayerList[1].CustomProperties["OppositeMoney"]);
+            Player2Money = Coin;
+            OppositeUI.transform.GetChild(0).GetComponent<Text>().text = Player2Money.ToString();
+            //PhotonNetwork.PlayerList[1].SetCustomProperties(new Hashtable() { { "OppositeMoney", Coin } });
+            //Debug.Log(PhotonNetwork.PlayerList[1].CustomProperties["OppositeMoney"]);
         }
         //if ((int)PhotonNetwork.LocalPlayer.CustomProperties["Color"] == 1)
         //{

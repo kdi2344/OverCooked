@@ -52,9 +52,9 @@ public class RoomData : MonoBehaviour
         ro.IsOpen = true;
         ro.IsVisible = true;
         ro.MaxPlayers = 2;
+
         userIDText = GameObject.FindGameObjectWithTag("nickname").transform.GetChild(2).GetComponent<Text>();
         PhotonNetwork.NickName = userIDText.text; //틀릴수도 있음
-        Debug.Log("OnEnterRoom Nickname : " + PhotonNetwork.NickName);
         PhotonNetwork.JoinOrCreateRoom(roomName, ro, TypedLobby.Default);
     }
 
