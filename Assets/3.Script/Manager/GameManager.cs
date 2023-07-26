@@ -136,9 +136,12 @@ public class GameManager : MonoBehaviour
     {
         if (!SoundManager.instance.isSingle)
         {
+            PhotonNetwork.AutomaticallySyncScene = true;
             pv = GetComponent<PhotonView>();
             OppositeUI.SetActive(true);
             OppositeUI.transform.GetChild(2).GetComponent<Text>().text = PhotonNetwork.PlayerListOthers[0].NickName;
+            PhotonNetwork.PlayerList[0].SetCustomProperties(new Hashtable() { { "OppositeMoney", -1 } });
+            PhotonNetwork.PlayerList[1].SetCustomProperties(new Hashtable() { { "OppositeMoney", -1 } });
         }
         else
         {
@@ -247,7 +250,7 @@ public class GameManager : MonoBehaviour
             Invoke("MakeOrder", 80f);
             Invoke("MakeOrder", 150f);
         }
-        else if (StartSetting && once)
+        else if (SoundManager.instance.isSingle && StartSetting && once)
         {
             if (Input.GetKeyDown(KeyCode.P))
             {
@@ -333,12 +336,22 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 { //멀티
-                    PhotonNetwork.LoadLevel("FightResultScene");
+                    lastSec += Time.unscaledDeltaTime;
+                    if (lastSec > 1)
+                    {
+                        pv.RPC("LoadResult", RpcTarget.All);
+                    }
                 }
             }
         }
 
     }
+    [PunRPC]
+    private void LoadResult()
+    {
+        PhotonNetwork.LoadLevel("FightResultScene");
+    }
+
     private void ToClock()
     {
         TimeSlider.value = GameTime;
@@ -651,32 +664,14 @@ public class GameManager : MonoBehaviour
         {
             Player1Money = Coin;
             OppositeUI.transform.GetChild(0).GetComponent<Text>().text = Player1Money.ToString();
-            //PhotonNetwork.PlayerList[0].SetCustomProperties(new Hashtable() { { "OppositeMoney", Coin } });
-            //Debug.Log(PhotonNetwork.PlayerList[0].CustomProperties["OppositeMoney"]);
+            PhotonNetwork.PlayerList[0].SetCustomProperties(new Hashtable() { { "OppositeMoney", Coin } });
         }
         else if (OriginalMoney != Coin && (int)PhotonNetwork.LocalPlayer.CustomProperties["Color"] == 0)
         {
             Player2Money = Coin;
             OppositeUI.transform.GetChild(0).GetComponent<Text>().text = Player2Money.ToString();
-            //PhotonNetwork.PlayerList[1].SetCustomProperties(new Hashtable() { { "OppositeMoney", Coin } });
-            //Debug.Log(PhotonNetwork.PlayerList[1].CustomProperties["OppositeMoney"]);
+            PhotonNetwork.PlayerList[1].SetCustomProperties(new Hashtable() { { "OppositeMoney", Coin } });
         }
-        //if ((int)PhotonNetwork.LocalPlayer.CustomProperties["Color"] == 1)
-        //{
-        //    if (originMoney != Coin)
-        //    {
-        //        OppositeMoney = Coin;
-        //        Debug.Log(OppositeMoney);
-        //    }
-        //}
-        //else if ((int)PhotonNetwork.LocalPlayer.CustomProperties["Color"] == 0)
-        //{
-        //    if (originMoney != Coin)
-        //    {
-        //        OppositeMoney = Coin;
-        //        Debug.Log(OppositeMoney);
-        //    }
-        //}
     }
 
     IEnumerator StartBigger()
@@ -730,7 +725,7 @@ public class GameManager : MonoBehaviour
                 Tip = 0;
                 TextTip.text = "";
                 TipSlider.value = tipCombo;
-                StageManager.instance.failMoney += (int)(CurrentOrder[i].Price * 0.5f);
+                if (StageManager.instance != null) StageManager.instance.failMoney += (int)(CurrentOrder[i].Price * 0.5f);
                 Coin -= (int)(CurrentOrder[i].Price * 0.5f);
                 TextCoin.text = Coin.ToString(); //돈 얼마됐다고 업데이트
                 if (alphaCo == null)

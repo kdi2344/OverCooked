@@ -27,6 +27,9 @@ EditorBuildSettings:
     path: Assets/1.Scene/StagePotato.unity
     guid: f22e64c1033fd6a468878b9c180d667a
   - enabled: 1
+    path: Assets/1.Scene/FightResultScene.unity
+    guid: 61636241fe0ef8245bd642f8a15978a6
+  - enabled: 1
     path: Assets/1.Scene/LoadingScene.unity
     guid: fa5833fe2f283264f9cd4d594d3f10ad
   m_configObjects: {}
