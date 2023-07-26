@@ -3048,6 +3048,69 @@ Transform:
   m_Father: {fileID: 695207357}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0.000031679916, y: -0.0000032141802, z: 2.9992726}
+--- !u!1 &1225273568
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1225273569}
+  - component: {fileID: 1225273570}
+  m_Layer: 0
+  m_Name: ResultManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1225273569
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225273568}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.1321216, y: -1.8355297, z: 1.1684406}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1225273570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225273568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9c536b4413c24947b6214a642d18ce4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Stagename: {fileID: 571736075}
+  name1: {fileID: 1628883393}
+  name2: {fileID: 735124571}
+  limits:
+  - {fileID: 11400000, guid: 42deb512a3debee479aab351c2d42f0c, type: 2}
+  - {fileID: 11400000, guid: b2bb14481ffe9e04094b11e09686b623, type: 2}
+  - {fileID: 11400000, guid: 101ab3ae6715e874a82889f910f202e9, type: 2}
+  newStars:
+  - {fileID: 585414017}
+  - {fileID: 486697635}
+  - {fileID: 488429527}
+  txtStars:
+  - {fileID: 1076985418}
+  - {fileID: 1850462762}
+  - {fileID: 938207753}
+  success: {fileID: 636064019}
+  tip: {fileID: 1022669011}
+  fail: {fileID: 1080802950}
+  total: {fileID: 1579654832}
+  canSkip: 0
 --- !u!1 &1230159867
 GameObject:
   m_ObjectHideFlags: 0

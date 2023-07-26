@@ -57,33 +57,25 @@ public class TestManager : MonoBehaviour
     private void CreatePlayer()
     {
         spawnPoints = GameObject.Find("SpawnPointGroup").GetComponentsInChildren<Transform>();
-
-        Vector3 pos = spawnPoints[PhotonNetwork.CurrentRoom.PlayerCount].position;
-        Quaternion rot = spawnPoints[PhotonNetwork.CurrentRoom.PlayerCount].rotation;
-
-        playerTemp = PhotonNetwork.Instantiate("LobbyPlayer", pos, rot, 0);
-        //pv.RPC(nameof(SetPlayer), RpcTarget.AllViaServer);
-
-        int colorNum = PhotonNetwork.CurrentRoom.PlayerCount;
-        //Debug.Log("colornum " + colorNum);
-        PhotonNetwork.CurrentRoom.Players[PhotonNetwork.CurrentRoom.PlayerCount].SetCustomProperties(new Hashtable { { "Color", PhotonNetwork.CurrentRoom.PlayerCount } });
-        if (colorNum != -1)
+        if (!SoundManager.instance.alreadyPlayed)
         {
-            //Debug.Log("ColorNum = " + colorNum);
-            playerTemp.GetComponent<LobbyPlayerController>().InitColor(colorNum-1);
-        }
-        
-        
-        //PhotonNetwork.LocalPlayer.SetCustomProperties(new Hashtable { { "Color",  } });
-        //CP = PhotonNetwork.LocalPlayer.CustomProperties;
-        //playerTemp.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>().sprite = FindObjectOfType<PlayerController>().colors[PhotonNetwork.CurrentRoom.PlayerCount-1];
-        //Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
+            Vector3 pos = spawnPoints[PhotonNetwork.CurrentRoom.PlayerCount].position;
+            Quaternion rot = spawnPoints[PhotonNetwork.CurrentRoom.PlayerCount].rotation;
 
-        //int colorNum = (int)CP["Color"];
-        //Debug.Log($"colorNum : {colorNum}");
-        //if (colorNum != -1)
-        //{
-        //    playerTemp.GetComponent<PlayerController>().InitColor(colorNum - 1);
-        //}
+            playerTemp = PhotonNetwork.Instantiate("LobbyPlayer", pos, rot, 0);
+            int colorNum = PhotonNetwork.CurrentRoom.PlayerCount;
+            PhotonNetwork.CurrentRoom.Players[PhotonNetwork.CurrentRoom.PlayerCount].SetCustomProperties(new Hashtable { { "Color", PhotonNetwork.CurrentRoom.PlayerCount } });
+            if (colorNum != -1)
+            {
+                playerTemp.GetComponent<LobbyPlayerController>().InitColor(colorNum - 1);
+            }
+        }
+        else
+        {
+            Vector3 pos = spawnPoints[(int)PhotonNetwork.LocalPlayer.CustomProperties["Color"]+1].position;
+            Quaternion rot = spawnPoints[(int)PhotonNetwork.LocalPlayer.CustomProperties["Color"]+1].rotation;
+            playerTemp = PhotonNetwork.Instantiate("LobbyPlayer", pos, rot, 0);
+            playerTemp.GetComponent<LobbyPlayerController>().InitColor((int)PhotonNetwork.LocalPlayer.CustomProperties["Color"]);
+        }
     }
 }

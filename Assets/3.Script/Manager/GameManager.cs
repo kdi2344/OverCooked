@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public Coroutine activeCo = null;
 
     public bool isStop = true; //일시정지 여부
+    private bool move = false;
 
     //시작하기 전 ready go를 위한 공간
     [SerializeField] private float StartTime = 0;
@@ -136,6 +137,8 @@ public class GameManager : MonoBehaviour
     {
         if (!SoundManager.instance.isSingle)
         {
+            SoundManager.instance.asBGM.volume = 0;
+            SoundManager.instance.alreadyPlayed = false;
             PhotonNetwork.AutomaticallySyncScene = true;
             pv = GetComponent<PhotonView>();
             OppositeUI.SetActive(true);
@@ -234,6 +237,7 @@ public class GameManager : MonoBehaviour
             else if (StartTime > 6 && PlayTwice && Go.transform.localScale.x > 1)
             {
                 SoundManager.instance.StagePlay(SoundManager.instance.StageName);
+                if (!SoundManager.instance.isSingle) SoundManager.instance.StagePlay("SampleScene");
                 Go.SetActive(false);
                 isStop = false;
                 StartSetting = true;
@@ -337,19 +341,24 @@ public class GameManager : MonoBehaviour
                 else
                 { //멀티
                     lastSec += Time.unscaledDeltaTime;
-                    if (lastSec > 1)
+                    if (lastSec > 1 && !move)
                     {
+                        PhotonNetwork.AutomaticallySyncScene = true;
+                        //SceneManager.LoadScene("FightResultScene");
                         pv.RPC("LoadResult", RpcTarget.All);
+                        move = true;
                     }
                 }
             }
         }
 
     }
+
     [PunRPC]
-    private void LoadResult()
+    public void LoadResult()
     {
         PhotonNetwork.LoadLevel("FightResultScene");
+        Debug.Log("실행");
     }
 
     private void ToClock()

@@ -13,6 +13,7 @@ public class SoundManager : MonoBehaviour
     public static SoundManager instance = null;
     private bool isStop = false;
     public bool isSingle = true; //싱글 멀티 구분
+    public bool alreadyPlayed = false;
 
     //해상도 설정
     List<Resolution> resolutions = new List<Resolution>();

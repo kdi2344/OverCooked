@@ -1637,6 +1637,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1073352845}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayEffect
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: btn
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &92255556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6546,6 +6558,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1073352845}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayEffect
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: btn
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &735477036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9962,6 +9986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSingle: 1
+  alreadyPlayed: 0
   resolutionDropdown: {fileID: 1569718497}
   fullscreenBtn: {fileID: 1299745931}
   Setting: {fileID: 1776155454}
@@ -13502,6 +13527,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1073352845}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayEffect
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: btn
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1398842958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17023,6 +17060,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1073352845}
+        m_TargetAssemblyTypeName: SoundManager, Assembly-CSharp
+        m_MethodName: PlayEffect
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: btn
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1707311198
