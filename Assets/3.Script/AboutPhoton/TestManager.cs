@@ -18,8 +18,6 @@ public class TestManager : MonoBehaviour
     public Transform[] spawnPoints;
     private GameObject playerTemp;
 
-    //public Sprite[] materials;
-
     private void Awake()
     {
         if (instance == null)
@@ -35,7 +33,6 @@ public class TestManager : MonoBehaviour
     {
         pv = GetComponent<PhotonView>();
         CP = PhotonNetwork.LocalPlayer.CustomProperties;
-        //StartCoroutine(CreatePlayer());
         CreatePlayer();
     }
 
@@ -45,14 +42,7 @@ public class TestManager : MonoBehaviour
         {
             PhotonNetwork.LoadLevel("Lobby");
         }
-    }
-
-    //[PunRPC]
-    //private void SetPlayer()
-    //{
-    //    //playerTemp.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
-    //    playerTemp.GetComponent<PlayerController>().Speed = 5;
-    //}
+    } 
 
     private void CreatePlayer()
     {

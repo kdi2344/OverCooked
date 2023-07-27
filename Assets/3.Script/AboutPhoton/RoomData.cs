@@ -27,22 +27,17 @@ public class RoomData : MonoBehaviour
     }
     private void Awake()
     {
-        //RoomInfoText = GetComponentInChildren<Text>();
         RoomInfoText = transform.GetChild(0).GetComponent<Text>();
         userIDText = GameObject.FindGameObjectWithTag("nickname").transform.GetChild(2).GetComponent<Text>();
         SetText();
         
         GetComponent<Button>().onClick.AddListener(() => OnEnterRoom(_roomInfo.Name));
-        //userIDText = GameObject.Find("EnterNickname").GetComponent<inputfield>();
-        //Debug.Log("RoomInfoText = "+ RoomInfoText.transform.parent.name);
-        //Debug.Log(RoomInfoText.transform.parent.name);
     }
     public void SetText()
     {
         if (_roomInfo != null)
         {
             RoomInfoText = transform.GetChild(0).GetComponent<Text>();
-            //userIDText = GameObject.FindGameObjectWithTag("nickname").transform.GetChild(2).GetComponent<Text>();
             RoomInfoText.text = $"{_roomInfo.Name} ({_roomInfo.PlayerCount}/{_roomInfo.MaxPlayers})";
         }
     }

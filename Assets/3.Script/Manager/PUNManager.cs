@@ -14,7 +14,6 @@ public class PUNManager : MonoBehaviourPunCallbacks
 
     [SerializeField] Button ServerBtn;
 
-    //public InputField NickName_i; //가지고 있다가 플레이어가 생성되면 부여
     public InputField userID_i;
     public InputField roomname_i;
 
@@ -42,15 +41,11 @@ public class PUNManager : MonoBehaviourPunCallbacks
         Disconnect();
     }
     #region 서버 관련 콜백 함수들
-    //ConnecttoMaster
     public void Connect()
     {
-        //setting.AppSettings.Server = DBManager.instance.ServerIP;
-
         //Master 서버에 연결
         PhotonNetwork.ConnectToMaster(setting.AppSettings.Server, setting.AppSettings.Port, "");
         Debug.Log("Connect to Master Server");
-        //ServerBtn.onClick.AddListener(JoinRandomRoomORCreateRoom); //onClick 이벤트 넣기
     }
     public void Disconnect()
     {
@@ -80,30 +75,16 @@ public class PUNManager : MonoBehaviourPunCallbacks
         Debug.Log($"{nickname} Start Random Matching");
         PhotonNetwork.LocalPlayer.NickName = nickname;
 
-        //string maxplayer_s = MaxPlayer_i.text;
-        //string maxtime_s = MaxTime_i.text;
-
         RoomOptions option = new RoomOptions();
 
         option.MaxPlayers = 2;
-        //실질적으로 사용할 커스텀 프로퍼티 객체 생성
-        //option.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable()
-        //{
-        //    { "MaxTime", i_maxtime}
-        //};
-        ////로비에서 커스텀 프로퍼티 등록 -> 게임에서 필터링 가능
-        //option.CustomRoomPropertiesForLobby = new string[] { "MaxTime" };
 
-        //방 참가 시도하고 실패하면 생성해서 방에 참가해야함
         PhotonNetwork.JoinRandomOrCreateRoom
         (
             expectedCustomRoomProperties: new ExitGames.Client.Photon.Hashtable() { { "MaxTime", 100 } },
-            expectedMaxPlayers: (byte)2,  //안될 수 있음 유의
+            expectedMaxPlayers: (byte)2, 
             roomOptions: option
         );
-        //btn.onClick.RemoveAllListeners();
-        //ServerBtn.transform.GetChild(0).GetComponent<Text>().text = "Cancel";
-        //ServerBtn.onClick.AddListener(CancelMatching);
     }
     public void CancelMatching()
     {
@@ -111,7 +92,6 @@ public class PUNManager : MonoBehaviourPunCallbacks
         Debug.Log("Left Room");
         PhotonNetwork.LeaveRoom();
         ServerBtn.onClick.RemoveAllListeners();
-        //ServerBtn.transform.GetChild(0).GetComponent<Text>().text = "Join";
         ServerBtn.onClick.AddListener(JoinRandomRoomORCreateRoom);
     }
     public override void OnCreatedRoom()
@@ -122,30 +102,17 @@ public class PUNManager : MonoBehaviourPunCallbacks
     //콜백 함수
     public override void OnConnectedToMaster()
     {
-        //base.OnConnectedToMaster();
         Debug.Log("Connect to Master Server");
         PhotonNetwork.JoinLobby(); //대기실로 이동
     }
     public override void OnJoinedLobby()
     {
         Debug.Log("Enter to Lobby");
-        //base.OnJoinedLobby();
-        //PhotonNetwork.JoinRandomRoom();
     }
-
-    //public override void OnJoinRandomFailed(short returnCode, string message)
-    //{
-    //    base.OnJoinRandomFailed(returnCode, message);
-    //    Debug.Log("No empty Room");
-    //    PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 5 });
-    //    Debug.Log("Make Room");
-    //}
 
     public override void OnJoinedRoom()
     {
-        //base.OnJoinedRoom();
         Debug.Log("방 입장 완료");
-        //PhotonNetwork.Instantiate(playerPrefabs.name, Vector3.zero, Quaternion.identity);
         UpdatePlayer();
         if (PhotonNetwork.IsMasterClient)
         {
@@ -170,7 +137,6 @@ public class PUNManager : MonoBehaviourPunCallbacks
 
     public void UpdatePlayer()
     {
-        //UserCountText.text = $"{PhotonNetwork.CurrentRoom.PlayerCount} / {PhotonNetwork.CurrentRoom.MaxPlayers}";
         //이벤트 -> 현재 방에 있는 Player의 수와 max 플레이어가 같다면 실질적인 플레이를 생성하고, 플레이를 가능하게 만듦
         if (PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
         {

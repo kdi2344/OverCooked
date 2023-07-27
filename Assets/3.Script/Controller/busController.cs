@@ -190,10 +190,6 @@ public class busController : MonoBehaviour
                 // 회전하는 부분. Point 1.
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * rotateSpeed);
             }
-            else
-            {
-                //isMoving = false;
-            }
         }
         else {
             if (pv.IsMine)
@@ -212,10 +208,6 @@ public class busController : MonoBehaviour
                     transform.position += dir * Speed * Time.deltaTime;
                     // 회전하는 부분. Point 1.
                     transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * rotateSpeed);
-                }
-                else
-                {
-                    //isMoving = false;
                 }
             }
         }
