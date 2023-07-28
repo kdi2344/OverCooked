@@ -198,7 +198,8 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.0020530624
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5739762996342836955, guid: 03f80bdd062783f48bb4fc582c798d50, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 03f80bdd062783f48bb4fc582c798d50, type: 3}
 --- !u!4 &5022059 stripped
 Transform:
@@ -2114,7 +2115,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1856816726651193945, guid: 2120c2d8fc76830438efb0cc916d3b4b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2120c2d8fc76830438efb0cc916d3b4b, type: 3}
 --- !u!4 &333744453 stripped
 Transform:
@@ -4535,7 +4537,8 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.03873041
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 592758817631978698, guid: f00bd4b30a85beb438fdd379e5c9b511, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f00bd4b30a85beb438fdd379e5c9b511, type: 3}
 --- !u!4 &762794200 stripped
 Transform:
@@ -7788,7 +7791,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1856816726651193945, guid: 2120c2d8fc76830438efb0cc916d3b4b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2120c2d8fc76830438efb0cc916d3b4b, type: 3}
 --- !u!4 &1408388466 stripped
 Transform:
@@ -10528,7 +10532,8 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.0021927087
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3866531319619083322, guid: a1d3ba21291457a4183dc579464c9029, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a1d3ba21291457a4183dc579464c9029, type: 3}
 --- !u!4 &2044570534 stripped
 Transform:
@@ -16716,6 +16721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8da54d51f9cd3e0449315e217a2d184e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pv: {fileID: 0}
   state: 1
   isStop: 0
   StartTime: 0
@@ -16726,6 +16732,10 @@ MonoBehaviour:
   TimeSlider: {fileID: 4156643022361070597}
   TextTime: {fileID: 4156643021860901445}
   SandTimer: {fileID: 1602058956082155713}
+  OriginalMoney: 0
+  Player1Money: 0
+  Player2Money: 0
+  OppositeUI: {fileID: 0}
   CoinOb: {fileID: 4156643022636094086}
   TipSlider: {fileID: 4156643021778939680}
   Coin: 0

@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            OppositeUI.SetActive(false);
+            if (OppositeUI != null) OppositeUI.SetActive(false);
         }
 
         duration = GameTime / 2;
